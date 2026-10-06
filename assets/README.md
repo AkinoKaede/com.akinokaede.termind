@@ -33,8 +33,8 @@ Its inner-display frame places the volume buttons along the top edge near the ri
 iPhone Overview uses two devices with aligned bottom edges: a fully visible
 iPhone Assistant in the right foreground and an enlarged, partially cropped Mac
 Workspace behind it. Mac and iPad Overview retain all three devices.
-The existing `01_three_screens.jpg` filenames remain stable. Mac device frames use
-the 14-inch MacBook Pro M5 Space Black bezel, matching Workspace captures at native scale.
+iPhone artwork uses `01_overview.jpg`; the other platforms retain `01_three_screens.jpg`.
+Mac device frames use the 14-inch MacBook Pro M5 Space Black bezel, matching Workspace captures at native scale.
 
 ## Usage
 
