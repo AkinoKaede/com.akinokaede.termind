@@ -1,5 +1,11 @@
 import type { ImageMetadata } from "astro";
 
+import assistantDuoInnerEn from "../../assets/device_frames/en/iphone-duo-inner/assistant.png";
+import assistantDuoInnerZhHans from "../../assets/device_frames/zh-hans/iphone-duo-inner/assistant.png";
+import assistantDuoInnerZhHant from "../../assets/device_frames/zh-hant/iphone-duo-inner/assistant.png";
+import sftpDuoInnerEn from "../../assets/device_frames/en/iphone-duo-inner/sftp.png";
+import sftpDuoInnerZhHans from "../../assets/device_frames/zh-hans/iphone-duo-inner/sftp.png";
+import sftpDuoInnerZhHant from "../../assets/device_frames/zh-hant/iphone-duo-inner/sftp.png";
 import assistantIphoneEn from "../../assets/device_frames/en/iphone/assistant.png";
 import assistantIphoneZhHans from "../../assets/device_frames/zh-hans/iphone/assistant.png";
 import assistantIphoneZhHant from "../../assets/device_frames/zh-hant/iphone/assistant.png";
@@ -24,6 +30,11 @@ import workspaceMacZhHant from "../../assets/device_frames/zh-hant/mac/workspace
 
 export type MarketingAssetLocale = "en" | "zh-hans" | "zh-hant";
 
+const duoInnerFrames = {
+  assistant: { en: assistantDuoInnerEn, "zh-hans": assistantDuoInnerZhHans, "zh-hant": assistantDuoInnerZhHant },
+  sftp: { en: sftpDuoInnerEn, "zh-hans": sftpDuoInnerZhHans, "zh-hant": sftpDuoInnerZhHant },
+} satisfies Record<string, Record<MarketingAssetLocale, ImageMetadata>>;
+
 const iphoneFrames = {
   assistant: { en: assistantIphoneEn, "zh-hans": assistantIphoneZhHans, "zh-hant": assistantIphoneZhHant },
   ssh: { en: sshIphoneEn, "zh-hans": sshIphoneZhHans, "zh-hant": sshIphoneZhHant },
@@ -44,6 +55,10 @@ const workspaceFrames = {
 
 export function iphoneFrame(feature: keyof typeof iphoneFrames, locale: MarketingAssetLocale): ImageMetadata {
   return iphoneFrames[feature][locale];
+}
+
+export function duoInnerFrame(feature: keyof typeof duoInnerFrames, locale: MarketingAssetLocale): ImageMetadata {
+  return duoInnerFrames[feature][locale];
 }
 
 export function ipadFrame(feature: keyof typeof ipadFrames, locale: MarketingAssetLocale): ImageMetadata {
