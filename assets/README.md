@@ -28,6 +28,11 @@ Overview combines Mac Workspace, Duo inner SFTP, and Duo outer Vault. Duo captur
 use iOS 27.1; iPhone 18 Pro Max and iPad Pro captures use iOS/iPadOS 27.0.
 All mobile captures use 9:41 and 100% battery while discharging.
 The iPhone Duo platform label reads “FLEXIBLE”, “灵活变换”, or “靈活變換”.
+Its inner-display frame places the volume buttons along the top edge near the right corner.
+
+iPhone Overview uses two devices: a prominent iPhone Assistant in the foreground
+and Mac Workspace behind it. Mac and iPad Overview retain all three devices.
+The existing `01_three_screens.jpg` filenames remain stable.
 
 ## Usage
 
