@@ -11,12 +11,12 @@ Locales are `en`, `zh-hans`, and `zh-hant`. Capture and frame devices are `iphon
 
 | Capture | Pixels |
 | --- | --- |
-| iPhone 17 Pro | 1206 × 2622 |
+| iPhone 17 Pro Max | 1320 × 2868 |
 | iPad Pro 13-inch (M5) | 2752 × 2064 |
 | Mac Workspace / Overview | 3024 × 1964 |
 | Other Mac windows | 2360 × 1480 |
 
-App Store canvases are `iphone-6.5` (1284 × 2778), `ipad-13` (2752 × 2064),
+App Store canvases are `iphone-6.9` (1320 × 2868), `ipad-13` (2752 × 2064),
 and `mac` (2880 × 1800). These sizes describe the artwork, not the capture device.
 Preserve original captures and refresh derived frames and artwork when their sources change.
 
