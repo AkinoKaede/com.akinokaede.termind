@@ -5,20 +5,29 @@
 - `app_store/<locale>/<device>/`: final RGB JPEG artwork with an sRGB color profile.
 
 Locales are `en`, `zh-hans`, and `zh-hant`. Capture and frame devices are `iphone`,
-`ipad`, and `mac`. Filenames use lowercase words separated by underscores.
+`ipad`, `mac`, `iphone-duo-inner`, and `iphone-duo-outer`. Filenames use lowercase words separated by underscores.
 
 ## Image sizes
 
 | Capture | Pixels |
 | --- | --- |
-| iPhone 17 Pro Max | 1320 × 2868 |
+| iPhone 18 Pro Max | 1320 × 2868 |
+| iPhone Duo outer, portrait | 1398 × 2034 |
+| iPhone Duo inner, unfolded landscape | 2853 × 2007 |
 | iPad Pro 13-inch (M5) | 2752 × 2064 |
 | Mac Workspace / Overview | 3024 × 1964 |
 | Other Mac windows | 2360 × 1480 |
 
 App Store canvases are `iphone-6.9` (1320 × 2868), `ipad-13` (2752 × 2064),
-and `mac` (2880 × 1800). These sizes describe the artwork, not the capture device.
+`iphone-duo` (2853 × 2007), and `mac` (2880 × 1800). These sizes describe the artwork, not the capture device.
 Preserve original captures and refresh derived frames and artwork when their sources change.
+
+The Figma `App Store iPhone Duo` page supplies six boards per language. SSH, SFTP,
+and Assistant use the inner display; Metrics and Vault use the outer display.
+Overview combines Mac Workspace, Duo inner SFTP, and Duo outer Vault. Duo captures
+use iOS 27.1; iPhone 18 Pro Max and iPad Pro captures use iOS/iPadOS 27.0.
+All mobile captures use 9:41 and 100% battery while discharging.
+The iPhone Duo platform label reads “FLEXIBLE”, “灵活变换”, or “靈活變換”.
 
 ## Usage
 
