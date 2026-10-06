@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PricingPage from "../components/PricingPage.astro";
+import { copy, type SiteLocale } from "../lib/i18n";
+import { termindPricing } from "../lib/pricing";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "Pricing — Termind", "价格 — Termind")}
+  description={copy(locale, `Start with free SSH, SFTP, and port forwarding. Termind Pro is ${termindPricing.annual}/year or ${termindPricing.lifetime} for lifetime access on macOS and iOS.`, `免费使用 SSH、SFTP 与端口转发。Termind Pro 年订阅 ${termindPricing.annual}，永久版 ${termindPricing.lifetime}，适用于 macOS 与 iOS。`)}
+  locale={locale}
+  pagePath="/pricing/"
+>
+  <PricingPage locale={locale} />
+</BaseLayout>

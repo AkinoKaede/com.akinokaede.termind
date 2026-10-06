@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ComparePage from "../../components/ComparePage.astro";
+import { copy, type SiteLocale } from "../../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "Compare SSH clients — Termind", "对比 SSH 客户端 — Termind")}
+  description={copy(locale, "Compare Termind with Termius, WebSSH, ServerCat, and Prompt 3. Explore hardware keys, SSH workflows, monitoring, Tailscale, sync, and pricing.", "对比 Termind 与 Termius、WebSSH、ServerCat 和 Prompt 3，全面了解硬件密钥、SSH 工作流、监控、Tailscale、数据同步与方案定价。")}
+  locale={locale}
+  pagePath="/compare/"
+>
+  <ComparePage locale={locale} />
+</BaseLayout>

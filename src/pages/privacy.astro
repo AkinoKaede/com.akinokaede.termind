@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PrivacyPolicy from "../components/PrivacyPolicy.astro";
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "Privacy Policy — Termind", "隐私政策 — Termind")}
+  description={copy(locale, "How Termind handles device data, iCloud and Keychain sync, Tailscale, AI providers, Web Search, remote connections, camera attachments, and speech transcription.", "Termind 如何处理设备数据、iCloud 与钥匙串同步、Tailscale、AI 提供方、网页搜索、远程连接、相机附件和语音转写。")}
+  locale={locale}
+  pagePath="/privacy/"
+>
+  <PrivacyPolicy locale={locale} />
+</BaseLayout>

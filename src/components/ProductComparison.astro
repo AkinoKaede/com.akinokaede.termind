@@ -1,0 +1,134 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
+import { termindPricing } from "../lib/pricing";
+import { getComparison, type ComparisonSlug } from "../lib/comparisons";
+
+interface Props { locale: SiteLocale; slug: ComparisonSlug; }
+const { locale, slug } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const { competitor, rows } = getComparison(slug, locale);
+const attribution = competitor.attribution ?? c(`${competitor.name} is a product of ${competitor.owner}.`, `${competitor.name} 由 ${competitor.owner} 开发。`);
+---
+
+<BaseLayout
+  title={c(`Termind vs. ${competitor.name} — Compare SSH clients`, `Termind 与 ${competitor.name} — SSH 客户端对比`)}
+  description={competitor.description}
+  locale={locale}
+  pagePath={`/compare/${slug}/`}
+>
+  <article class="comparison shell">
+    <a class="back-link" href={localizedPath(locale, "/compare/")}><span aria-hidden="true">←</span> {c("All comparisons", "所有对比")}</a>
+
+    <header class="detail-hero reveal">
+      <div>
+        <p class="eyebrow">TERMIND / {competitor.name.toUpperCase()}</p>
+        <h1 class="display">Termind<br /><em>vs. {competitor.name}</em></h1>
+      </div>
+      <div class="hero-summary">
+        <p>{competitor.summary}</p>
+        <a href="#feature-comparison">{c("Compare the details", "查看功能对比")} <span aria-hidden="true">↓</span></a>
+      </div>
+    </header>
+
+    <section class="quick-take" aria-label={c("Which one fits your workflow?", "哪款更适合你的工作方式？")}>
+      <div class="termind-take">
+        <span class="take-label"><img src="/brand_mark.svg" width="26" height="26" alt="" />{c("CHOOSE TERMIND IF YOU NEED", "选择 TERMIND，如果你需要")}</span>
+        <h2>{competitor.termindRecommendationTitle}</h2>
+        <p>{competitor.termindRecommendation}</p>
+      </div>
+      <div>
+        <span class="take-label">{c(`CONSIDER ${competitor.name.toUpperCase()} IF YOU NEED`, `考虑 ${competitor.name.toUpperCase()}，如果你需要`)}</span>
+        <h2>{competitor.recommendationTitle}</h2>
+        <p>{competitor.recommendation}</p>
+      </div>
+    </section>
+
+    <section class="feature-comparison" id="feature-comparison" aria-labelledby="features-heading">
+      <div class="section-heading">
+        <h2 id="features-heading" class="display">{c("The details that matter.", "关键区别，逐项看。")}</h2>
+      </div>
+      <ul class="feature-list" role="list">
+        {rows.map((row, index) => (
+          <li id={row.id}>
+            <div class="feature-title">
+              <span class="feature-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{row.feature}</h3>
+              <p>{row.benefit}</p>
+            </div>
+            <dl class="product-details">
+              <div class="termind-detail"><dt>Termind</dt><dd><strong>{row.termind}</strong><p>{row.termindNote}</p></dd></div>
+              <div><dt>{competitor.name}</dt><dd><strong>{row.competitor.title}</strong><p>{row.competitor.note}</p></dd></div>
+            </dl>
+          </li>
+        ))}
+      </ul>
+      <div class="sources" id="comparison-sources">
+        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-03">{c("October 3, 2026", "2026 年 10 月 3 日")}</time></p>
+      </div>
+    </section>
+
+    <section class="download-cta">
+      <div><p class="eyebrow">{c("MAKE IT YOUR WORKSPACE", "开始你的远程工作")}</p><h2 class="display">{c("Try Termind for yourself.", "亲手试试 Termind。")}</h2><p>{c("Start with free SSH, SFTP, and port forwarding. No Termind account needed.", "从免费的 SSH、SFTP 和端口转发开始，无需注册 Termind 账户。")}</p></div>
+      <a href={termindPricing.appStoreURL}>{c("Download on the App Store", "在 App Store 下载")} <span aria-hidden="true">↗</span></a>
+    </section>
+    <p class="trademark-note">{attribution} {c(`This comparison is published by Termind and is not affiliated with or endorsed by ${competitor.owner}.`, `本对比由 Termind 发布，与 ${competitor.owner} 无隶属或背书关系。`)}</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .back-link { display: inline-flex; gap: .6rem; margin-top: 2.2rem; color: var(--muted); font-size: .8rem; text-decoration: none; }
+  .back-link:hover { color: var(--cyan); }
+  .detail-hero { display: grid; grid-template-columns: 1.1fr 1fr; align-items: end; gap: 4rem; padding-block: 3rem 3.5rem; }
+  h1 { margin-top: 1.5rem; font-size: clamp(3.4rem, 7vw, 6rem); }
+  h1 em { color: var(--cyan); }
+  .hero-summary { max-width: 460px; padding-bottom: .5rem; }
+  .hero-summary p { margin: 0 0 1.7rem; color: var(--muted); font-size: 1.05rem; }
+  .hero-summary a { color: var(--cyan); font-size: .85rem; font-weight: 600; text-decoration: none; }
+  .hero-summary a span { margin-left: .6rem; }
+  .quick-take { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-strong); border-radius: var(--radius-m); overflow: hidden; background: var(--paper-raised); }
+  .quick-take > div { padding: 2rem 2.3rem; }
+  .termind-take { background: #eaf5fb; border-right: 1px solid var(--line-strong); }
+  .take-label { display: flex; align-items: center; gap: .6rem; min-height: 26px; color: var(--muted); font: .65rem var(--mono); letter-spacing: .08em; }
+  .quick-take h2 { margin: 1rem 0 .6rem; font-size: 1.35rem; font-weight: 500; letter-spacing: -.025em; }
+  .quick-take p { margin: 0; color: var(--muted); font-size: .88rem; }
+  .feature-comparison { padding-top: 5rem; scroll-margin-top: 2rem; }
+  .section-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.7rem; }
+  .section-heading h2, .download-cta h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
+  .feature-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
+  .feature-list > li { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 2.5rem; padding: 2rem 0; border-bottom: 1px solid var(--line-strong); scroll-margin-top: 2rem; }
+  .feature-number { color: var(--cyan); font: .72rem var(--mono); }
+  .feature-title h3 { margin: .65rem 0 .5rem; font-size: 1.2rem; font-weight: 500; letter-spacing: -.025em; }
+  .feature-title p { margin: 0; color: var(--muted); font-size: .82rem; }
+  .product-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0; }
+  .product-details > div { min-width: 0; padding: 1.3rem; }
+  .product-details > .termind-detail { border-radius: var(--radius-s); background: #eaf5fb; }
+  .product-details dt { margin-bottom: .7rem; color: var(--faint); font: .7rem var(--mono); }
+  .termind-detail dt { color: var(--cyan); }
+  .product-details dd { margin: 0; }
+  .product-details strong { font-size: .9rem; font-weight: 600; }
+  .product-details p { margin: .5rem 0 0; color: var(--muted); font-size: .82rem; line-height: 1.8; }
+  .sources { max-width: 870px; margin-top: 1.3rem; color: var(--faint); font-size: .73rem; scroll-margin-top: 2rem; }
+  .sources p { margin: 0; }
+  .download-cta { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 5rem; padding: 2.5rem; border: 1px solid var(--line); border-radius: var(--radius-l); background: #eaf5fb; }
+  .download-cta h2 { margin-top: 1rem; }
+  .download-cta p:not(.eyebrow) { max-width: 540px; margin: 1rem 0 0; color: var(--muted); font-size: .85rem; }
+  .download-cta > a { display: inline-flex; flex-shrink: 0; align-items: center; gap: 1rem; padding: .9rem 1.3rem; border-radius: var(--radius-pill); background: var(--ink); color: white; font-size: .8rem; font-weight: 600; text-decoration: none; }
+  .download-cta > a:hover { background: var(--cyan); }
+  .trademark-note { margin: 1.2rem 0 0; color: var(--faint); font-size: .68rem; }
+  @media (max-width: 850px) {
+    .detail-hero { gap: 2rem; }
+    .feature-list > li { grid-template-columns: 1fr; gap: 1rem; }
+    .quick-take > div { padding: 1.5rem; }
+    .download-cta { align-items: flex-start; flex-direction: column; }
+  }
+  @media (max-width: 700px) {
+    .detail-hero { grid-template-columns: 1fr; padding-block: 2.5rem; }
+    .hero-summary { max-width: none; }
+    .quick-take, .product-details { grid-template-columns: 1fr; }
+    .termind-take { border-right: 0; border-bottom: 1px solid var(--line-strong); }
+    .feature-comparison { padding-top: 3.5rem; }
+    .product-details { gap: .2rem; }
+    .download-cta { margin-top: 3.5rem; padding: 1.7rem; }
+  }
+</style>

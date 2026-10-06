@@ -1,0 +1,141 @@
+---
+import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const zh = locale !== "en";
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+
+let items: Array<[string, string | string[], string?]> = zh ? [
+  ["Termind 能帮我做什么？", "Termind 是一款 AI 驱动的远程工作台。你可以用自然语言生成命令，让 AI 助手帮你排查问题、管理服务器，并借助 SSH、Telnet、SFTP 与实时监控完成后续工作。AI 始终作为辅助，模型选择、权限控制与操作确认完全由你掌控。"],
+  ["AI 助手和命令生成器有什么不同？", [
+    "命令生成器专注在“帮我写一条命令”：输入需求并检查生成的命令，再决定是否执行。它永久免费，并且绝不会替你按下回车。",
+    "AI 助手则适用于多步骤任务，例如排查服务状态、分析日志，并在获得你授权的范围内执行命令或读写文件。它是 Pro 功能，还能结合技能、网页搜索、远程 MCP 工具与持久化记忆，不仅提供方案建议，更能切实协助你完成运维工作。",
+  ]],
+  ["持久化记忆是什么？每次聊天还要重新交代背景吗？", [
+    "持久化记忆（Hermes Memory）可让 AI 助手在不同会话之间保留有价值的背景与个人偏好，例如常用环境信息或日常操作习惯。在处理相关任务时，助手会按需检索已保存的记忆或历史对话，免去反复说明的繁琐。",
+    "该功能默认保持关闭，所有记忆数据仅保存在当前设备本地，不通过 iCloud 同步。你可以随时查看、编辑、导出或一键抹除记忆库，也可以随时停用自动学习。开启自动学习会调用模型，可能产生相应的第三方 API 费用。",
+  ]],
+  ["AI 会不经确认就执行命令吗？", "取决于你选择的权限模式。命令生成器绝不会主动执行命令；AI 助手则严格遵循工具策略和权限模式：需要授权的操作可以交由你亲自确认，或由安全审查模型评估；开启“完全访问”后，这类操作不再逐次询问。执行前请务必确认操作范围，尤其是在生产服务器上。"],
+  ["使用 AI 需要自己的 API 密钥吗？", "需要。Termind 采用自带密钥（BYOK）模式：配置模型服务的端点地址、模型与密钥后即可使用 AI。支持 Chat Completions、Responses、Messages 和 generateContent 四种主流协议。无需注册 Termind 账户；Pro 方案不包含第三方模型用量，相关费用由你的 AI 提供方单独收取。"],
+  ["不使用 AI，也能正常使用 Termind 吗？", "当然可以。SSH 与 Telnet 终端、SFTP 文件管理、命令片段和端口转发均可独立使用，无需配置任何 AI 密钥。AI 助手、持久化记忆、网页搜索和 MCP 连接均可按需开启。"],
+  ["Mac、iPhone 和 iPad 的功能一样吗？", "Termind 支持 macOS 15、iOS 18 和 iPadOS 18 及以上版本。三端均可使用 SSH、Telnet、SFTP、服务器监控、AI 助手和内置 Tailscale，部分高级功能需要 Pro。Mac 额外免费提供串口、多窗格工作区和广播输入，内置 MCP 服务器需要 Pro；iPhone 和 iPad 的每个工作区包含一个 SSH、Telnet 或 SFTP 会话。"],
+  ["服务器上需要安装 Termind 或其他软件吗？", "无需安装 Termind Agent 或任何常驻守护进程。普通连接仅需目标服务器具备可用的 SSH 或 Telnet 服务，文件管理则需支持 SFTP。使用内置 Tailscale 连接时，目标服务器需要运行 Tailscale 并启用 Tailscale SSH。可选的 SSH Shell 集成仅在当前 Shell 会话中运行，断开后不会留下后台进程，也绝不修改 Shell 配置文件。"],
+  ["如何连接 Tailnet？需要另外安装 Tailscale 吗？", [
+    "内置 Tailscale 是 Termind Pro 功能。当前设备无需额外安装 Tailscale 客户端或配置系统 VPN，Termind 会在应用内直接建立连接。",
+    "在保管库中新建或编辑分组，开启 Tailscale，通过浏览器登录或使用 Auth Key，完成后保存分组。Tailnet 中发现的设备会自动呈现在该分组下；不同分组还可以分别连接不同的 Tailnet。",
+    "目标服务器需要启用 Tailscale SSH，且 Tailnet 访问策略须允许你使用所选用户名连接。随后即可直接打开 SSH 终端或使用 SFTP；设备详情还提供在线状态、MagicDNS 名称与 Ping 延迟。Tailnet 登录状态仅保存在当前设备，切换设备后需重新登录。",
+  ], "tailscale"],
+  ["哪些功能免费？Pro 多了什么？", [
+    "基础 SSH、Telnet、SFTP、终端上传、命令片段、命令生成器、端口转发，以及 Mac 串口、多窗格工作区和输入广播永久免费。即使只想快速连接服务器或传输几个文件，也可以随时直接使用。",
+    "Pro 解锁内置 Tailscale、SFTP 多连接加速、Mac 端口转发多连接加速、支持持久化记忆的 AI 助手、超过 3 台服务器的监控、远程 MCP 客户端、保管库、监控和设置的 iCloud 同步，以及 Mac 内置 MCP 服务器。基础文件传输、端口转发、多会话与多条转发规则始终免费。可按年订阅或一次购买永久版，两者均支持家庭共享；第三方 AI 用量费用另计。",
+  ]],
+  ["密码和 SSH 私钥存在哪里？", "它们妥善保存在 Apple 数据保护钥匙串中，与主机信息严格隔离存放。密码与软件 SSH 私钥可选择仅保存在当前设备，或通过 iCloud 钥匙串安全同步；安全隔区私钥不可导出，也绝不会同步到其他设备。SSH 私钥绝不会作为聊天上下文发送给 AI 模型。"],
+  ["换一台设备，哪些内容能接着用？", [
+    "开启 Pro 的 iCloud 同步后，可以同步保管库、监控配置与各项设置：涵盖主机、命令片段、端口转发、监控布局，以及终端外观、连接、AI 模型、MCP 客户端、技能与网页搜索偏好。连接偏好包括 SSH 最大会话数和文件传输并发设置。你可以自由选择需要同步的类别。",
+    "启用设置同步后，AI API 密钥和远程 MCP 客户端令牌由 iCloud 钥匙串同步。聊天记录、持久化记忆、实时监控数据和连接状态不会同步；Mac 内置 MCP 服务器的设置与令牌也仅保留在本机。",
+  ]],
+  ["使用 AI 或记忆时，哪些数据会发送给模型？", [
+    "Termind 直接连接你选择的 AI 提供方，不经过任何 Termind 托管的中间服务。请求可能包含你的提示词、附件、会话上下文，以及经你授权读取的命令输出或文件内容。提供方如何保留和处理这些数据，完全取决于其自身政策。",
+    "记忆保存在本机，并不代表数据永远不出设备：启用后，按需检索到的记忆条目或历史片段会作为上下文发送给模型；自动学习也会将相关对话与部分已有记忆发送给你配置的学习模型。请只保存你愿意提交给该提供方处理的信息。",
+    "网页搜索可在设置中随时关闭。启用后，搜索词与选中的网页内容会发送给搜索服务及你的 AI 提供方；完整数据流向详见隐私政策。",
+  ]],
+  ["遇到问题，去哪里寻求帮助？", "可以前往支持页面，或发送邮件至 support-termind@akinokaede.com。详细描述你尝试的操作、遇到的现象，以及设备型号与系统版本，会更便于快速排查。分享截图或日志前，请务必脱敏密码、密钥、主机地址及其他敏感信息。"],
+] : [
+  ["What can I do with Termind?", "Termind is an AI-driven remote workspace. Describe a command, ask the AI Assistant to investigate an issue or act on a server, then keep working with SSH, Telnet, SFTP, and live metrics in the same app. AI helps with the work; you choose the model, permissions, and workflow."],
+  ["How is the AI Assistant different from Command Generator?", [
+    "Command Generator is for “write me a command”: describe what you need, review the result, and decide whether to run it. It stays free and never presses Return for you.",
+    "The AI Assistant handles multi-step tasks, such as checking a service, reading logs, and running commands or working with files under the permissions you set. It is a Pro feature and can use skills, Web Search, remote MCP tools, and Hermes Memory to help you get the job done—not just suggest what to do.",
+  ]],
+  ["What is Hermes Memory? Do I have to repeat myself in every chat?", [
+    "Hermes Memory lets the AI Assistant carry useful context and preferences across conversations, such as how you work or details about your environment. The Assistant searches saved memory when it is relevant and can search past chats, so you can spend less time explaining the same background.",
+    "It is off by default. The memory store stays on this device and does not sync through iCloud. You can review, edit, export, or destroy it at any time, and turn off Automatic Learning. Automatic Learning may incur additional API charges.",
+  ]],
+  ["Can the AI run commands without asking me?", "That depends on the permissions you choose. Command Generator never runs commands. The AI Assistant follows tool policies and your permission mode: actions requiring approval can come to you for confirmation or go to a security-review model. Full Access allows those actions without asking each time. Review the scope of access before you use it, especially on production servers."],
+  ["Do I need my own API key to use AI?", "Yes. Termind uses bring-your-own-key (BYOK): configure your model endpoint, model, and API key. It supports Chat Completions, Responses, Messages, and generateContent protocols. No Termind account is needed. Pro does not include third-party model usage; your AI provider bills that separately."],
+  ["Can I use Termind without AI?", "Absolutely. SSH and Telnet terminals, SFTP file management, snippets, and port forwarding work without an AI key. The AI Assistant, Hermes Memory, Web Search, and MCP connections are optional—turn on only what you need."],
+  ["Are the features the same on Mac, iPhone, and iPad?", "Termind supports macOS 15, iOS 18, and iPadOS 18 or later. All three offer SSH, Telnet, SFTP, server metrics, the AI Assistant, and built-in Tailscale, with some features requiring Pro. Mac also offers serial sessions, multi-pane workspaces, and input broadcasting for free. Its built-in MCP server requires Pro. Each iPhone or iPad workspace contains one SSH, Telnet, or SFTP session."],
+  ["Do I need to install anything on my server?", "No Termind agent or daemon is required. Standard connections need a working SSH or Telnet service, plus SFTP support for file management. To connect through built-in Tailscale, the server must run Tailscale with Tailscale SSH enabled. Optional SSH Shell Integration runs only in the current shell session: it leaves no background process after disconnecting and does not change shell configuration files."],
+  ["How do I connect my Tailnet? Do I need the Tailscale app?", [
+    "Built-in Tailscale is a Termind Pro feature. No separate Tailscale app or system VPN setup is needed on this device; Termind establishes the connection within the app.",
+    "Create or edit a group in Vault, enable Tailscale, sign in through your browser or use an Auth Key, then save the group. Discovered Tailnet devices appear in that group. You can connect different groups to different tailnets.",
+    "The target server must have Tailscale SSH enabled, and your Tailnet’s access policies must allow the username you connect with. You can then open an SSH terminal or use SFTP. Device details also show online status, MagicDNS names, and Ping latency. Tailnet sign-in stays on the current device, so sign in again when you switch devices.",
+  ], "tailscale"],
+  ["What is free, and what does Pro add?", [
+    "Core SSH, Telnet, SFTP, terminal uploads, snippets, Command Generator, and port forwarding stay free, as do serial sessions, multi-pane workspaces, and input broadcasting on Mac. If you just need to connect to a server or move a few files, you can get started right away.",
+    "Pro unlocks built-in Tailscale, multi-connection acceleration for SFTP and for port forwarding on Mac, the AI Assistant with optional Hermes Memory, monitoring for more than 3 servers, remote MCP clients, iCloud sync for Vault, Metrics, and settings, plus the built-in MCP server on Mac. Core file transfers and forwarding, multiple sessions, and multiple forwarding rules stay free. Choose an annual plan or a one-time lifetime purchase; both support Family Sharing. Third-party AI usage is billed separately.",
+  ]],
+  ["Where are my passwords and SSH private keys stored?", "In Apple’s Data Protection Keychain, separate from your host information. Passwords and software SSH private keys can stay on this device or sync through iCloud Keychain. Secure Enclave private keys cannot be exported and do not sync. SSH private keys are not sent to the AI model as chat context."],
+  ["What carries over when I switch devices?", [
+    "With Pro’s iCloud sync enabled, you can sync Vault, Metrics configuration, and settings: hosts, snippets, port forwards, monitoring layouts, terminal appearance, Connections, AI models, MCP clients, skills, and Web Search preferences. Connections preferences include SSH Max Sessions and file-transfer concurrency. You choose which categories to sync.",
+    "With Settings sync enabled, AI API keys and remote MCP client tokens sync through iCloud Keychain. Chats, Hermes Memory, live metric samples, and connection state do not sync. The Mac’s built-in MCP server settings and token also stay on that device.",
+  ]],
+  ["What goes to the model when I use AI or Memory?", [
+    "Termind connects directly to your selected AI provider, with no hosted Termind AI service in between. Requests may include your messages, attachments, session context, and command output or file contents you authorize it to read. The provider’s own policies govern how it handles and retains that data.",
+    "Local memory storage does not mean memory never leaves your device. When enabled, retrieved memory entries or chat excerpts may be sent to the model as context. Automatic Learning also sends relevant conversation content and selected existing memory to your configured learning model. Keep only information you are comfortable sharing with that provider.",
+    "Web Search can be turned off in settings. When enabled, queries and selected page content are sent to search services and your AI provider. See the Privacy Policy for the complete data flow.",
+  ]],
+  ["Where can I get help?", "Visit Support or email support-termind@akinokaede.com. Tell us what you were trying to do, what happened, and which device and OS version you use. Before sharing screenshots or logs, remove passwords, keys, host addresses, and other sensitive details."],
+];
+if (locale === "zh-Hant") {
+  items = items.map(([question, answer, id]) => [
+    copy(locale, "", question),
+    Array.isArray(answer) ? answer.map(paragraph => copy(locale, "", paragraph)) : copy(locale, "", answer),
+    id,
+  ]);
+}
+---
+
+<div class="faq shell">
+  <header class="faq-hero reveal">
+    <p class="eyebrow">{c("Before you connect", "连接之前，先了解这些")}</p>
+    <h1 class="display">{c("Good to know.", "常见问题")}</h1>
+    <p>{c("What AI can do, how Tailscale connects, what Pro adds, and where your data goes.", "关于 AI 能力、Tailscale 连接、Pro 方案及数据去向，都在这里为你详细解答。")}</p>
+  </header>
+
+  <div class="faq-list">
+    {items.map(([question, answer, id], index) => (
+      <details id={id} open={index === 0 || id === "tailscale"}>
+        <summary><span>{String(index + 1).padStart(2, "0")}</span><strong>{question}</strong><i aria-hidden="true"></i></summary>
+        {(Array.isArray(answer) ? answer : [answer]).map(paragraph => <p>{paragraph}</p>)}
+      </details>
+    ))}
+  </div>
+
+  <aside class="faq-footer">
+    <div><p class="eyebrow">{c("Still wondering?", "还有疑问？")}</p><h2>{c("We’re here to help.", "我们来帮你。")}</h2></div>
+    <a href={localizedPath(locale, "/support/")}>{c("Go to Support", "前往支持")}<span>→</span></a>
+  </aside>
+</div>
+
+<style>
+  .faq { padding-top: 7rem; }
+  .faq-hero { max-width: 880px; padding-bottom: 5rem; }
+  .faq-hero h1 { margin-top: 1.3rem; font-size: clamp(5rem, 10vw, 9rem); }
+  .faq-hero > p:last-child { max-width: 590px; margin: 2rem 0 0; color: var(--muted); font-size: 1.1rem; }
+  .faq-list { width: calc(100% - 220px); margin-left: 220px; border-top: 1px solid var(--line-strong); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { display: grid; grid-template-columns: 58px 1fr 20px; align-items: center; min-height: 88px; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary span { color: var(--cyan); font-family: var(--mono); font-size: .62rem; }
+  summary strong { color: var(--ink); font-family: var(--display); font-size: clamp(1.2rem, 2vw, 1.55rem); font-weight: 400; }
+  summary i { position: relative; width: 15px; height: 15px; }
+  summary i::before, summary i::after { position: absolute; left: 1px; top: 7px; width: 13px; height: 1px; content: ""; background: var(--faint); transition: transform 170ms ease; }
+  summary i::after { transform: rotate(90deg); }
+  details[open] summary i::after { transform: rotate(0); }
+  details > p { max-width: 720px; margin: -.5rem 0 0 58px; padding: 0 2rem 1rem 0; color: var(--muted); font-size: .91rem; line-height: 1.8; }
+  details > p:last-child { padding-bottom: 2.4rem; }
+  .faq-footer { display: grid; grid-template-columns: 1fr 270px; gap: 4rem; align-items: end; margin-top: 7rem; padding: 4rem; border: 1px solid var(--line-strong); border-radius: 24px; background: var(--paper-raised); }
+  .faq-footer h2 { margin: 1.1rem 0 0; font-family: var(--display); font-size: 3rem; font-weight: 400; }
+  .faq-footer a { display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid var(--line-strong); color: var(--cyan); font-size: .82rem; font-weight: 650; text-decoration: none; }
+  @media (max-width: 760px) {
+    .faq { padding-top: 4.5rem; }
+    .faq-list { width: 100%; margin-left: 0; }
+    .faq-footer { grid-template-columns: 1fr; padding: 2rem; }
+  }
+  @media (max-width: 520px) {
+    .faq-hero h1 { font-size: 4.5rem; }
+    summary { grid-template-columns: 34px 1fr 18px; }
+    details > p { margin-left: 34px; }
+  }
+</style>

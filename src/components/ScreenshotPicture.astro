@@ -1,0 +1,37 @@
+---
+import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"img">, "src" | "width" | "height"> {
+  src: ImageMetadata;
+  width: number;
+  quality?: number;
+  fallbackBackground?: string;
+}
+
+const { src, width, quality = 75, fallbackBackground = "#f7f9fa", alt, ...imageAttributes } = Astro.props;
+const transform = { src, width, quality };
+const [avif, webp, jpeg] = await Promise.all([
+  getImage({ ...transform, format: "avif" }),
+  getImage({ ...transform, format: "webp" }),
+  getImage({ ...transform, format: "jpg", background: fallbackBackground }),
+]);
+const attributeEntries = Object.entries(imageAttributes);
+const scopedAttributes = Object.fromEntries(attributeEntries.filter(([key]) => key.startsWith("data-astro-cid")));
+const forwardedAttributes = Object.fromEntries(attributeEntries.filter(([key]) => !key.startsWith("data-astro-cid")));
+---
+
+<picture {...scopedAttributes}>
+  <source srcset={avif.src} type="image/avif" />
+  <source srcset={webp.src} type="image/webp" />
+  <img
+    src={jpeg.src}
+    width={jpeg.attributes.width}
+    height={jpeg.attributes.height}
+    alt={alt}
+    decoding="async"
+    {...forwardedAttributes}
+    {...scopedAttributes}
+  />
+</picture>

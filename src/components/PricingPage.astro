@@ -1,0 +1,148 @@
+---
+import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
+import { termindPricing } from "../lib/pricing";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+
+const freeFeatures = [
+  c("SSH, Telnet, SFTP, and terminal uploads", "SSH、Telnet、SFTP 与终端上传"),
+  c("Snippets and port forwarding", "命令片段与端口转发"),
+  c("AI Command Generator with your own key", "使用自己密钥的 AI 命令生成器"),
+  c("Monitor up to 3 servers", "最多监控 3 台服务器"),
+  c("On macOS: serial, multi-pane workspaces, and input broadcasting", "macOS：串口、多窗格工作区与广播输入"),
+];
+const proFeatures = [
+  [c("Parallel SFTP", "并行 SFTP"), c("Transfer across multiple SSH connections, with smart scheduling and global and per-host concurrency limits.", "通过多个 SSH 连接传输，支持智能调度，以及全局和单主机并发上限。")],
+  [c("Multi-connection port forwarding", "多连接端口转发"), c("On macOS, spread local and dynamic forwarding traffic across an SSH connection pool.", "在 macOS 上，通过 SSH 连接池分摊本地与动态端口转发流量。")],
+  [c("Built-in Tailscale", "内置 Tailscale"), c("Sign in to multiple tailnets, discover devices, and connect through Tailscale SSH without a separate client on this device.", "登录多个 Tailnet、自动发现设备，并通过 Tailscale SSH 连接，当前设备无需另装客户端。")],
+  [c("AI Assistant", "AI 助手"), c("Investigate issues, run commands, and work with files using your model and permissions, plus skills and optional local memory.", "使用自己的模型与权限排查问题、执行命令和处理文件，并可使用技能与可选的本地记忆。")],
+  [c("More servers to monitor", "监控更多服务器"), c("Go beyond the free limit of 3 monitored servers and keep their live metrics in one workspace.", "解锁超过 3 台服务器的监控，在一个工作台查看实时指标。")],
+  [c("iCloud sync", "iCloud 同步"), c("Sync Vault, monitoring configuration, and settings. Credentials use iCloud Keychain; chats and memory stay local.", "同步保管库、监控配置与设置。凭据通过 iCloud 钥匙串同步，聊天与记忆留在本机。")],
+  [c("MCP connections", "MCP 连接"), c("Connect remote MCP tools to the Assistant. On macOS, the built-in MCP server also lets compatible AI clients use your SSH and SFTP tools.", "为助手连接远程 MCP 工具。macOS 内置 MCP 服务器，还可让兼容的 AI 客户端使用你的 SSH 与 SFTP 工具。")],
+];
+const plans = [
+  {
+    name: c("Annual", "年度订阅"),
+    price: termindPricing.annual,
+    unit: c("/ year", "/ 年"),
+    description: c("A year of your complete workspace.", "一整年畅享完整工作台。"),
+    billing: c("Billed annually. Renews until canceled.", "按年收费，取消前会自动续订。"),
+    points: [c("Every Pro feature", "全部 Pro 功能"), c("macOS & iOS", "macOS 与 iOS"), c("Family Sharing included", "支持家庭共享"), c("Cancel the next renewal at any time", "可随时取消下次续订")],
+    lifetime: false,
+  },
+  {
+    name: c("Lifetime", "永久版"),
+    price: termindPricing.lifetime,
+    unit: c("once", "一次购买"),
+    description: c("Your workspace, yours to keep.", "一次付费，永久拥有。"),
+    billing: c("One payment. No subscription renewal.", "一次付费，无需续订。"),
+    points: [c("Every Pro feature", "全部 Pro 功能"), c("macOS & iOS", "macOS 与 iOS"), c("Family Sharing included", "支持家庭共享"), c("Lifetime Pro access", "永久使用 Pro")],
+    lifetime: true,
+  },
+];
+---
+
+<article class="pricing-page shell">
+  <header class="pricing-hero reveal">
+    <p class="eyebrow">{c("PRICING", "价格")}</p>
+    <h1 class="display">{c("Start free.", "免费开始，")}<br /><em>{c("Make it yours.", "随心选择升级方式。")}</em></h1>
+    <p class="lede">{c("The essentials are free. Add Pro for a year or keep it for life. One purchase works on macOS and iOS, with Family Sharing included.", "核心功能永久免费。Pro 可按年订阅，也可一次购买永久使用。一次购买即可通用于 macOS 与 iOS，并支持家庭共享。")}</p>
+  </header>
+
+  <section class="plans" aria-label={c("Free and Pro plans", "免费版与 Pro 方案")}>
+    <div class="plan free-plan">
+      <p class="plan-label">TERMIND</p>
+      <h2>{c("Free", "免费版")}</h2>
+      <p class="plan-description">{c("Everything you need to get connected.", "日常连接所需，一应俱全。")}</p>
+      <p class="price"><strong>$0</strong><span>{c("forever", "永久免费")}</span></p>
+      <p class="billing">{c("No Termind account needed.", "无需注册 Termind 账户。")}</p>
+      <a class="plan-button" href={termindPricing.appStoreURL}>{c("Download free", "免费下载")} <span aria-hidden="true">↗</span></a>
+      <ul role="list">{freeFeatures.map((feature) => <li>{feature}</li>)}</ul>
+    </div>
+    {plans.map((plan) => (
+      <div class:list={["plan", { "lifetime-plan": plan.lifetime }]}>
+        <p class="plan-label">TERMIND PRO</p>
+        <h2>{plan.name}</h2>
+        <p class="plan-description">{plan.description}</p>
+        <p class="price"><strong>{plan.price}</strong><span>{plan.unit}</span></p>
+        <p class="billing">{plan.billing}</p>
+        <a class="plan-button" href={termindPricing.appStoreURL} aria-label={c(`View Termind Pro ${plan.name} on the App Store`, `在 App Store 查看 Termind Pro ${plan.name}`)}>{c("View on the App Store", "在 App Store 查看")} <span aria-hidden="true">↗</span></a>
+        <p class="includes-free">{c("Everything in Free, plus:", "包含所有免费功能，并提供：")}</p>
+        <ul role="list">{plan.points.map((point) => <li>{point}</li>)}</ul>
+        <a class="feature-link" href="#pro-features">{c("Explore all Pro features", "查看全部 Pro 功能")} <span aria-hidden="true">↓</span></a>
+      </div>
+    ))}
+  </section>
+
+  <div class="pricing-notes">
+    <p>{c("Regional prices and available offers are shown in the App Store. Download Termind, then choose Pro in the app.", "各地区价格与可用优惠以 App Store 展示为准。下载 Termind 后，可在应用内选择 Pro 方案。")}</p>
+    <p>{c("AI uses your own API key. Model provider usage is billed separately and is not included in either Pro plan.", "AI 使用你自己的 API 密钥，模型提供方用量费用另计，两种 Pro 方案均不包含这部分费用。")}</p>
+  </div>
+
+  <section class="pro-features" id="pro-features" aria-labelledby="pro-features-heading">
+    <div class="section-heading"><p class="eyebrow">{c("ONE PRO. TWO WAYS TO OWN IT.", "同样的 PRO，两种购买方式")}</p><h2 class="display" id="pro-features-heading">{c("More room to do your work.", "让你的工作更进一步。")}</h2><p>{c("Annual and lifetime unlock the same Pro features.", "年度订阅与永久版，解锁相同的 Pro 功能。")}</p></div>
+    <ul class="feature-list" role="list">
+      {proFeatures.map(([title, description], index) => (
+        <li><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{description}</p></div></li>
+      ))}
+    </ul>
+    <p class="tailscale-note">{c("Built-in Tailscale requires Tailscale SSH on the target server and access allowed by your Tailnet policy.", "使用内置 Tailscale 时，目标服务器需启用 Tailscale SSH，且 Tailnet 策略须允许访问。")}</p>
+  </section>
+
+  <aside class="pricing-help"><div><h2>{c("A few questions before you choose?", "选择之前，还有疑问？")}</h2><p>{c("Learn about features, sync, and how AI works in Termind.", "了解功能细节、数据同步以及 Termind 的 AI 机制。")}</p></div><div class="help-links"><a href={localizedPath(locale, "/faq/")}>{c("Read the FAQ", "查看常见问题")} <span aria-hidden="true">→</span></a><a href={localizedPath(locale, "/compare/termius/")}>{c("Compare with Termius", "与 Termius 对比")} <span aria-hidden="true">→</span></a></div></aside>
+</article>
+
+<style>
+  .pricing-hero { max-width: 830px; padding-block: 5rem 3.5rem; }
+  h1 { margin-top: 1.5rem; font-size: clamp(2.8rem, 6vw, 5.2rem); }
+  h1 em { color: var(--cyan); }
+  .lede { max-width: 680px; margin: 1.7rem 0 0; color: var(--muted); font-size: 1.05rem; }
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+  .plan { padding: 2rem; border: 1px solid var(--line-strong); border-radius: var(--radius-m); background: var(--paper-raised); }
+  .lifetime-plan { background: #eaf5fb; border-color: #96c5dc; }
+  .plan-label { margin: 0; color: var(--cyan); font: .68rem var(--mono); letter-spacing: .1em; }
+  .plan h2 { margin: 1rem 0 .5rem; font-size: 1.6rem; font-weight: 500; letter-spacing: -.035em; }
+  .plan-description { min-height: 3em; margin: 0; color: var(--muted); font-size: .85rem; }
+  .price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .55rem; margin: 1.5rem 0 .4rem; }
+  .price strong { font-size: clamp(2.7rem, 4vw, 3.5rem); line-height: 1.2; font-weight: 500; letter-spacing: -.06em; }
+  .price > span { color: var(--muted); font-size: .8rem; }
+  .billing { min-height: 3em; margin: 0; color: var(--muted); font-size: .74rem; }
+  .plan-button { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-block: 1.5rem; padding: .85rem 1rem; border: 1px solid var(--ink); border-radius: var(--radius-pill); background: var(--ink); color: white; font-size: .78rem; font-weight: 600; text-decoration: none; }
+  .plan-button:hover { background: var(--cyan); border-color: var(--cyan); }
+  .free-plan .plan-button { color: var(--ink); background: transparent; border-color: var(--line-strong); }
+  .free-plan .plan-button:hover { background: var(--paper); }
+  .plan ul { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+  .plan li { position: relative; padding-left: 1.2rem; color: var(--muted); font-size: .82rem; }
+  .plan li::before { position: absolute; top: .65em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); content: ""; }
+  .includes-free { margin: 0 0 1rem; font-size: .8rem; font-weight: 600; }
+  .feature-link { display: inline-block; margin-top: 1.5rem; color: var(--cyan); font-size: .78rem; }
+  .pricing-notes { max-width: 900px; margin-top: 1.4rem; color: var(--faint); font-size: .75rem; }
+  .pricing-notes p { margin: .4rem 0; }
+  .pro-features { padding-top: 5rem; scroll-margin-top: 2rem; }
+  .section-heading h2 { margin-top: 1.2rem; font-size: clamp(2rem, 4vw, 3rem); }
+  .section-heading > p:last-child { margin: 1rem 0 0; color: var(--muted); font-size: .9rem; }
+  .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem; margin: 2.5rem 0 0; padding: 0; list-style: none; }
+  .feature-list li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 1rem; padding-block: 1.5rem; border-top: 1px solid var(--line-strong); }
+  .feature-list li > span { padding-top: .35rem; color: var(--cyan); font: .7rem var(--mono); }
+  .feature-list h3 { margin: 0 0 .5rem; font-size: 1.05rem; font-weight: 500; }
+  .feature-list p { margin: 0; color: var(--muted); font-size: .85rem; }
+  .tailscale-note { margin-top: 1rem; color: var(--faint); font-size: .75rem; }
+  .pricing-help { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line-strong); }
+  .pricing-help h2 { margin: 0; font-size: 1.25rem; font-weight: 500; }
+  .pricing-help p { margin: .5rem 0 0; color: var(--muted); font-size: .85rem; }
+  .help-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+  .help-links a { color: var(--cyan); font-size: .8rem; }
+  @media (max-width: 1000px) {
+    .plan { padding: 1.5rem; }
+  }
+  @media (max-width: 760px) {
+    .pricing-hero { padding-block: 3.5rem 2.5rem; }
+    .plans, .feature-list { grid-template-columns: 1fr; }
+    .plan { padding: 1.8rem; }
+    .plan-description, .billing { min-height: 0; }
+    .pro-features { padding-top: 3.5rem; }
+    .pricing-help { align-items: flex-start; flex-direction: column; gap: 1rem; }
+  }
+</style>

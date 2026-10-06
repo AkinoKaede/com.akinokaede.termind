@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FAQPage from "../components/FAQPage.astro";
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "FAQ — Termind", "常见问题 — Termind")}
+  description={copy(locale, "Get to know Termind’s AI Assistant, Hermes Memory, free and Pro features, supported devices, and how your data is stored and shared.", "了解 Termind 的 AI 助手、持久化记忆、免费与 Pro 功能、支持设备，以及数据如何保存和共享。")}
+  locale={locale}
+  pagePath="/faq/"
+>
+  <FAQPage locale={locale} />
+</BaseLayout>

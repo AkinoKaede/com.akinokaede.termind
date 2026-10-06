@@ -1,0 +1,8 @@
+---
+import ProductComparison from "../../components/ProductComparison.astro";
+import type { SiteLocale } from "../../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+<ProductComparison locale={locale} slug="servercat" />

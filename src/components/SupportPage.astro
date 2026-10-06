@@ -1,0 +1,113 @@
+---
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+---
+
+<div class="support shell">
+  <header class="support-hero reveal">
+    <div>
+      <p class="eyebrow">{c("Termind Support", "Termind 支持")}</p>
+      <h1 class="display">{c("Need a hand?", "需要帮助？")}</h1>
+      <p>{c("Tell us what went wrong. We’ll help you get connected and back to your work.", "告诉我们你遇到的问题，我们会尽快协助你排查故障，恢复工作状态。")}</p>
+    </div>
+    <a class="mail-button" href="mailto:support-termind@akinokaede.com">
+      <span>{c("Email support", "发送邮件")}</span>
+      <strong>support-termind@akinokaede.com</strong>
+      <i aria-hidden="true">→</i>
+    </a>
+  </header>
+
+  <section class="before-writing">
+    <div class="section-label">{c("What to include", "邮件中请包含")}</div>
+    <div class="check-grid">
+      <article><span>01</span><h2>{c("What happened", "现象描述")}</h2><p>{c("Describe the action, expected result, and what happened instead.", "详细说明你执行的操作、预期结果以及实际出现的现象。")}</p></article>
+      <article><span>02</span><h2>{c("Your setup", "运行环境")}</h2><p>{c("Include the Termind version, device model, operating-system version, and affected feature.", "提供 Termind 版本、设备型号、系统版本及相关功能模块。")}</p></article>
+      <article><span>03</span><h2>{c("Redacted clues", "脱敏线索")}</h2><p>{c("Screenshots and errors help, after sensitive details are removed.", "可附上关键截图或错误日志，但请务必提前脱敏隐私信息。")}</p></article>
+    </div>
+  </section>
+
+  <section class="safety-note">
+    <div class="shield" aria-hidden="true">!</div>
+    <div>
+      <h2>{c("Redact before you send", "发送前，请务必脱敏")}</h2>
+      <p>{c("Never send passwords, private keys, API keys, complete host addresses, access tokens, or unreviewed logs. We will not ask for them by email.", "切勿在邮件中包含密码、私钥、API 密钥、完整主机地址、访问令牌或未经脱敏的日志。我们绝不会通过邮件向你索取这些敏感信息。")}</p>
+    </div>
+  </section>
+
+  <section class="contact-split">
+    <div>
+      <p class="eyebrow">{c("Privacy matters", "隐私事务")} </p>
+      <h2>{c("Questions about your data", "数据处理相关咨询")}</h2>
+      <p>{c("For questions about the privacy policy, data sync, or third-party services, contact us through the privacy address.", "如果关于隐私政策、数据同步或第三方服务有任何疑问，请通过隐私专用邮箱与我们联系。")}</p>
+      <a href="mailto:privacy-termind@akinokaede.com">privacy-termind@akinokaede.com <span>→</span></a>
+    </div>
+    <div>
+      <p class="eyebrow">{c("Quick checks", "自助排查")}</p>
+      <h2>{c("Before you write", "发信前可先尝试")}</h2>
+      <ul>
+        <li>{c("Confirm the relevant feature is enabled in Settings.", "确认“设置”中对应功能选项已正确启用。")}</li>
+        <li>{c("Check this device’s network, iCloud, Keychain, and permission status.", "检查当前设备的网络连接、iCloud 状态、钥匙串或系统权限。")}</li>
+        <li>{c("Retry once and note the exact steps that reproduce the issue.", "再次重试，并记录可以稳定复现该问题的具体操作步骤。")}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="business-contact">
+    <p>{c("Business inquiries", "商务合作")}</p>
+    <a href="mailto:termind@akinokaede.com">termind@akinokaede.com <span>→</span></a>
+  </section>
+</div>
+
+<style>
+  .support { padding-top: 6rem; }
+  .support-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(3rem, 8vw, 8rem); align-items: end; min-height: 480px; padding-bottom: 5rem; border-bottom: 1px solid var(--line-strong); }
+  .support-hero h1 { margin-top: 1.4rem; font-size: clamp(4.5rem, 9vw, 8.7rem); }
+  .support-hero div > p:last-child { max-width: 37rem; margin: 2rem 0 0; color: var(--muted); font-size: 1.08rem; }
+  .mail-button { position: relative; display: flex; flex-direction: column; padding: 1.5rem 3.5rem 1.5rem 1.5rem; border: 1px solid var(--line-strong); border-radius: 18px; background: rgba(255,255,255,.72); box-shadow: 0 20px 65px rgba(38, 52, 61, .12); color: var(--ink); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .mail-button:hover { transform: translateY(-3px); box-shadow: 0 25px 75px rgba(38, 52, 61, .18); }
+  .mail-button span { color: var(--cyan); font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; }
+  .mail-button strong { margin-top: .4rem; font-size: .83rem; font-weight: 600; overflow-wrap: anywhere; }
+  .mail-button i { position: absolute; right: 1.3rem; top: 50%; color: var(--blue); font-size: 1.4rem; font-style: normal; transform: translateY(-50%); }
+  .before-writing { padding-block: 6rem; }
+  .section-label { margin-bottom: 2rem; color: var(--faint); font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; }
+  .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+  .check-grid article { min-height: 245px; padding: 2rem; border-right: 1px solid var(--line); }
+  .check-grid article:first-child { padding-left: 0; }
+  .check-grid article:last-child { border: 0; }
+  .check-grid span { color: var(--cyan); font-family: var(--mono); font-size: .63rem; }
+  .check-grid h2 { margin: 3rem 0 .7rem; font-family: var(--display); font-size: 1.75rem; font-weight: 400; }
+  .check-grid p { margin: 0; color: var(--muted); font-size: .86rem; }
+  .safety-note { display: grid; grid-template-columns: 74px 1fr; gap: 1.5rem; align-items: start; max-width: 850px; margin: 1rem auto 8rem; padding: 2rem; border: 1px solid rgba(38, 52, 61, .25); border-radius: 22px; background: var(--paper-raised); }
+  .shield { display: grid; place-items: center; width: 58px; height: 66px; color: var(--blue); background: rgba(38, 52, 61, .14); clip-path: polygon(50% 0, 94% 15%, 86% 72%, 50% 100%, 14% 72%, 6% 15%); font-family: var(--display); font-size: 1.8rem; }
+  .safety-note h2 { margin: 0; font-family: var(--display); font-size: 2rem; font-weight: 400; }
+  .safety-note p { margin: .6rem 0 0; color: var(--muted); font-size: .88rem; }
+  .contact-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-strong); }
+  .contact-split > div { padding: 4rem 4rem 4rem 0; }
+  .contact-split > div:last-child { padding-left: 4rem; border-left: 1px solid var(--line); }
+  .contact-split h2 { margin: 1.4rem 0 .7rem; font-family: var(--display); font-size: 2.3rem; font-weight: 400; }
+  .contact-split p, .contact-split li { color: var(--muted); font-size: .86rem; }
+  .contact-split a { display: flex; justify-content: space-between; margin-top: 2rem; padding-block: 1rem; border-top: 1px solid var(--line); color: var(--cyan); font-size: .78rem; font-weight: 650; text-decoration: none; }
+  .contact-split ul { display: grid; gap: .7rem; padding-left: 1.2rem; }
+  .contact-split li::marker { color: var(--cyan); }
+  .business-contact { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-block: 2rem; border-bottom: 1px solid var(--line-strong); }
+  .business-contact p { margin: 0; color: var(--faint); font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; }
+  .business-contact a { color: var(--cyan); font-size: .78rem; font-weight: 650; text-decoration: none; }
+  @media (max-width: 780px) {
+    .support { padding-top: 4rem; }
+    .support-hero, .contact-split { grid-template-columns: 1fr; }
+    .support-hero { min-height: 0; }
+    .check-grid { grid-template-columns: 1fr; }
+    .check-grid article, .check-grid article:first-child { min-height: 0; padding: 2rem 0; border-right: 0; border-bottom: 1px solid var(--line); }
+    .check-grid article:last-child { border-bottom: 0; }
+    .check-grid h2 { margin-top: 1rem; }
+    .contact-split > div, .contact-split > div:last-child { padding: 3rem 0; border-left: 0; border-bottom: 1px solid var(--line); }
+    .business-contact { align-items: flex-start; flex-direction: column; gap: .6rem; }
+  }
+  @media (max-width: 520px) {
+    .support-hero h1 { font-size: 4rem; }
+    .safety-note { grid-template-columns: 1fr; }
+  }
+</style>

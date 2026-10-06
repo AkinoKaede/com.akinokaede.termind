@@ -1,0 +1,84 @@
+---
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+---
+
+<section id="free-pro" class="offer shell" aria-labelledby="offer-title">
+  <div class="offer-copy">
+    <p class="eyebrow">{locale === "zh-Hans" ? "疯狂星期四 · Telegram 社区福利" : c("A gift for our Telegram community", "Telegram 社区福利")}</p>
+    <h2 id="offer-title" class="display">
+      {c("Yours for free.", "免费领取")}<br />
+      <em>Termind Pro</em>
+    </h2>
+    <p class="offer-description">
+      {c("Join the Termind Telegram channel and group, then enter our draw through the bot for a chance to win a free Pro redeem code every Thursday. Check the channel for announcements and results.", "加入 Termind 的 Telegram 频道和交流群组，即可通过机器人参与每周四抽奖，赢取免费的 Pro 兑换码。开奖结果与活动公告以频道发布为准。")}
+    </p>
+    <a class="channel-button" href="https://t.me/termind_updates">
+      {c("Join the Telegram channel", "加入 Telegram 频道")}<span aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <div class="offer-guide">
+    <p class="guide-title">{c("Three steps to enter and redeem", "三步参与抽奖")}</p>
+    <ol>
+      <li>
+        <span class="step-number" aria-hidden="true">01</span>
+        <div>
+          <h3>{c("Join the channel and group", "加入频道与群组")}</h3>
+          <p>
+            <a href="https://t.me/termind_updates">{c("Subscribe to the channel", "订阅频道")}</a>
+            {c(" and ", "，并")}
+            <a href="https://t.me/+f8HX2PBSOR5hYzQ0">{c("join the community group", "加入交流群组")}</a>{c(".", "。")}
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="step-number" aria-hidden="true">02</span>
+        <div>
+          <h3>{c("Enter the Thursday draw", "参与周四抽奖")}</h3>
+          <p><a href="https://t.me/termind_offer_bot?start=draw">{c("Open the draw bot", "打开抽奖机器人")}</a>{c(", tap Start, then Enter Draw. The draw takes place every Thursday.", "，点击“开始”，再点击“报名抽奖”。每周四开奖。")}</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-number" aria-hidden="true">03</span>
+        <div>
+          <h3>{c("Win and redeem Pro", "中奖后兑换 Pro")}</h3>
+          <p>{c("Winners receive their code in a private message from the bot. Use the App Store link provided to redeem it before it expires.", "中奖后，机器人会私聊发送兑换码。通过提供的 App Store 链接，在兑换码有效期内完成兑换。")}</p>
+        </div>
+      </li>
+    </ol>
+    <p class="offer-terms">{c("Entry does not guarantee a win; non-winners can enter the next draw. Redemption eligibility and validity are determined by Apple.", "参与抽奖不保证必定中奖，未中奖者可继续参与下一轮；兑换资格与有效期以 Apple 规则为准。")}</p>
+  </div>
+</section>
+
+<style>
+  .offer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid var(--line-strong);
+    border-radius: 28px;
+    background: var(--paper-raised);
+    scroll-margin-top: 2rem;
+  }
+  .offer h2 { margin-top: 1.6rem; font-size: clamp(2.5rem, 4vw, 4.2rem); line-height: 1.08; }
+  .offer h2 em { color: var(--cyan); font-weight: 400; }
+  .offer-description { margin: 1.5rem 0; color: var(--muted); font-size: .94rem; line-height: 1.8; }
+  .channel-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: .9rem 1.2rem; border-radius: 10px; background: var(--ink); color: white; font-size: .85rem; font-weight: 600; text-decoration: none; }
+  .channel-button:hover { background: #3b4b55; }
+  .guide-title { margin: 0; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line-strong); font-size: .78rem; font-weight: 650; }
+  ol { margin: 0; padding: 0; list-style: none; }
+  li { display: flex; gap: 1rem; padding-block: 1.4rem; border-bottom: 1px solid var(--line); }
+  .step-number { padding-top: .2rem; color: var(--cyan); font-family: var(--mono); font-size: .7rem; }
+  h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+  li p { margin: .45rem 0 0; color: var(--muted); font-size: .85rem; line-height: 1.75; }
+  li a { color: var(--cyan); }
+  .offer-terms { margin: 1.2rem 0 0; color: var(--muted); font-size: .72rem; line-height: 1.8; }
+  @media (max-width: 760px) {
+    .offer { grid-template-columns: 1fr; }
+  }
+</style>

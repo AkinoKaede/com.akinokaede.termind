@@ -1,0 +1,294 @@
+---
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+---
+
+<article class="policy">
+  <header class="policy-title reveal">
+    <p class="eyebrow">{c("Data handling, in plain language", "数据处理说明")}</p>
+    <h1 class="display">{c("Privacy Policy", "隐私政策")}</h1>
+    <p class="summary">
+      {c("Termind is local-first. You choose which services to connect and whether to share diagnostic data.", "Termind 以本地优先为原则。您可以选择连接哪些服务，以及是否分享诊断数据。")}
+    </p>
+    <div class="meta">
+      <span>{c("Effective", "生效日期")}</span><strong>{c("October 3, 2026", "2026 年 10 月 3 日")}</strong>
+      <span>{c("Version", "版本")}</span><strong>2.1</strong>
+    </div>
+  </header>
+
+  <aside class="policy-nav" aria-label={c("Table of contents", "目录")}>
+    <p>{c("Contents", "目录")}</p>
+    <ol>
+      <li><a href="#overview">{c("Overview", "概览")}</a></li>
+      <li><a href="#local-data">{c("Data on your device", "设备上的数据")}</a></li>
+      <li><a href="#icloud">{c("iCloud & Keychain", "iCloud与钥匙串")}</a></li>
+      <li><a href="#purchases">{c("Purchases and subscriptions", "购买与订阅")}</a></li>
+      <li><a href="#ai">{c("AI & MCP", "AI 与 MCP")}</a></li>
+      <li><a href="#search">{c("Web Search", "网页搜索")}</a></li>
+      <li><a href="#connections">{c("Remote connections", "远程连接")}</a></li>
+      <li><a href="#tailscale">Tailscale</a></li>
+      <li><a href="#speech">{c("Camera & speech", "相机与语音")}</a></li>
+      <li><a href="#diagnostics">{c("Diagnostics", "诊断")}</a></li>
+      <li><a href="#website">{c("This website", "本网站")}</a></li>
+      <li><a href="#control">{c("Your controls", "您的控制权")}</a></li>
+      <li><a href="#contact">{c("Contact", "联系")}</a></li>
+    </ol>
+  </aside>
+
+  <div class="policy-body">
+    <section id="overview">
+      <div class="section-no">01</div>
+      <div>
+        <h2>{c("Overview", "概览")}</h2>
+        <p>{c("We do not sell personal information, show advertising, use cross-app tracking, or include third-party behavioral analytics SDKs in the app. No Termind account is required.", "我们不会出售您的个人信息，不投放广告，也不会在应用中使用跨应用追踪或第三方行为分析 SDK。应用不要求创建 Termind 账户。")}</p>
+        <p>{c("Termind is a client application. When you use AI, search, iCloud, Tailscale, speech, or remote connections, the relevant service provider processes what it receives under its own terms. Termind does not place a hosted proxy between you and those providers.", "Termind 是一个客户端工具。当您使用 AI、搜索、iCloud、Tailscale、语音或远程连接时，相应服务提供方会按照其自己的条款处理收到的数据。Termind 与这些提供方之间没有托管代理层。")}</p>
+      </div>
+    </section>
+
+    <section id="local-data">
+      <div class="section-no">02</div>
+      <div>
+        <h2>{c("Data stored on your device", "保存在设备上的数据")}</h2>
+        <p>{c("To provide its features, Termind stores the following information on your device:", "为了提供应用功能，Termind 会在当前设备上保存下列信息：")}</p>
+        <ul>
+          <li>{c("Vault metadata such as host names, addresses, ports, usernames, groups, tags, identity labels, public-key fingerprints, Known Hosts entries, snippets, and port-forwarding rules.", "保管库元数据，例如主机名、地址、端口、用户名、分组、标签、身份标签、公钥指纹、已知主机、命令片段和端口转发规则。")}</li>
+          <li>{c("Tailscale group configuration, this device’s Tailnet profile, and cached peer information such as device names, addresses, public SSH host keys, online status, and key-expiry information. Private node state is stored separately in Keychain, as described in the Tailscale section.", "Tailscale 分组配置、当前设备的 Tailnet 配置档案，以及缓存的设备名称、地址、SSH 主机公钥、在线状态和密钥到期信息等节点资料。节点私密状态独立保存在钥匙串中，详见 Tailscale 部分。")}</li>
+          <li>{c("Connection history, including the host, connection type and times, together with the name or model used to identify the device where the connection was made.", "连接历史，包括连接的主机、连接类型和时间，以及用于识别发起连接设备的名称或型号。")}</li>
+          <li>{c("AI provider and model configuration, role assignments, the last selected model, MCP client configuration and tool policies, skill text and enabled state, Web Search preferences, terminal themes and integration options, and Connections preferences such as SSH Max Sessions and file-transfer concurrency. Enabling settings sync also stores these settings in your private iCloud database.", "AI提供方与模型配置、用途分配、最近选择的模型、MCP客户端配置及工具访问策略、技能正文与启用状态、网页搜索偏好、终端主题与集成选项，以及SSH最大会话数和文件传输并发等连接偏好。启用设置同步后，这些设置也会存入您的私有iCloud数据库。")}</li>
+          <li>{c("Conversations, messages, agent tool calls and results, security-review records, command history, workspace state, and app settings.", "对话、消息、Agent 工具调用与结果、安全审查记录、命令历史，以及工作区和应用设置。")}</li>
+          <li>{c("Context attachments you import and per-conversation scratch files until you delete the related conversation.", "您主动导入的上下文附件和每个对话的临时 scratch 文件，直至您删除相应对话。")}</li>
+        </ul>
+        <p>{c("This data is not automatically sent to the Termind developer. The operating system, device backups, or other software you install may access or back up local files according to their own settings.", "这些数据不会自动发送给 Termind 开发者。操作系统、设备备份或您安装的其他软件可能按照各自的设置访问或备份本地文件。")}</p>
+      </div>
+    </section>
+
+    <section id="icloud">
+      <div class="section-no">03</div>
+      <div>
+        <h2>{c("iCloud & Keychain", "iCloud与钥匙串")}</h2>
+        <h3>{c("Vault sync", "保管库同步")}</h3>
+        <p>{c("When “iCloud Sync” is on and “Vault” is selected, Vault data, connection history, and the device names or models used to identify where connections were made are stored in the private iCloud database for your Apple ID. Device information is used only to distinguish connection-history sources across your devices. It is transferred only through your private iCloud database; the Termind developer does not receive or collect it. Apple processes synced data under its terms.", "开启“iCloud同步”并勾选“保管库”时，保管库数据、连接历史，以及用于识别连接来源的设备名称或型号会存入您 Apple ID 的私有 iCloud 数据库。设备信息仅用于在您的设备间区分连接历史的来源，并且只通过您的私有 iCloud 数据库传输；Termind 开发者不会接收或收集这些信息。Apple 按照其条款处理同步数据。")}</p>
+        <p>{c("Tailscale group configuration can sync with Vault. Tailnet sign-in and the discovered peer cache stay on the current device; see", "Tailscale 分组配置可以随保管库同步。Tailnet 登录状态与已发现节点的缓存保留在当前设备；详见")}{" "}<a href="#tailscale">{c("Tailscale data handling", "Tailscale 数据处理说明")}</a>{c(".", "。")}</p>
+        <h3>{c("Metrics sync", "监控同步")}</h3>
+        <p>{c("“Metrics” is selected by default. When iCloud Sync is on, monitored host identifiers, pause state, disk and network-interface selections, and card order sync through CloudKit. Host addresses and credentials remain managed separately by Vault and Keychain; live samples, metric history, authentication state, and menu-bar preferences do not sync. A configuration is retained but hidden when its host is unavailable on the current device.", "默认勾选“监控”。开启“iCloud同步”后，监控的主机标识、暂停状态、磁盘和网卡选择以及卡片顺序会通过CloudKit同步。主机地址和凭据仍由保管库与钥匙串分别管理；实时指标、历史曲线、认证状态和菜单栏偏好不会同步。若当前设备没有对应主机，配置会保留但暂时不显示。")}</p>
+        <h3>{c("Settings sync", "设置同步")}</h3>
+        <p>{c("iCloud sync is a Pro feature with one main switch and checkboxes for the data to sync. Vault, Metrics, and Settings are all selected by default. When the main switch is on and “Settings” is selected, provider and endpoint settings, model lists and custom parameters, role assignments, the last selected model, MCP client configuration and tool policies, complete skill text and enabled state, Web Search preferences, terminal preferences, and Connections preferences sync through CloudKit to your Apple account’s private iCloud database. Connections preferences include SSH Max Sessions and file-transfer concurrency. Configuration includes complete custom terminal configuration text and custom MCP header names and values; use the dedicated credential fields for secrets.", "iCloud同步是Pro功能，使用一个总开关，并通过勾选框选择同步内容。保管库、监控和设置现在都默认勾选。开启总开关并勾选“设置”后，模型提供方及端点地址、模型列表与自定义参数、用途分配、最近选择的模型、MCP客户端配置及工具访问策略、技能全文及启用状态、网页搜索偏好、终端偏好与连接偏好会通过CloudKit同步到您Apple账户的私有iCloud数据库。连接偏好包括SSH最大会话数和文件传输并发设置。终端自定义配置全文及MCP自定义请求头的名称和值也包含在配置中；请使用专门的凭据字段保存密钥。")}</p>
+        <p>{c("Settings sync excludes conversations, messages, tool execution history, runtime or connection state, global approval mode, and the enabled state, port, exposed-tool settings, and access token of Termind’s built-in MCP server. That token is stored only in the Data Protection Keychain on the current Mac. Enabling sync does not automatically connect to MCP servers or execute tools. Apple processes synced data; Termind does not operate a backend that receives this configuration.", "设置同步不包含对话、消息、工具执行记录、运行或连接状态、全局审批模式，以及Termind内置MCP服务器的开关、端口、工具暴露设置和访问令牌。该令牌仅存储在当前Mac的数据保护钥匙串中。启用同步不会自动连接MCP服务器或执行工具。Apple处理同步数据；Termind不运营接收这些配置的后台服务。")}</p>
+        <h3>{c("Passwords and private keys", "密码和私钥")}</h3>
+        <p>{c("Passwords, software SSH private keys, AI API keys, and MCP credentials are stored in Apple’s Data Protection Keychain, not in the Vault database. You can choose whether to save a software SSH key’s passphrase with its private key in Keychain; if you do not, Termind asks for it when connecting. Storage options for passwords and SSH keys include:", "密码、软件SSH私钥、AI API密钥和MCP凭据保存在Apple数据保护钥匙串中，而不是保管库数据库中。您可以选择是否将软件SSH密钥的口令与私钥一同保存在钥匙串中；如果不保存，Termind会在连接时要求输入。密码和SSH密钥的存储方式包括：")}</p>
+        <ul>
+          <li><strong>iCloud：</strong> {c("the Keychain item may sync across your devices through iCloud Keychain.", "钥匙串项目可通过iCloud钥匙串在您的设备间同步。")}</li>
+          <li><strong>{c("This Device", "这台设备")}：</strong> {c("the item is marked for this device only and does not sync.", "项目被标记为仅限当前设备，不同步。")}</li>
+          <li><strong>{c("Secure Enclave", "安全隔区")}：</strong> {c("the private key is non-exportable and does not sync to other devices.", "私钥不可导出，也不会同步到其他设备。")}</li>
+        </ul>
+        <p>{c("For a compatible FIDO2 hardware key, the Vault stores a credential reference and public key, which may sync with Vault data. The private key stays on the hardware key and is needed to authenticate even if its reference syncs.", "对于兼容的FIDO2硬件密钥，保管库会保存凭据引用和公钥；这些信息可能随保管库数据同步。私钥留在硬件密钥上，即使凭据引用已同步，认证仍需要该硬件密钥。")}</p>
+        <p>{c("When you first enable settings sync, existing AI API keys and remote MCP client bearer tokens migrate from local Keychain storage to iCloud Keychain; configuration records contain only references to these credentials. Failed migrations retain the local copy and can be retried. The built-in MCP server token is excluded; copies synchronized by older releases are moved to and verified in the local Keychain before being removed from iCloud Keychain. Credentials that have never been enabled for sync remain local. Turning off settings sync leaves migrated AI and remote MCP credentials managed by iCloud Keychain, where subsequent changes may still sync. Your Apple account and system settings determine whether iCloud Keychain is enabled, which devices receive items, and how Apple protects them. Configuration and credentials may reach another device at different times.", "首次启用设置同步时，已有AI API密钥和远程MCP客户端bearer token会从本机钥匙串迁移到iCloud钥匙串；配置记录仅保存这些凭据的引用。迁移失败时保留本机副本并允许重试。内置MCP服务器令牌不参与该迁移；旧版本已同步的副本会先迁回并验证为本机钥匙串项目，再从iCloud钥匙串删除。此前未启用同步的凭据仍仅保存在本机。关闭设置同步后，已迁移的AI与远程MCP凭据继续由iCloud钥匙串管理，其后续修改仍可同步。是否实际启用iCloud钥匙串、同步到哪些设备，以及Apple如何保护数据，由您的Apple账户和系统设置决定；配置和密钥可能在不同时间到达另一台设备。")}</p>
+      </div>
+    </section>
+
+    <section id="purchases">
+      <div class="section-no">04</div>
+      <div>
+        <h2>{c("Purchases and subscriptions", "购买与订阅")}</h2>
+        <p>{c("Termind uses Apple StoreKit to verify the annual Pro subscription, introductory free trial, lifetime purchase, restored purchases, revocations, renewal state, and Family Sharing access. Apple processes purchase-account, transaction, and payment information under its policies. Termind does not receive your complete payment details.", "Termind使用Apple StoreKit验证Pro年度订阅、推介促销免费试用、永久版购买、恢复购买、退款撤销、续订状态和家庭共享权益。Apple会按照其政策处理购买账户、交易和付款信息；Termind不会收到您的完整付款资料。")}</p>
+        <p>{c("RevenueCat provides our purchase validation, entitlement synchronization, and paywall service. Its SDK sends a randomly generated anonymous app user ID, purchase and subscription records, and app/device environment information needed to provide these services. Restoring the same Apple purchase can associate your anonymous IDs across devices. We do not send RevenueCat your host credentials, terminal content, conversations, AI API keys, or payment-card details, and automatic device-identifier collection is disabled.", "RevenueCat为我们提供购买验证、权益同步和付费页面服务。其SDK会发送随机生成的匿名应用用户ID、购买与订阅记录，以及提供这些服务所需的应用和设备环境信息。恢复同一笔Apple购买时，不同设备的匿名ID可能会被关联。我们不会向RevenueCat发送您的主机凭据、终端内容、对话、AI API密钥或银行卡资料，且已关闭自动收集设备标识符。")}</p>
+        <p>{c("Free-trial eligibility, duration, and subscription expiration are based on the store's product and purchase records. Termind does not use device fingerprinting or operate its own license server.", "免费试用资格、期限和订阅到期时间以商店的商品与购买记录为依据。Termind不使用设备指纹，也不运营自己的许可服务器。")}</p>
+        <p><a href="https://www.revenuecat.com/privacy/">{c("RevenueCat Privacy Policy", "RevenueCat隐私政策")}</a></p>
+      </div>
+    </section>
+
+    <section id="ai">
+      <div class="section-no">05</div>
+      <div>
+        <h2>{c("AI providers and MCP", "AI 提供方与 MCP")}</h2>
+        <p>{c("AI features are optional and use a bring-your-own-key model. You may configure any endpoint that speaks the Chat Completions, Responses, Messages, or generateContent protocol. When you use AI, Termind sends the data needed for the request directly to the selected endpoint, which may include:", "AI 功能是可选的，并采用 BYOK（自带密钥）模式。您可以配置任何使用 Chat Completions、Responses、Messages 或 generateContent 协议的端点。使用 AI 时，Termind 会直接向所选端点发送完成请求所需的数据，可能包括：")}</p>
+        <ul>
+          <li>{c("your prompts, conversation history, selected images, and attachments;", "您的提示、对话历史、所选图片和附件；")}</li>
+          <li>{c("current session context, such as host and remote-system information and working directory;", "当前会话上下文，例如主机和远程系统信息、工作目录；")}</li>
+          <li>{c("tool names, arguments, results, and command output or file contents you authorize the agent to read;", "工具名称、参数、结果以及您授权读取的命令输出或文件内容；")}</li>
+          <li>{c("the API key or access token used to authenticate the request.", "用于认证该请求的 API 密钥或访问令牌。")}</li>
+        </ul>
+        <p>{c("Private-key material is not sent to the model as chat context. Termind resolves credentials locally to establish SSH connections. Review the privacy policy, retention controls, and enterprise terms of your selected AI provider. The operator of a custom endpoint is responsible for that endpoint.", "私钥材料不会作为聊天上下文发送给模型。Termind 会在本地解析凭据并建立 SSH 连接。请查阅您所选 AI 提供方的隐私政策、数据保留设置和企业条款。自定义端点由该端点的运营者负责。")}</p>
+        <p>{c("If you add a remote MCP server, Termind exchanges requests, tool arguments, and results according to the tools that server exposes. The data shared depends on the server you enable and tools you invoke. On Mac only, Termind’s built-in MCP server listens on the local loopback interface by default; if you change how it is exposed, you are responsible for securing access.", "如果您添加远程 MCP 服务器，Termind 会根据该服务器提供的工具协议交换请求、工具参数和结果。发送范围取决于您启用的服务器和调用的工具。仅在 Mac 上，Termind 的内置 MCP 服务器默认监听本机回环地址；如果您改变网络暴露方式，您需要自行保护访问。")}</p>
+      </div>
+    </section>
+
+    <section id="search">
+      <div class="section-no">06</div>
+      <div>
+        <h2>{c("Web Search", "网页搜索")}</h2>
+        <p>{c("Web Search is optional and can be disabled in Settings at any time. When the selected AI model does not use provider-native search, Termind performs a local Web Search from the current device, queries the following search engines, and visits selected result pages to extract readable content:", "网页搜索是可选功能，可随时在设置中关闭。当所选 AI 模型不使用提供方原生搜索时，Termind 会从当前设备执行本地网页搜索，同时查询下列搜索引擎，并访问入选结果页以提取可读正文：")}</p>
+        <div class="provider-grid">
+          <div><strong>Google</strong><span>{c("Query and standard network-request information", "搜索词和标准网络请求信息")}</span></div>
+          <div><strong>Bing</strong><span>{c("Query and standard network-request information", "搜索词和标准网络请求信息")}</span></div>
+          <div><strong>DuckDuckGo</strong><span>{c("Query and standard network-request information", "搜索词和标准网络请求信息")}</span></div>
+          <div><strong>Yahoo</strong><span>{c("Query and standard network-request information", "搜索词和标准网络请求信息")}</span></div>
+        </div>
+        <p>{c("Requests go directly from the current device to these search engines and selected result websites, so they will generally also receive your IP address, user agent, requested URL, and other standard network-request information. Result-page titles, URLs, and bounded Markdown content are sent to your selected AI provider as tool results.", "请求会从当前设备直接发往这些搜索引擎和入选结果网站，因此它们通常也会收到您的 IP 地址、用户代理、请求 URL 和其他标准网络请求信息。结果页的标题、URL 和裁剪后的 Markdown 正文会作为工具结果发送给您选择的 AI 提供方。")}</p>
+        <p>{c("Some AI models support provider-native search. When enabled, the AI provider performs the search on its own servers, and that provider—not Termind's local Web Search and the search engines above—processes the query and search activity.", "某些支持原生搜索的 AI 模型可以改由 AI 提供方在其服务器上执行搜索。此时，查询和搜索行为由该 AI 提供方处理，而不是由 Termind 的本地网页搜索和上述搜索引擎处理。")}</p>
+      </div>
+    </section>
+
+    <section id="connections">
+      <div class="section-no">07</div>
+      <div>
+        <h2>{c("SSH, SFTP, web fetches, and remote actions", "SSH、SFTP、网页读取与远程操作")}</h2>
+        <p>{c("When you connect to a host, Termind sends the information required to establish the connection to that host and any proxy or jump host you configure. Passwords are used for authentication inside the encrypted SSH session. SSH private keys remain on the current device and are used to sign locally. Target systems may log IP addresses, usernames, times, commands, file transfers, and other activity according to their own configuration.", "当您连接主机时，Termind 会向目标主机以及您配置的代理或跳板机发送建立连接所需的信息。密码通过加密的 SSH 会话用于认证；SSH 私钥保留在当前设备，并用于在本地完成加密签名。目标系统可能根据其自身配置记录 IP 地址、用户名、时间、命令、文件传输和其他活动。")}</p>
+        <p>{c("When you or the agent fetches a web page, Termind directly visits the specified HTTP(S) address, including private-network addresses. The destination generally receives your IP address, URL, user agent, and standard network-request information. Depending on the tool call, bounded Markdown or original HTML may be sent to your selected AI provider as context. Termind cannot control the destination’s logging or privacy practices.", "当您或 Agent 读取网页时，Termind 会直接访问指定的 HTTP(S) 地址，包括内网地址。目标网站通常会收到您的 IP 地址、URL、用户代理和标准网络请求信息。根据工具调用，裁剪后的 Markdown 或原始 HTML 可能作为上下文发送给您选择的 AI 提供方。Termind 无法控制目标网站的日志或隐私实践。")}</p>
+      </div>
+    </section>
+
+    <section id="tailscale">
+      <div class="section-no">08</div>
+      <div>
+        <h2>Tailscale</h2>
+        <h3>{c("Sign-in and device information", "登录与设备信息")}</h3>
+        <p>{c(
+          "Tailscale is optional. When you sign in from a Vault group, Termind registers an embedded node with Tailscale or the control service you configure. Browser sign-in is handled by that service and its identity provider. If you use an Auth Key, it is sent to the selected control service to authorize the node; it is not included in synced group configuration.",
+          "Tailscale 是可选功能。在保管库分组中登录时，Termind 会向 Tailscale 或您配置的控制服务注册内置节点。浏览器登录由该服务及其身份提供方处理。如果使用 Auth Key，它会发送给所选控制服务以授权节点，不会写入同步的分组配置。"
+        )}</p>
+        <p>{c(
+          "The control service receives information needed to authenticate the node and coordinate connections, including the device name you configure, operating system, Tailscale version, IP addresses, node identifiers, and public keys. It supplies the peer information Termind uses to show devices and verify Tailscale SSH host keys. Tailnet administrators can see device and connection information according to their permissions and logging settings.",
+          "控制服务会收到认证节点与协调连接所需的信息，包括您设置的设备名称、操作系统、Tailscale 版本、IP 地址、节点标识和公钥。它还会提供节点资料，供 Termind 展示设备并核验 Tailscale SSH 主机公钥。Tailnet 管理员可以根据其权限与日志设置查看设备和连接信息。"
+        )}</p>
+        <h3>{c("Traffic, relays, and exit nodes", "流量、中继与出口节点")}</h3>
+        <p>{c(
+          "Traffic between Tailscale nodes is encrypted with WireGuard. Connections may be direct or pass through a peer relay or DERP relay, which forwards encrypted traffic without decrypting its contents. The services involved can process connection metadata such as IP addresses, connection times, and traffic volume; Tailscale may also process diagnostic and connection logs under its own policy. This processing is separate from Termind’s optional Crashlytics reporting.",
+          "Tailscale 节点之间的流量通过 WireGuard 加密。连接可能直连，也可能经过节点中继或 DERP 中继；中继转发加密流量，不解密其内容。参与连接的服务可以处理 IP 地址、连接时间和流量统计等元数据；Tailscale 也可能按照其自身政策处理诊断与连接日志。这些处理独立于 Termind 可选的 Crashlytics 诊断报告。"
+        )}</p>
+        <p>{c(
+          "If you select an Exit Node, traffic routed through it is handled by its operator, who may see destinations and any contents not protected by application-layer encryption. SSH and SFTP remain encrypted to the target server. DNS resolvers may process the names queried according to your network configuration. Termind’s embedded connection does not turn on a system-wide VPN or route other apps’ traffic.",
+          "如果选择 Exit Node（出口节点），经其路由的流量会由该节点的运营者处理；运营者可能看到目标地址和未受应用层加密保护的内容。SSH 与 SFTP 仍会保持到目标服务器的加密。根据网络配置，DNS 解析服务也可能处理查询的域名。Termind 的内置连接不会启用系统级 VPN，也不会接管其他应用的流量。"
+        )}</p>
+        <h3>{c("Local storage and iCloud", "本地存储与 iCloud")}</h3>
+        <p>{c(
+          "Private node state, including the keys used to maintain the Tailnet identity, is stored in Apple Keychain items marked for this device only, with Keychain synchronization disabled. The app stores the local profile reference and discovered peer cache on this device. These are not included in Termind’s iCloud sync, so another device must sign in separately.",
+          "节点私密状态（包括维持 Tailnet 身份所用的密钥）保存在标记为仅限当前设备的 Apple 钥匙串项目中，并禁用钥匙串同步。应用在当前设备保存本地配置档案引用和已发现节点的缓存。这些内容不参与 Termind 的 iCloud 同步，其他设备需要分别登录。"
+        )}</p>
+        <p>{c(
+          "With Vault sync enabled, the group’s control-service URL, Tailnet DNS suffix, selected Exit Node identifier, and saved host preferences can sync through your private iCloud database. Host preferences include usernames, tags, colors, detected distribution, character encoding, initial SFTP path, shell-integration choice, startup-snippet reference, and environment variables. Do not put secrets in these configuration fields.",
+          "开启保管库同步后，分组的控制服务 URL、Tailnet DNS 后缀、所选出口节点标识和已保存的主机偏好可以通过您的私有 iCloud 数据库同步。主机偏好包括用户名、标签、颜色、识别出的发行版、字符编码、SFTP 初始路径、Shell 集成选项、启动命令片段引用和环境变量。请勿在这些配置字段中存放秘密信息。"
+        )}</p>
+        <p>{c(
+          "Tailscale’s processing and retention are governed by its Privacy Policy. If you use a custom control service, its operator’s policy also applies. Data retained by a Tailnet administrator, identity provider, relay, DNS resolver, or Exit Node operator is subject to that party’s policies.",
+          "Tailscale 的数据处理与保留受其隐私政策约束。如果使用自定义控制服务，其运营者的政策同样适用。Tailnet 管理员、身份提供方、中继、DNS 解析服务或出口节点运营者保留的数据受相应方的政策约束。"
+        )}</p>
+        <p><a href="https://tailscale.com/privacy-policy">{c("Tailscale Privacy Policy", "Tailscale 隐私政策")}</a></p>
+      </div>
+    </section>
+
+    <section id="speech">
+      <div class="section-no">09</div>
+      <div>
+        <h2>{c("Camera attachments and speech transcription", "相机附件与语音转写")}</h2>
+        <h3>{c("Camera attachments on iPhone and iPad", "iPhone 与 iPad 相机附件")}</h3>
+        <p>{c("Termind accesses the camera only after you choose Camera in the Assistant and grant permission. A photo remains in the conversation draft until you send it; when sent, it is handled as described in the AI section. Mac does not expose this camera attachment flow.", "只有当您在 Assistant 中选择“相机”并授予权限后，Termind 才会访问相机。照片会保留在对话草稿中，直至您发送；发送后将按照 AI 部分的说明处理。Mac 不提供此相机附件流程。")}</p>
+        <h3>{c("Speech transcription", "语音转写")}</h3>
+        <p>{c("Termind captures audio only after you press the transcription button and grant microphone and Speech Recognition permissions. Transcription uses Apple Speech. Depending on operating-system settings, language, and device capabilities, Apple may process audio on-device or on its servers. Termind stops the active recording after completion, cancellation, or failure. Transcribed text enters your chat draft and, if sent, is handled as described in the AI section.", "只有在您点击转写按钮并授予麦克风与语音识别权限后，Termind 才会采集音频。转写使用 Apple Speech。根据操作系统设置、语言和设备能力，Apple 可能在设备上或通过其服务器处理音频。完成、取消或失败后，Termind 会停止当前录音；转写出的文本会进入您的聊天草稿，并在您发送后按照 AI 部分的说明处理。")}</p>
+      </div>
+    </section>
+
+    <section id="diagnostics">
+      <div class="section-no">10</div>
+      <div>
+        <h2>{c("Diagnostics", "诊断")}</h2>
+        <p>{c("Termind asks for your choice before enabling Google Firebase Crashlytics. If you agree, diagnostic data is sent to Google to help us diagnose and fix problems. This includes crash stack traces, relevant application state, app and operating-system versions, device information, and diagnostic installation identifiers. Termind does not attach terminal output, chat content, passwords, private keys, or a user account ID.", "Termind 会先询问您的选择，再启用 Google Firebase Crashlytics。如果您同意，诊断数据会发送给 Google，以帮助我们诊断并修复问题。这些数据包含崩溃堆栈、相关应用状态、应用和操作系统版本、设备信息及诊断安装标识符。Termind 不会附加终端输出、聊天内容、密码、私钥或用户账户 ID。")}</p>
+        <p>{c("Your choice is stored only on this device and does not sync through iCloud. You can decline without losing app features, or change your choice in Settings > App > Diagnostics. Turning sharing off blocks future uploads; it does not withdraw data already sent or stop an upload already authorized. Restarting Termind stops local crash recording. If you opt back in, pending diagnostic data from before consent was restored is discarded.", "您的选择仅保存在当前设备，不通过 iCloud 同步。拒绝不会影响应用功能，您也可以在“设置”>“应用”>“诊断”中更改选择。关闭后将阻止后续上传，但不会撤回已发送的数据或停止已获授权的上传。重新启动 Termind 后将停止本地崩溃记录。如果您重新同意，恢复授权前的待发送诊断数据将被丢弃。")}</p>
+        <p>{c("Google processes this diagnostic data under the Firebase data-processing terms. For Firebase's data handling and retention information, see", "Google 根据 Firebase 数据处理条款处理这些诊断数据。有关 Firebase 的数据处理与保留期限，请参阅")}
+          {" "}<a href="https://firebase.google.com/support/privacy">{c("Firebase Privacy and Security", "Firebase 隐私与安全说明")}</a>{c(".", "。")}
+        </p>
+      </div>
+    </section>
+
+    <section id="website">
+      <div class="section-no">11</div>
+      <div>
+        <h2>{c("This website", "本网站")}</h2>
+        <p>{c("This website sets no analytics cookies, uses no advertising technology, and contains no contact form. It stores only your selected site language in local browser storage; that preference is not transmitted to Termind. The hosting provider may still process standard server logs—such as IP address, request time, path, and user agent—to deliver the site, prevent abuse, and maintain security, subject to the hosting provider’s policy.", "本网站不设置分析 Cookie，不使用广告技术，也不包含联系表单。网站仅在浏览器本地存储您选择的网站语言；该偏好不会发送给 Termind。托管服务提供商仍可能为了传输网页、防止滥用和维护安全而处理标准服务器日志，例如 IP 地址、请求时间、请求路径和用户代理；其处理受托管服务提供商政策约束。")}</p>
+      </div>
+    </section>
+
+    <section id="control">
+      <div class="section-no">12</div>
+      <div>
+        <h2>{c("Retention, deletion, and your controls", "保留、删除与您的控制权")}</h2>
+        <ul>
+          <li>{c("You can turn off the main iCloud Sync switch or deselect Vault, Metrics, or Settings to pause the corresponding configuration transfers. You can also disable Web Search, speech permissions, and other optional features. Pausing sync does not erase existing cloud data or stop iCloud Keychain sync for migrated AI credentials.", "您可以关闭iCloud同步总开关，或取消勾选“保管库”“监控”“设置”以暂停相应配置的同步，也可以关闭网页搜索、语音权限和其他可选功能。暂停同步会停止相应配置的传输，不会清除已有云端数据，也不会停止已迁移AI凭据的iCloud钥匙串同步。")}</li>
+          <li>{c("You can delete hosts, monitored items, credential references, conversations, and other content in the app. When the corresponding sync is enabled, Vault, Metrics, and settings deletions propagate to iCloud; deletions made while paused or offline propagate after sync resumes. The protocol retains necessary deletion markers to prevent deleted content from returning, so deletion does not immediately erase all sync metadata.", "您可以在应用中删除主机、监控项、凭据引用、对话和其他内容。同步开启时，保管库、监控和设置的删除操作会传播到iCloud；暂停或离线期间的删除会在恢复同步后传播。同步协议保留必要的删除标记以防止已删除内容重新出现，因此删除不意味着所有同步元数据立即被彻底清除。")}</li>
+          <li>{c("Uninstalling the app may not automatically delete data in Keychain or iCloud. Delete relevant credentials, Vault data, and settings in the app before uninstalling, or use Apple’s system settings to manage iCloud and Keychain.", "卸载应用不一定会自动删除钥匙串或iCloud中的数据。请在卸载前从应用中删除相应凭据、保管库数据和设置，或使用Apple提供的系统设置管理iCloud与钥匙串。")}</li>
+          <li>{c("To remove a Tailnet sign-in from this device, log out in the group editor and save the change. Termind removes the local profile reference and peer cache, closes the node, and schedules its private Keychain state and supporting files for deletion, retrying if cleanup fails. Group configuration and synced preferences are separate; delete the group if you also want to remove them. Local logout does not erase provider or administrator logs or revoke a reusable Auth Key. Manage device removal and key revocation through the control service.", "要移除当前设备上的 Tailnet 登录，请在分组编辑器中退出登录并保存更改。Termind 会移除本地配置档案引用与节点缓存、关闭节点，并安排删除其钥匙串私密状态和辅助文件；清理失败时会重试。分组配置与同步的偏好独立保留；如需一并移除，请删除分组。本地退出登录不会清除服务提供方或管理员的日志，也不会撤销可重复使用的 Auth Key。请通过控制服务管理设备移除与密钥撤销。")}</li>
+          <li>{c("Data retained by AI or search providers, Apple, Tailscale or a custom control service, or remote hosts must be managed through those providers. The Termind developer cannot delete data from those services on your behalf.", "第三方 AI、搜索、Apple、Tailscale 或自定义控制服务以及远程主机保留的数据须通过相应提供方处理；Termind 开发者无法从这些服务中代您删除数据。")}</li>
+        </ul>
+        <p>{c("Termind is not directed to children under 13, and we do not knowingly collect children’s personal information.", "Termind 并非面向 13 岁以下儿童设计。我们不会有意收集儿童的个人信息。")}</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-no">13</div>
+      <div>
+        <h2>{c("Changes and contact", "政策变更与联系")}</h2>
+        <p>{c("If the product’s data practices materially change, we will update the version and effective date on this page and provide notice in the app where appropriate.", "如果产品的数据处理方式发生重大变化，我们会更新本页面的版本和生效日期，并在适当情况下于应用内说明。")}</p>
+        <p>{c("For privacy questions, email privacy-termind@akinokaede.com. For product and technical support questions, email support-termind@akinokaede.com. For business inquiries, email termind@akinokaede.com. Do not include passwords, private keys, API keys, complete host addresses, unredacted logs, or other unnecessary sensitive information.", "隐私问题请发送至 privacy-termind@akinokaede.com。产品使用与技术支持问题请发送至 support-termind@akinokaede.com。商务合作请发送至 termind@akinokaede.com。请勿在邮件中发送密码、私钥、API 密钥、完整主机地址、未经脱敏的日志或其他不必要的敏感信息。")}</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:privacy-termind@akinokaede.com">{c("Privacy questions", "隐私问题")} <span>→</span></a>
+          <a class="contact-link" href="mailto:support-termind@akinokaede.com">{c("Product & technical support", "产品与技术支持")} <span>→</span></a>
+          <a class="contact-link" href="mailto:termind@akinokaede.com">{c("Business inquiries", "商务合作")} <span>→</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</article>
+
+<style>
+  .policy { position: relative; width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+  .policy-title { max-width: 850px; padding: 7rem 0 5rem; }
+  .policy-title h1 { margin-top: 1.2rem; font-size: clamp(4.7rem, 10vw, 9rem); }
+  .summary { max-width: 760px; margin: 2.2rem 0 0; color: var(--muted); font-size: clamp(1.05rem, 1.7vw, 1.32rem); line-height: 1.75; }
+  .meta { display: grid; grid-template-columns: 90px 1fr; gap: 0.1rem 1rem; margin-top: 2.4rem; color: var(--faint); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .meta strong { color: var(--muted); font-weight: 400; }
+
+  .policy-nav { position: sticky; top: 1.5rem; float: left; width: 220px; padding: 1.2rem 1rem 1.2rem 0; }
+  .policy-nav p { margin: 0 0 1rem; color: var(--faint); font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .policy-nav ol { display: grid; gap: 0.42rem; margin: 0; padding: 0; list-style: none; counter-reset: nav; }
+  .policy-nav li { counter-increment: nav; }
+  .policy-nav a { display: grid; grid-template-columns: 24px 1fr; color: var(--faint); font-size: 0.72rem; text-decoration: none; transition: color 150ms ease; }
+  .policy-nav a::before { content: counter(nav, decimal-leading-zero); font-family: var(--mono); font-size: 0.58rem; }
+  .policy-nav a:hover { color: var(--cyan); }
+
+  .policy-body { width: calc(100% - 280px); margin-left: 280px; border-top: 1px solid var(--line-strong); }
+  .policy-body section { display: grid; grid-template-columns: 58px 1fr; scroll-margin-top: 2rem; border-bottom: 1px solid var(--line); }
+  .section-no { padding-top: 3.5rem; color: var(--cyan); font-family: var(--mono); font-size: 0.62rem; }
+  .policy-body section > div:last-child { max-width: 760px; padding: 3.2rem 0 4.2rem; }
+  .policy-body h2 { margin: 0 0 1.7rem; font-family: var(--display); font-size: clamp(2.1rem, 4vw, 3.2rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; }
+  .policy-body h3 { margin: 2.4rem 0 0.5rem; color: var(--ink); font-size: 0.92rem; font-weight: 650; }
+  .policy-body p, .policy-body li { color: var(--muted); font-size: 0.92rem; line-height: 1.82; }
+  .policy-body p { margin: 1rem 0; }
+  .policy-body ul { display: grid; gap: 0.6rem; margin: 1.3rem 0; padding-left: 1.2rem; }
+  .policy-body li::marker { color: var(--cyan); }
+  .policy-body strong { color: var(--ink); }
+  .provider-grid { display: grid; grid-template-columns: repeat(2, 1fr); margin: 1.8rem 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .provider-grid div { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .provider-grid strong { font-family: var(--mono); font-size: 0.71rem; }
+  .provider-grid span { color: var(--faint); font-size: 0.72rem; line-height: 1.5; }
+  .contact-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+  .contact-link { display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid var(--line-strong); color: var(--cyan); font-size: 0.82rem; font-weight: 650; text-decoration: none; }
+
+  @media (max-width: 820px) {
+    .policy-nav { position: static; float: none; width: 100%; margin-bottom: 3rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .policy-nav ol { grid-template-columns: repeat(2, 1fr); }
+    .policy-body { width: 100%; margin-left: 0; }
+    .contact-links { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .policy { width: calc(100% - 28px); }
+    .policy-title { padding-block: 4.5rem 3.5rem; }
+    .policy-title h1 { font-size: 4.2rem; }
+    .policy-nav ol, .provider-grid, .contact-links { grid-template-columns: 1fr; }
+    .policy-body section { grid-template-columns: 34px 1fr; }
+    .policy-body section > div:last-child { padding-top: 2.5rem; }
+    .section-no { padding-top: 2.75rem; }
+  }
+</style>

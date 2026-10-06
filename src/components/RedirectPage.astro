@@ -1,0 +1,18 @@
+---
+interface Props { target: string; }
+const { target } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={target} />
+    <title>正在前往 Termind 简体中文网站</title>
+    <script is:inline define:vars={{ target }}>location.replace(target);</script>
+  </head>
+  <body><p>页面已迁移至 <a href={target}>{target}</a>。</p></body>
+</html>

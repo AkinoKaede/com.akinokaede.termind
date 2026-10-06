@@ -1,0 +1,141 @@
+---
+import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const features = [
+  [c("Sync Tailscale devices", "同步 Tailscale 设备"), c(
+    "Sign in from a Vault group. Your Tailnet’s devices appear together, ready for your next connection.",
+    "在保管库分组中登录，Tailnet 中的设备便会自动汇集，随时方便连接。"
+  )],
+  [c("Keep working over SSH and SFTP", "SSH 与 SFTP，随时可用"), c(
+    "Open a terminal or move files through Tailscale SSH, following your Tailnet’s access policies.",
+    "通过 Tailscale SSH 打开终端或传输文件，连接遵循你的 Tailnet 访问策略。"
+  )],
+  [c("See how you’re connected", "连接状态，一目了然"), c(
+    "Check device status, MagicDNS names, and Ping latency, including whether the route is direct or relayed.",
+    "查看设备状态、MagicDNS 名称与 Ping 延迟，直连或中继路由一清二楚。"
+  )],
+];
+---
+
+<section class="tailscale shell" id="tailscale" aria-labelledby="tailscale-title">
+  <div class="tailscale-copy">
+    <p class="eyebrow">{c("TAILSCALE, BUILT IN", "内置 TAILSCALE")}</p>
+    <h2 class="display" id="tailscale-title">{c("Your Tailnet.", "你的 Tailnet，")}<br /><em>{c("Already in Termind.", "就在 Termind。")}</em></h2>
+    <p class="tailscale-intro">{c(
+      "Reach your private servers from Termind. Termind connects to your Tailnet directly, with no separate Tailscale app or system VPN setup needed on this device.",
+      "从 Termind 访问你的私有服务器。Termind 可直接接入 Tailnet，无需在当前设备另装 Tailscale 客户端或配置系统 VPN。"
+    )}</p>
+    <ul class="tailscale-features">
+      {features.map(([title, description], index) => (
+        <li><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{description}</p></div></li>
+      ))}
+    </ul>
+    <div class="tailscale-actions">
+      <a class="tailscale-link" href={`${localizedPath(locale, "/faq/")}#tailscale`}>{c("How to connect your Tailnet", "了解如何连接 Tailnet")} <span aria-hidden="true">↗</span></a>
+      <a class="tailscale-link" href={`${localizedPath(locale, "/privacy/")}#tailscale`}>{c("Tailscale and your privacy", "Tailscale 与你的隐私")} <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="tailscale-credit">
+      {c("Termind’s built-in Tailscale support is powered by ", "Termind 的内置 Tailscale 功能基于 ")}<a href="https://github.com/AkinoKaede/libtailscale-spm">libtailscale-spm</a>{c(".", " 实现。")}
+    </p>
+  </div>
+
+  <figure class="tailnet-figure">
+    <div class="tailnet-heading"><span>{c("YOUR PRIVATE NETWORK", "你的私有网络")}</span><span class="pro-label">TERMIND PRO</span></div>
+    <div class="tailnet-map" role="img" aria-label={c(
+      "Connection diagram: Termind connects through your Tailnet to your development server, production server, and home lab.",
+      "连接示意图：Termind 通过你的 Tailnet，连接开发服务器、生产服务器与家庭实验室。"
+    )}>
+      <div class="tailnet-device" aria-hidden="true">
+        <img src="/brand_mark.svg" width="58" height="58" alt="" />
+        <strong>Termind</strong>
+        <span>{c("Your workspace", "你的工作台")}</span>
+      </div>
+      <div class="tailnet-path" aria-hidden="true"><span>Tailnet</span><i></i></div>
+      <div class="tailnet-peers" aria-hidden="true">
+        {[
+          ["dev", c("Development", "开发环境")],
+          ["production", c("Production", "生产环境")],
+          ["homelab", c("Home lab", "家庭实验室")],
+        ].map(([hostname, label]) => (
+          <div class="tailnet-peer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="3" width="16" height="7" rx="2" /><rect x="4" y="14" width="16" height="7" rx="2" /><path d="M8 6.5h.01M8 17.5h.01M12 6.5h4M12 17.5h4" stroke-linecap="round" /></svg>
+            <div><strong>{hostname}</strong><span>{label}</span></div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="tailnet-services"><span>SSH</span><span>SFTP</span><span>Exit Node</span></div>
+    <figcaption>{c(
+      "Enable Tailscale SSH on the servers you want to reach. Your Tailnet’s SSH policy controls access.",
+      "请在目标服务器上启用 Tailscale SSH，访问权限由你的 Tailnet SSH 策略控制。"
+    )}</figcaption>
+  </figure>
+  <p class="tailscale-footnote">{c(
+    "Tailscale is a trademark of Tailscale Inc. The name is used here only to describe compatibility. Termind is not affiliated with, sponsored by, or endorsed by Tailscale Inc.",
+    "Tailscale 是 Tailscale Inc. 的商标，此处仅用于说明兼容性。Termind 与 Tailscale Inc. 无隶属关系，亦未获得其赞助或背书。"
+  )}</p>
+</section>
+
+<style>
+  .tailscale {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem clamp(2.5rem, 5vw, 5rem);
+    padding-block: 6rem;
+    scroll-margin-top: 2rem;
+  }
+  .tailscale h2 { margin-top: 1.25rem; font-size: clamp(2.6rem, 4vw, 4.1rem); }
+  .tailscale h2 em { color: var(--cyan); }
+  .tailscale-intro { margin: 1.5rem 0 0; color: var(--muted); font-size: .95rem; line-height: 1.8; }
+  .tailscale-features { display: grid; gap: 1.3rem; margin: 2rem 0; padding: 0; list-style: none; }
+  .tailscale-features li { display: grid; grid-template-columns: 25px 1fr; gap: .8rem; }
+  .tailscale-features li > span { padding-top: .2rem; color: var(--cyan); font-family: var(--mono); font-size: .65rem; }
+  .tailscale-features h3 { margin: 0; font-size: .93rem; font-weight: 600; }
+  .tailscale-features p { margin: .3rem 0 0; color: var(--muted); font-size: .85rem; line-height: 1.75; }
+  .tailscale-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.8rem; }
+  .tailscale-link { display: inline-flex; align-items: center; gap: 1rem; color: var(--cyan); font-size: .82rem; font-weight: 650; text-decoration: none; }
+  .tailscale-link:hover { text-decoration: underline; }
+  .tailscale-credit { margin: 1.25rem 0 0; color: var(--muted); font-size: .78rem; line-height: 1.8; }
+  .tailscale-credit a { color: var(--cyan); text-underline-offset: .2em; }
+  .tailnet-figure { margin: 0; padding: 1.8rem; border: 1px solid var(--line-strong); border-radius: 24px; background: var(--paper-raised); box-shadow: var(--shadow); }
+  .tailnet-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .8rem; color: var(--faint); font-family: var(--mono); font-size: .6rem; letter-spacing: .06em; }
+  .pro-label { padding: .3rem .55rem; border: 1px solid var(--line); border-radius: 5px; color: var(--cyan); }
+  .tailnet-map { display: grid; grid-template-columns: minmax(0, .9fr) 54px minmax(0, 1.1fr); align-items: center; padding-block: 3rem; }
+  .tailnet-device { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .tailnet-device img { margin-bottom: .8rem; }
+  .tailnet-device strong { font-size: 1.2rem; letter-spacing: -.03em; }
+  .tailnet-device > span { margin-top: .3rem; color: var(--muted); font-size: .6rem; }
+  .tailnet-path { position: relative; height: 1px; margin-right: 20px; background: var(--cyan); }
+  .tailnet-path > span { position: absolute; right: 0; bottom: .65rem; color: var(--cyan); font-family: var(--mono); font-size: .55rem; }
+  .tailnet-path i { position: absolute; top: -3px; left: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); }
+  .tailnet-peers { position: relative; display: grid; gap: 1rem; }
+  .tailnet-peers::before { position: absolute; top: 35px; bottom: 35px; left: -20px; width: 1px; content: ""; background: var(--cyan); }
+  .tailnet-peer { position: relative; display: flex; align-items: center; gap: .7rem; min-height: 70px; padding: .75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  .tailnet-peer::before { position: absolute; top: 50%; right: 100%; width: 20px; height: 1px; content: ""; background: var(--cyan); }
+  .tailnet-peer svg { flex: 0 0 22px; width: 22px; height: 22px; color: var(--cyan); }
+  .tailnet-peer div { min-width: 0; }
+  .tailnet-peer strong { display: block; font-family: var(--mono); font-size: .7rem; font-weight: 500; }
+  .tailnet-peer div > span { display: block; margin-top: .2rem; color: var(--muted); font-size: .66rem; }
+  .tailnet-services { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem 1.2rem; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--cyan); font-family: var(--mono); font-size: .65rem; }
+  figcaption { margin-top: 1rem; color: var(--muted); font-size: .75rem; line-height: 1.75; }
+  .tailscale-footnote { grid-column: 1 / -1; margin: 0; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--faint); font-size: .68rem; line-height: 1.7; }
+  @media (max-width: 960px) {
+    .tailscale { grid-template-columns: 1fr; gap: 2.5rem; padding-block: 4rem; }
+    .tailscale-copy { max-width: 650px; }
+    .tailnet-figure { width: 100%; max-width: 650px; }
+    .tailnet-map { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .tailnet-figure { padding: 1.2rem; }
+    .tailnet-map { grid-template-columns: minmax(0, .9fr) 36px minmax(0, 1.1fr); padding-block: 2.5rem; }
+    .tailnet-peer { gap: .5rem; padding: .65rem .5rem; }
+    .tailnet-peer svg { flex-basis: 18px; width: 18px; height: 18px; }
+    .tailnet-peer strong { font-size: .63rem; }
+    .tailnet-device > span { max-width: 80px; }
+    .tailnet-path > span { display: none; }
+  }
+</style>

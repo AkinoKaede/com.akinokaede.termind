@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SupportPage from "../components/SupportPage.astro";
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "Support — Termind", "支持 — Termind")}
+  description={copy(locale, "Get help with Termind for Mac, iPhone, and iPad.", "获取 Termind for Mac、iPhone 与 iPad 产品与技术支持。")}
+  locale={locale}
+  pagePath="/support/"
+>
+  <SupportPage locale={locale} />
+</BaseLayout>

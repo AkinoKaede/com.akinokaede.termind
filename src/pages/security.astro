@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SecurityPage from "../components/SecurityPage.astro";
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale?: SiteLocale; }
+const { locale = "en" } = Astro.props;
+---
+
+<BaseLayout
+  title={copy(locale, "Security by design — Termind", "安全设计 — Termind")}
+  description={copy(locale, "Learn how Termind protects SSH credentials at rest and in memory, verifies server identity, and keeps Assistant and MCP access within boundaries you control.", "了解 Termind 如何保护静态存储与内存中的 SSH 凭据、核验服务器身份，并让 AI 助手与 MCP 的访问保持在你控制的边界内。")}
+  locale={locale}
+  pagePath="/security/"
+>
+  <SecurityPage locale={locale} />
+</BaseLayout>
