@@ -2,7 +2,14 @@
 
 - `captures/<locale>/<device>/`: full-resolution app screenshots.
 - `device_frames/<locale>/<device>/`: PNG device compositions.
-- `app_store/<locale>/<device>/`: final RGB JPEG artwork with an sRGB color profile.
+- `screenshots/<locale>/<device>/`: final RGB JPEG artwork with an sRGB color profile.
+- `header/header.png`: universal App Store header, shared across languages.
+- `search_results/<locale>/search_results.png`: localized App Store search artwork.
+
+Header artwork is 3840 × 1646 pixels; Search Results artwork is 3840 × 2560 pixels.
+Both are opaque RGB PNGs with an embedded sRGB profile, exported at 1× from the
+Figma `Header and Search Results` page. Keep review previews and export manifests
+outside this asset tree.
 
 Locales are `en`, `zh-hans`, and `zh-hant`. Capture and frame directories are `iphone-6.3`,
 `ipad-15`, `mac-14`, `iphone-duo-inner`, and `iphone-duo-outer`. Filenames use lowercase words separated by underscores.
