@@ -7,11 +7,15 @@
 - `search_results/<locale>/search_results.png`: localized App Store search artwork.
 
 Header artwork is 3840 × 1646 pixels; Search Results artwork is 3840 × 2560 pixels.
+Japanese artwork uses upright Hiragino Sans text. Mac Command Generator
+headlines use two vertical columns, read right to left, with punctuation preserved
+in Japanese and both Chinese variants.
+
 Both are opaque RGB PNGs with an embedded sRGB profile, exported at 1× from the
 Figma `Header and Search Results` page. Keep review previews and export manifests
 outside this asset tree.
 
-Locales are `en`, `zh-hans`, and `zh-hant`. Capture and frame directories are `iphone-6.3`,
+Locales are `en`, `zh-hans`, `zh-hant`, and `ja`. Capture and frame directories are `iphone-6.3`,
 `ipad-15`, `mac-14`, `iphone-duo-inner`, and `iphone-duo-outer`. Filenames use lowercase words separated by underscores.
 
 ## Image sizes
@@ -34,7 +38,7 @@ and Assistant use the inner display; Metrics and Vault use the outer display.
 Overview combines Mac Workspace, Duo inner SFTP, and Duo outer Vault. Duo captures
 use iOS 27.1; iPhone 18 Pro and iPad Pro captures use iOS/iPadOS 27.0.
 All mobile captures use 9:41 and 100% battery while discharging.
-The iPhone Duo platform label reads “FLEXIBLE”, “灵活变换”, or “靈活變換”.
+The iPhone Duo platform label reads “FLEXIBLE”, “灵活变换”, “靈活變換”, or “自由に使い分け”.
 Its inner-display frame places the volume buttons along the top edge near the right corner.
 
 iPhone Overview uses two devices with aligned bottom edges: a fully visible
