@@ -1,6 +1,7 @@
 # Termind marketing assets
 
 - `captures/<locale>/<device>/`: full-resolution app screenshots.
+- `device_templates/`: versioned device bezel PNGs, source notes and checksums used by the framing script.
 - `device_frames/<locale>/<device>/`: PNG device compositions.
 - `screenshots/<locale>/<device>/`: final RGB JPEG artwork with an sRGB color profile.
 - `header/header.png`: universal App Store header, shared across languages.
@@ -53,5 +54,5 @@ The full-screen `workspace.png` remains the source for device-framed Overview ar
 ## Usage
 
 Device frames use [fastlane frameit-frames](https://github.com/fastlane/frameit-frames)
-and Apple artwork. Follow the owners' usage terms; licensed source templates are
-not included. Public access grants no additional rights to these assets or Termind branding.
+and Apple artwork. The five templates required by the current pipeline are included in
+`device_templates/`; see its README for sources, geometry and setup. Follow the owners' usage terms. Public access grants no additional rights to these assets or Termind branding.
