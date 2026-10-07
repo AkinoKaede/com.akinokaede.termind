@@ -147,8 +147,8 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
         <h2>Tailscale</h2>
         <h3>{c("Sign-in and device information", "登录与设备信息")}</h3>
         <p>{c(
-          "Tailscale is optional. When you sign in from a Vault group, Termind registers an embedded node with Tailscale or the control service you configure. Browser sign-in is handled by that service and its identity provider. If you use an Auth Key, it is sent to the selected control service to authorize the node; it is not included in synced group configuration.",
-          "Tailscale 是可选功能。在保管库分组中登录时，Termind 会向 Tailscale 或您配置的控制服务注册内置节点。浏览器登录由该服务及其身份提供方处理。如果使用 Auth Key，它会发送给所选控制服务以授权节点，不会写入同步的分组配置。"
+          "Tailscale is optional. When you sign in from a host group, Termind registers an embedded node with Tailscale or the control service you configure. Browser sign-in is handled by that service and its identity provider. If you use an Auth Key, it is sent to the selected control service to authorize the node; it is not included in synced group configuration.",
+          "Tailscale 是可选功能。在主机分组中登录时，Termind 会向 Tailscale 或您配置的控制服务注册内置节点。浏览器登录由该服务及其身份提供方处理。如果使用 Auth Key，它会发送给所选控制服务以授权节点，不会写入同步的分组配置。"
         )}</p>
         <p>{c(
           "The control service receives information needed to authenticate the node and coordinate connections, including the device name you configure, operating system, Tailscale version, IP addresses, node identifiers, and public keys. It supplies the peer information Termind uses to show devices and verify Tailscale SSH host keys. Tailnet administrators can see device and connection information according to their permissions and logging settings.",

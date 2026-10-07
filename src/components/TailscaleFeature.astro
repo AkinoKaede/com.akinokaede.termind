@@ -6,8 +6,8 @@ const { locale } = Astro.props;
 const c = (english: string, simplified: string) => copy(locale, english, simplified);
 const features = [
   [c("Sync Tailscale devices", "同步 Tailscale 设备"), c(
-    "Sign in from a Vault group. Your Tailnet’s devices appear together, ready for your next connection.",
-    "在保管库分组中登录，Tailnet 中的设备便会自动汇集，随时方便连接。"
+    "Sign in from a host group. Your Tailnet’s devices appear together, ready for your next connection.",
+    "在主机分组中登录，Tailnet 中的设备便会自动汇集，随时方便连接。"
   )],
   [c("Keep working over SSH and SFTP", "SSH 与 SFTP，随时可用"), c(
     "Open a terminal or move files through Tailscale SSH, following your Tailnet’s access policies.",

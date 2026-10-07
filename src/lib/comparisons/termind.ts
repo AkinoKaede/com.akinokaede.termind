@@ -30,7 +30,7 @@ export function getTermindFeatures(locale: SiteLocale) {
       feature: c("Built-in Tailscale", "内置 Tailscale"),
       benefit: c("Connect to your private network from the app.", "在应用内接入私有网络。"),
       termind: c("In-app Tailnet access · Pro", "应用内连接 Tailnet · Pro"),
-      termindNote: c("Sign in and sync Tailscale devices in Vault groups; each group can use a different Tailnet. No separate client or system VPN is needed. SSH and SFTP require Tailscale SSH on the server.", "在分组中登录并同步 Tailscale 设备，各分组可接入不同 Tailnet。无需另装客户端或配置系统 VPN；SSH 和 SFTP 连接需在服务器上启用 Tailscale SSH。"),
+      termindNote: c("Sign in and sync Tailscale devices in host groups; each group can use a different Tailnet. No separate client or system VPN is needed. SSH and SFTP require Tailscale SSH on the server.", "在主机分组中登录并同步 Tailscale 设备，各分组可接入不同 Tailnet。无需另装客户端或配置系统 VPN；SSH 和 SFTP 连接需在服务器上启用 Tailscale SSH。"),
     },
     "ai": {
       id: "ai",
