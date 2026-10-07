@@ -7,7 +7,7 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
 ---
 
 <div class="support shell">
-  <header class="support-hero reveal">
+  <header class="support-hero reveal page-intro">
     <div>
       <p class="eyebrow">{c("Termind Support", "Termind 支持")}</p>
       <h1 class="display">{c("Need a hand?", "需要帮助？")}</h1>
@@ -66,8 +66,8 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
   .support-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(3rem, 8vw, 8rem); align-items: end; min-height: 480px; padding-bottom: 5rem; border-bottom: 1px solid var(--line-strong); }
   .support-hero h1 { margin-top: 1.4rem; font-size: clamp(4.5rem, 9vw, 8.7rem); }
   .support-hero div > p:last-child { max-width: 37rem; margin: 2rem 0 0; color: var(--muted); font-size: 1.08rem; }
-  .mail-button { position: relative; display: flex; flex-direction: column; padding: 1.5rem 3.5rem 1.5rem 1.5rem; border: 1px solid var(--line-strong); border-radius: 18px; background: rgba(255,255,255,.72); box-shadow: 0 20px 65px rgba(38, 52, 61, .12); color: var(--ink); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
-  .mail-button:hover { transform: translateY(-3px); box-shadow: 0 25px 75px rgba(38, 52, 61, .18); }
+  .mail-button { position: relative; display: flex; flex-direction: column; padding: 1.5rem 3.5rem 1.5rem 1.5rem; border: 1px solid var(--line-strong); border-radius: var(--panel-radius); background: var(--surface); box-shadow: var(--shadow); color: var(--ink); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .mail-button:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(38,52,61,.08); }
   .mail-button span { color: var(--cyan); font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; }
   .mail-button strong { margin-top: .4rem; font-size: .83rem; font-weight: 600; overflow-wrap: anywhere; }
   .mail-button i { position: absolute; right: 1.3rem; top: 50%; color: var(--blue); font-size: 1.4rem; font-style: normal; transform: translateY(-50%); }
@@ -80,7 +80,7 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
   .check-grid span { color: var(--cyan); font-family: var(--mono); font-size: .63rem; }
   .check-grid h2 { margin: 3rem 0 .7rem; font-family: var(--display); font-size: 1.75rem; font-weight: 400; }
   .check-grid p { margin: 0; color: var(--muted); font-size: .86rem; }
-  .safety-note { display: grid; grid-template-columns: 74px 1fr; gap: 1.5rem; align-items: start; max-width: 850px; margin: 1rem auto 8rem; padding: 2rem; border: 1px solid rgba(38, 52, 61, .25); border-radius: 22px; background: var(--paper-raised); }
+  .safety-note { display: grid; grid-template-columns: 74px 1fr; gap: 1.5rem; align-items: start; max-width: 850px; margin: 1rem auto 8rem; padding: 2rem; border: 1px solid rgba(38, 52, 61, .25); border-radius: var(--panel-radius); background: var(--surface-soft); }
   .shield { display: grid; place-items: center; width: 58px; height: 66px; color: var(--blue); background: rgba(38, 52, 61, .14); clip-path: polygon(50% 0, 94% 15%, 86% 72%, 50% 100%, 14% 72%, 6% 15%); font-family: var(--display); font-size: 1.8rem; }
   .safety-note h2 { margin: 0; font-family: var(--display); font-size: 2rem; font-weight: 400; }
   .safety-note p { margin: .6rem 0 0; color: var(--muted); font-size: .88rem; }

@@ -87,7 +87,7 @@ if (locale === "zh-Hant") {
 ---
 
 <div class="faq shell">
-  <header class="faq-hero reveal">
+  <header class="faq-hero reveal page-intro">
     <p class="eyebrow">{c("Before you connect", "连接之前，先了解这些")}</p>
     <h1 class="display">{c("Good to know.", "常见问题")}</h1>
     <p>{c("What AI can do, how Tailscale connects, what Pro adds, and where your data goes.", "关于 AI 能力、Tailscale 连接、Pro 方案及数据去向，都在这里为你详细解答。")}</p>
@@ -114,6 +114,7 @@ if (locale === "zh-Hant") {
   .faq-hero h1 { margin-top: 1.3rem; font-size: clamp(5rem, 10vw, 9rem); }
   .faq-hero > p:last-child { max-width: 590px; margin: 2rem 0 0; color: var(--muted); font-size: 1.1rem; }
   .faq-list { width: calc(100% - 220px); margin-left: 220px; border-top: 1px solid var(--line-strong); }
+  details[open] { background: var(--surface-soft); }
   details { border-bottom: 1px solid var(--line); }
   summary { display: grid; grid-template-columns: 58px 1fr 20px; align-items: center; min-height: 88px; cursor: pointer; list-style: none; }
   summary::-webkit-details-marker { display: none; }
@@ -125,7 +126,7 @@ if (locale === "zh-Hant") {
   details[open] summary i::after { transform: rotate(0); }
   details > p { max-width: 720px; margin: -.5rem 0 0 58px; padding: 0 2rem 1rem 0; color: var(--muted); font-size: .91rem; line-height: 1.8; }
   details > p:last-child { padding-bottom: 2.4rem; }
-  .faq-footer { display: grid; grid-template-columns: 1fr 270px; gap: 4rem; align-items: end; margin-top: 7rem; padding: 4rem; border: 1px solid var(--line-strong); border-radius: 24px; background: var(--paper-raised); }
+  .faq-footer { display: grid; grid-template-columns: 1fr 270px; gap: 4rem; align-items: end; margin-top: 7rem; padding: 4rem; border: 1px solid var(--line-strong); border-radius: var(--panel-radius); background: var(--surface-soft); }
   .faq-footer h2 { margin: 1.1rem 0 0; font-family: var(--display); font-size: 3rem; font-weight: 400; }
   .faq-footer a { display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid var(--line-strong); color: var(--cyan); font-size: .82rem; font-weight: 650; text-decoration: none; }
   @media (max-width: 760px) {

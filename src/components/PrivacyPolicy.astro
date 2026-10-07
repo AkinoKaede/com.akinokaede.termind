@@ -7,7 +7,7 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
 ---
 
 <article class="policy">
-  <header class="policy-title reveal">
+  <header class="policy-title reveal page-intro">
     <p class="eyebrow">{c("Data handling, in plain language", "数据处理说明")}</p>
     <h1 class="display">{c("Privacy Policy", "隐私政策")}</h1>
     <p class="summary">
@@ -270,7 +270,7 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
   .policy-body li::marker { color: var(--cyan); }
   .policy-body strong { color: var(--ink); }
   .provider-grid { display: grid; grid-template-columns: repeat(2, 1fr); margin: 1.8rem 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-  .provider-grid div { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .provider-grid div { background: var(--surface-soft); display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .provider-grid strong { font-family: var(--mono); font-size: 0.71rem; }
   .provider-grid span { color: var(--faint); font-size: 0.72rem; line-height: 1.5; }
   .contact-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }

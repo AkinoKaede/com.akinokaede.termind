@@ -1,0 +1,23 @@
+---
+interface Props { size?: number; }
+const { size = 72 } = Astro.props;
+---
+<span class="app-icon" style={`--icon-size: ${size}px`} aria-hidden="true">
+  <img src="/brand_mark.svg" width={size} height={size} alt="" />
+</span>
+
+<style>
+  .app-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    overflow: hidden;
+    border: 1px solid #d5dfe6;
+    border-radius: calc(var(--icon-size) * .23);
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(38, 52, 61, .07), 0 12px 24px rgba(38, 52, 61, .04);
+  }
+  img { display: block; width: 74%; height: 74%; object-fit: contain; }
+</style>

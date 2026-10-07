@@ -5,14 +5,18 @@
   --ink: #26343d;
   --muted: #53616a;
   --faint: #64727b;
-  --paper: #f7f9fa;
+  --paper: #ffffff;
+  --surface: #edf3f7;
+  --surface-inset: #e6eef4;
+  --surface-soft: #f7f9fa;
+  --panel-radius: 8px;
   --paper-raised: #ffffff;
   --line: #e0e5e8;
   --line-strong: #bdc7cd;
   --blue: #38b6f4;
   --cyan: #086a9b;
   --green: #26835e;
-  --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Noto Serif CJK SC", serif;
+  --display: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --body: "Avenir Next", Avenir, "PingFang SC", "Microsoft YaHei", sans-serif;
   --mono: "SFMono-Regular", "Cascadia Mono", monospace;
   --shadow: 0 18px 48px rgba(38, 52, 61, 0.06);
@@ -51,7 +55,7 @@ html {
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   margin: 0;
   color: var(--ink);
   background: var(--paper);
@@ -146,4 +150,13 @@ img { max-width: 100%; }
 
 @media (max-width: 640px) {
   .shell { width: min(100% - 28px, 1180px); }
+}
+
+/* Secondary pages share the landing page's quiet terminal-window motif. */
+.page-intro { position: relative; isolation: isolate; }
+.page-intro::after { position: absolute; z-index: -1; top: 4.5rem; right: 1rem; width: 100px; height: 70px; border: 1px solid #dbe7ee; border-radius: 12px; content: ""; transform: rotate(10deg); pointer-events: none; }
+.page-intro .display { letter-spacing: -.045em; }
+@media (max-width: 640px) {
+  .page-intro::after { width: 52px; height: 36px; top: 2rem; right: .5rem; }
+  .page-intro h1.display { font-size: clamp(2.8rem, 12vw, 4.5rem); }
 }

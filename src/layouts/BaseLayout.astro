@@ -40,7 +40,7 @@ const languageName = locale === "en" ? "English" : locale === "zh-Hans" ? "简�
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f7f9fa" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
     {supportedLocales.map((candidate) => (
@@ -110,7 +110,7 @@ const languageName = locale === "en" ? "English" : locale === "zh-Hans" ? "简�
       })();
     </script>
   </head>
-  <body>
+  <body class:list={{ landing: pagePath === "/" }}>
     <header class="site-header shell">
       <a class="brand" href={localizedPath(locale)} aria-label={copy(locale, "Termind home", "Termind 首页")}>
         <img src="/brand_mark.svg" width="38" height="38" alt="" />
@@ -150,15 +150,17 @@ const languageName = locale === "en" ? "English" : locale === "zh-Hans" ? "简�
     </main>
     <footer class="site-footer shell">
       <div>
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>{copy(locale, "Local first. Private by default.", "本地优先，默认私密。")}</span>
+        <span class="footer-heart" aria-hidden="true">♥</span>
+        <span>Made with love.</span>
       </div>
-      <p>© 2026 Termind</p>
+      <p>© 2026 Termind Team</p>
     </footer>
   </body>
 </html>
 
 <style>
+  .brand span { font-family: Palatino, "Palatino Linotype", Georgia, serif; font-size: 1.55rem; font-weight: 700; }
+
   .site-header {
     display: flex;
     align-items: center;
@@ -234,12 +236,10 @@ const languageName = locale === "en" ? "English" : locale === "zh-Hans" ? "简�
   }
   .site-footer div { display: flex; align-items: center; gap: 0.6rem; }
   .site-footer p { margin: 0; }
-  .status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 14px rgba(38, 52, 61, 0.4);
+  .footer-heart {
+    color: #c76b7b;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   @media (max-width: 900px) {
@@ -247,6 +247,11 @@ const languageName = locale === "en" ? "English" : locale === "zh-Hans" ? "简�
     nav { gap: .85rem; flex-wrap: wrap; }
   }
   @media (max-width: 640px) {
+    .site-header { position: relative; }
+    nav { width: 100%; justify-content: space-between; gap: .65rem; }
+    nav a { font-size: .7rem; letter-spacing: 0; }
+    .language-picker { position: absolute; top: 1.2rem; right: 0; }
+
     .site-footer {
       align-items: flex-start;
       flex-direction: column;

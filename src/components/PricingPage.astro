@@ -45,7 +45,7 @@ const plans = [
 ---
 
 <article class="pricing-page shell">
-  <header class="pricing-hero reveal">
+  <header class="pricing-hero reveal page-intro">
     <p class="eyebrow">{c("PRICING", "价格")}</p>
     <h1 class="display">{c("Start free.", "免费开始，")}<br /><em>{c("Make it yours.", "随心选择升级方式。")}</em></h1>
     <p class="lede">{c("The essentials are free. Add Pro for a year or keep it for life. One purchase works on macOS and iOS, with Family Sharing included.", "核心功能永久免费。Pro 可按年订阅，也可一次购买永久使用。一次购买即可通用于 macOS 与 iOS，并支持家庭共享。")}</p>
@@ -100,13 +100,13 @@ const plans = [
   h1 em { color: var(--cyan); }
   .lede { max-width: 680px; margin: 1.7rem 0 0; color: var(--muted); font-size: 1.05rem; }
   .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
-  .plan { padding: 2rem; border: 1px solid var(--line-strong); border-radius: var(--radius-m); background: var(--paper-raised); }
-  .lifetime-plan { background: #eaf5fb; border-color: #96c5dc; }
+  .plan { padding: 2rem; border: 1px solid var(--line-strong); border-radius: var(--panel-radius); background: var(--surface-soft); }
+  .lifetime-plan { background: var(--surface); border-color: var(--line-strong); }
   .plan-label { margin: 0; color: var(--cyan); font: .68rem var(--mono); letter-spacing: .1em; }
   .plan h2 { margin: 1rem 0 .5rem; font-size: 1.6rem; font-weight: 500; letter-spacing: -.035em; }
   .plan-description { min-height: 3em; margin: 0; color: var(--muted); font-size: .85rem; }
   .price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .55rem; margin: 1.5rem 0 .4rem; }
-  .price strong { font-size: clamp(2.7rem, 4vw, 3.5rem); line-height: 1.2; font-weight: 500; letter-spacing: -.06em; }
+  .price strong { font-family: var(--display); font-size: clamp(2.7rem, 4vw, 3.5rem); line-height: 1.2; font-weight: 500; letter-spacing: -.06em; }
   .price > span { color: var(--muted); font-size: .8rem; }
   .billing { min-height: 3em; margin: 0; color: var(--muted); font-size: .74rem; }
   .plan-button { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-block: 1.5rem; padding: .85rem 1rem; border: 1px solid var(--ink); border-radius: var(--radius-pill); background: var(--ink); color: white; font-size: .78rem; font-weight: 600; text-decoration: none; }
