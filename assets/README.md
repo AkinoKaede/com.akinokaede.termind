@@ -35,6 +35,9 @@ iPhone Assistant in the right foreground and an enlarged, partially cropped Mac
 Workspace behind it. Mac and iPad Overview retain all three devices.
 iPhone artwork uses `01_overview.jpg`; the other platforms retain `01_three_screens.jpg`.
 Mac device frames use the 14-inch MacBook Pro M5 Space Black bezel, matching Workspace captures at native scale.
+Mac `02_workspace.jpg` uses the separate ordinary-window capture `workspace_window.png`
+(2360 × 1480), exported with `bundle exec fastlane mac screenshots scenes:workspace-window`.
+The full-screen `workspace.png` remains the source for device-framed Overview artwork.
 
 ## Usage
 
