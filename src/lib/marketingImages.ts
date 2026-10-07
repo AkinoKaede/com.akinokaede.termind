@@ -28,32 +28,43 @@ import workspaceMacEn from "../../assets/device_frames/en/mac-14/workspace.png";
 import workspaceMacZhHans from "../../assets/device_frames/zh-hans/mac-14/workspace.png";
 import workspaceMacZhHant from "../../assets/device_frames/zh-hant/mac-14/workspace.png";
 
-export type MarketingAssetLocale = "en" | "zh-hans" | "zh-hant";
+import assistantDuoOuterJa from "../../assets/device_frames/ja/iphone-duo-outer/assistant.png";
+import sftpDuoInnerJa from "../../assets/device_frames/ja/iphone-duo-inner/sftp.png";
+import assistantIphoneJa from "../../assets/device_frames/ja/iphone-6.3/assistant.png";
+import metricsIpadJa from "../../assets/device_frames/ja/ipad-15/metrics.png";
+import sftpIpadJa from "../../assets/device_frames/ja/ipad-15/sftp.png";
+import sshIphoneJa from "../../assets/device_frames/ja/iphone-6.3/ssh.png";
+import vaultIpadJa from "../../assets/device_frames/ja/ipad-15/vault.png";
+import vaultIphoneJa from "../../assets/device_frames/ja/iphone-6.3/vault.png";
+import workspaceMacJa from "../../assets/device_frames/ja/mac-14/workspace.png";
+
+export type MarketingAssetLocale = "en" | "zh-hans" | "zh-hant" | "ja";
 
 const duoOuterFrames = {
-  assistant: { en: assistantDuoOuterEn, "zh-hans": assistantDuoOuterZhHans, "zh-hant": assistantDuoOuterZhHant },
+  assistant: { en: assistantDuoOuterEn, "zh-hans": assistantDuoOuterZhHans, "zh-hant": assistantDuoOuterZhHant, ja: assistantDuoOuterJa },
 } satisfies Record<string, Record<MarketingAssetLocale, ImageMetadata>>;
 
 const duoInnerFrames = {
-  sftp: { en: sftpDuoInnerEn, "zh-hans": sftpDuoInnerZhHans, "zh-hant": sftpDuoInnerZhHant },
+  sftp: { en: sftpDuoInnerEn, "zh-hans": sftpDuoInnerZhHans, "zh-hant": sftpDuoInnerZhHant, ja: sftpDuoInnerJa },
 } satisfies Record<string, Record<MarketingAssetLocale, ImageMetadata>>;
 
 const iphoneFrames = {
-  assistant: { en: assistantIphoneEn, "zh-hans": assistantIphoneZhHans, "zh-hant": assistantIphoneZhHant },
-  ssh: { en: sshIphoneEn, "zh-hans": sshIphoneZhHans, "zh-hant": sshIphoneZhHant },
-  vault: { en: vaultIphoneEn, "zh-hans": vaultIphoneZhHans, "zh-hant": vaultIphoneZhHant },
+  assistant: { en: assistantIphoneEn, "zh-hans": assistantIphoneZhHans, "zh-hant": assistantIphoneZhHant, ja: assistantIphoneJa },
+  ssh: { en: sshIphoneEn, "zh-hans": sshIphoneZhHans, "zh-hant": sshIphoneZhHant, ja: sshIphoneJa },
+  vault: { en: vaultIphoneEn, "zh-hans": vaultIphoneZhHans, "zh-hant": vaultIphoneZhHant, ja: vaultIphoneJa },
 } satisfies Record<string, Record<MarketingAssetLocale, ImageMetadata>>;
 
 const ipadFrames = {
-  metrics: { en: metricsIpadEn, "zh-hans": metricsIpadZhHans, "zh-hant": metricsIpadZhHant },
-  sftp: { en: sftpIpadEn, "zh-hans": sftpIpadZhHans, "zh-hant": sftpIpadZhHant },
-  vault: { en: vaultIpadEn, "zh-hans": vaultIpadZhHans, "zh-hant": vaultIpadZhHant },
+  metrics: { en: metricsIpadEn, "zh-hans": metricsIpadZhHans, "zh-hant": metricsIpadZhHant, ja: metricsIpadJa },
+  sftp: { en: sftpIpadEn, "zh-hans": sftpIpadZhHans, "zh-hant": sftpIpadZhHant, ja: sftpIpadJa },
+  vault: { en: vaultIpadEn, "zh-hans": vaultIpadZhHans, "zh-hant": vaultIpadZhHant, ja: vaultIpadJa },
 } satisfies Record<string, Record<MarketingAssetLocale, ImageMetadata>>;
 
 const workspaceFrames = {
   en: workspaceMacEn,
   "zh-hans": workspaceMacZhHans,
   "zh-hant": workspaceMacZhHant,
+  ja: workspaceMacJa,
 } satisfies Record<MarketingAssetLocale, ImageMetadata>;
 
 export function iphoneFrame(feature: keyof typeof iphoneFrames, locale: MarketingAssetLocale): ImageMetadata {

@@ -10,7 +10,7 @@ import { termindPricing } from "../lib/pricing";
 
 interface Props { locale?: SiteLocale; }
 const { locale = "en" } = Astro.props;
-const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 const languageAsset = assetLocale(locale);
 const macWorkspace = workspaceFrame(languageAsset);
 ---
@@ -74,7 +74,7 @@ const macWorkspace = workspaceFrame(languageAsset);
 
     <article class="story-row phone-row">
       <div class="story-copy"><span class="feature-no">01 / IPHONE · SSH</span><h3>{c("A real terminal, wherever you are.", "真正的终端，随手即达。")}</h3><p>{c("A full terminal, made for touch. Find output, recall a snippet, and keep working wherever you are.", "为触控而生的完整终端。搜索输出、调用命令片段，随时接着工作。")}</p><ul><li>{c("Touch-first terminal controls", "为触控优化的终端控制")}</li><li>{c("Snippets and command history", "命令片段与历史记录")}</li><li>{c("Command Generator never presses Return", "命令生成器绝不替你按下回车")}</li></ul></div>
-      <div class="product-field phone-field"><figure class="device iphone feature-phone"><ScreenshotPicture src={iphoneFrame("ssh", languageAsset)} width={765} loading="lazy" alt={c("SSH terminal with production service output on iPhone", "iPhone 上显示生产服务输出的 SSH 终端")} /></figure><span class="field-note">iPHONE · PORTRAIT</span></div>
+      <div class="product-field phone-field"><figure class="device iphone feature-phone"><ScreenshotPicture src={iphoneFrame("ssh", languageAsset)} width={765} loading="lazy" alt={c("SSH terminal with production service output on iPhone", "iPhone 上显示生产服务输出的 SSH 终端")} /></figure><span class="field-note">{c("iPHONE · PORTRAIT", "iPHONE · 竖屏")}</span></div>
     </article>
 
     <article class="story-row reverse unfolded-row">
@@ -117,7 +117,7 @@ const macWorkspace = workspaceFrame(languageAsset);
 
   <section class="mcp-highlight shell" id="mcp">
     <div class="mcp-copy">
-      <p class="eyebrow">MAC ONLY · BUILT-IN MCP SERVER</p>
+      <p class="eyebrow">{c("MAC ONLY · BUILT-IN MCP SERVER", "MAC 专属 · 内置 MCP 服务器")}</p>
       <h2 class="display">{c("Give local AI", "让本地 AI 调用")}<br /><em>{c("secure remote tools.", "安全的远程能力。")}</em></h2>
       <p>{c(
         "Turn on Termind’s built-in MCP server and local clients can list saved hosts, execute SSH commands, and read or write through SFTP. Expose tools one by one, keep access on loopback by default, and retain an audit trail for every external call.",
@@ -207,7 +207,7 @@ const macWorkspace = workspaceFrame(languageAsset);
 
   </div>
 
-  <section class="pro shell"><div><p class="eyebrow">TERMIND PRO</p><h2 class="display">{c("Subscribe annually—or keep it forever.", "按年订阅，或永久拥有。")}</h2><p>{c("Core SSH, Telnet, SFTP, terminal uploads, snippets, Command Generator, and port forwarding stay free, as do serial sessions, multi-pane workspaces, and input broadcasting on Mac. Annual or lifetime Pro unlocks built-in Tailscale, the AI Assistant with optional Hermes Memory, monitoring for more than 3 servers, remote MCP clients, iCloud sync, and the built-in MCP server on Mac.", "基础 SSH、Telnet、SFTP、终端上传、命令片段、命令生成器、端口转发，以及 Mac 串口、多窗格工作区和广播输入永久免费。年度订阅或永久版可解锁内置 Tailscale、支持持久化记忆的 AI 助手、超过 3 台服务器的监控、远程 MCP 客户端、iCloud 同步，以及 Mac 内置 MCP 服务器。")}</p></div><aside><strong>{c(`${termindPricing.annual}/year · ${termindPricing.lifetime} lifetime`, `${termindPricing.annual}/年 · ${termindPricing.lifetime} 永久版`)}</strong><span>{c("Regional App Store pricing · Family Sharing", "以 App Store 地区价格为准 · 支持家庭共享")}</span><small>{c("Available offers are shown by the App Store. AI provider costs are separate.", "可用优惠以 App Store 当前展示为准；AI 提供方费用另计。")}</small><a href={localizedPath(locale, "/pricing/")}>{c("See all plans", "查看全部方案")} <span aria-hidden="true">→</span></a></aside></section>
+  <section class="pro shell"><div><p class="eyebrow">TERMIND PRO</p><h2 class="display">{c("Subscribe annually—or keep it forever.", "按年订阅，或永久拥有。")}</h2><p>{c("Core SSH, Telnet, SFTP, terminal uploads, snippets, Command Generator, and port forwarding stay free, as do serial sessions, multi-pane workspaces, and input broadcasting on Mac. Annual or lifetime Pro unlocks built-in Tailscale, the AI Assistant with optional Hermes Memory, monitoring for more than 3 servers, remote MCP clients, iCloud sync, and the built-in MCP server on Mac.", "基础 SSH、Telnet、SFTP、终端上传、命令片段、命令生成器、端口转发，以及 Mac 串口、多窗格工作区和广播输入永久免费。年度订阅或永久版可解锁内置 Tailscale、支持持久化记忆的 AI 助手、超过 3 台服务器的监控、远程 MCP 客户端、iCloud 同步，以及 Mac 内置 MCP 服务器。")}</p></div><aside><strong>{locale === "ja" ? `${termindPricing.annual}/年 · ${termindPricing.lifetime} 買い切り` : c(`${termindPricing.annual}/year · ${termindPricing.lifetime} lifetime`, `${termindPricing.annual}/年 · ${termindPricing.lifetime} 永久版`)}</strong><span>{c("Regional App Store pricing · Family Sharing", "以 App Store 地区价格为准 · 支持家庭共享")}</span><small>{c("Available offers are shown by the App Store. AI provider costs are separate.", "可用优惠以 App Store 当前展示为准；AI 提供方费用另计。")}</small><a href={localizedPath(locale, "/pricing/")}>{c("See all plans", "查看全部方案")} <span aria-hidden="true">→</span></a></aside></section>
 
   <TelegramOffer locale={locale} />
 
@@ -236,7 +236,20 @@ const macWorkspace = workspaceFrame(languageAsset);
     <img src="/brand_mark.svg" width="72" height="72" alt="" />
     <h2 class="display">{c("Ready when you are.", "随时，开始。")}</h2>
     <p>{c("Your next connection starts here.", "下一次连接，从这里开始。")}</p>
-    <a class="closing-download" href="https://apps.apple.com/app/apple-store/id6805856690">{c("Download on the App Store", "在 App Store 下载")} <span aria-hidden="true">↗</span></a>
+    <a
+          class="app-store-button"
+          href="https://apps.apple.com/app/apple-store/id6805856690"
+          aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
+        >
+          <span class="apple" aria-hidden="true"></span>
+          <span class:list={["store-copy", { chinese: locale !== "en" }]}>
+            {locale === "en" ? (
+              <><small>Download on the</small><strong>App Store</strong></>
+            ) : (
+              <><strong>App Store</strong><small>{c("", "下载")}</small></>
+            )}
+          </span>
+        </a>
   </section>
 </BaseLayout>
 
@@ -267,9 +280,8 @@ const macWorkspace = workspaceFrame(languageAsset);
   .closing { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; padding-block: 7rem 2rem; text-align: center; }
   .closing h2 { font-size: clamp(3rem,6vw,5.5rem); }
   .closing p { margin: 0; color: var(--muted); }
-  .closing-download { display: inline-flex; gap: 2rem; padding: 1rem 1.5rem; border-radius: 999px; background: var(--ink); color: white; text-decoration: none; font-size: .85rem; }
-  .app-store-button, .closing-download { transition: transform 180ms ease, background 180ms ease; }
-  .app-store-button:hover, .closing-download:hover { transform: translateY(-2px); background: #3c5363; }
+  .app-store-button { transition: transform 180ms ease, background 180ms ease; }
+  .app-store-button:hover { transform: translateY(-2px); background: #3c5363; }
   @media (max-width: 980px) {
     .hero { gap: 3rem; }
     .device-composition { width: 100%; }

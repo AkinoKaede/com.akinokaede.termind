@@ -1,6 +1,7 @@
+import { japanese } from "./ja";
 import OpenCC from "opencc-js";
 
-export type SiteLocale = "en" | "zh-Hans" | "zh-Hant";
+export type SiteLocale = "en" | "zh-Hans" | "zh-Hant" | "ja";
 
 export const siteOrigin = "https://termind.akinokaede.com";
 
@@ -54,22 +55,25 @@ function taiwanTraditional(text: string): string {
   return taiwanTerms.reduce((value, [source, target]) => value.replaceAll(source, target), toTaiwanTraditional(text));
 }
 
-export function copy(locale: SiteLocale, english: string, simplified: string): string {
+export function copy(locale: SiteLocale, english: string, simplified: string, japaneseText?: string): string {
   if (locale === "en") return english;
+  if (locale === "ja") return japaneseText ?? japanese[english] ?? english;
   return locale === "zh-Hant" ? taiwanTraditional(simplified) : simplified;
 }
 
 export function localizedPath(locale: SiteLocale, pagePath = "/"): string {
   const path = pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
   if (locale === "en") return path;
+  if (locale === "ja") return path === "/" ? "/ja/" : `/ja${path}`;
   const prefix = locale === "zh-Hans" ? "/zh-hans" : "/zh-hant";
   return path === "/" ? `${prefix}/` : `${prefix}${path}`;
 }
 
-export function assetLocale(locale: SiteLocale): "en" | "zh-hans" | "zh-hant" {
+export function assetLocale(locale: SiteLocale): "en" | "zh-hans" | "zh-hant" | "ja" {
+  if (locale === "ja") return "ja";
   if (locale === "zh-Hans") return "zh-hans";
   if (locale === "zh-Hant") return "zh-hant";
   return "en";
 }
 
-export const supportedLocales: SiteLocale[] = ["en", "zh-Hans", "zh-Hant"];
+export const supportedLocales: SiteLocale[] = ["en", "zh-Hans", "zh-Hant", "ja"];

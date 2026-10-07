@@ -7,15 +7,15 @@ import type { CompetitorContent } from "./types";
 // The maintainer confirmed the missing Tailscale, monitoring, terminal-upload and MCP features,
 // plus Starter hardware-key availability and the iOS credential compatibility limitation.
 export function getTermius(locale: SiteLocale): CompetitorContent {
-  const c = (english: string, simplified: string) => copy(locale, english, simplified);
+  const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
     name: "Termius",
     owner: "Termius Corporation",
     attribution: c("Termius is a trademark of Termius Corporation.", "Termius 是 Termius Corporation 的商标。"),
     description: c("Compare Termind and Termius across SSH and SFTP, parallel transfers, Tailscale integration, AI, server monitoring, sync, and pricing.", "对比 Termind 与 Termius 的 SSH 与 SFTP、并行传输、Tailscale 集成、AI、服务器监控、同步与价格。"),
-    summary: c(`Termind Pro includes an AI Assistant and built-in Tailscale for ${termindPricing.annual}/year. Termius Pro costs $120/year, supports Windows, Linux, and Android, and offers separate team plans.`, `Termind Pro 包含 AI 助手与内置 Tailscale，年费 ${termindPricing.annual}。Termius Pro 年费 $120，支持 Windows、Linux 和 Android，另有团队协作方案。`),
+    summary: c(`Termind Pro includes an AI Assistant and built-in Tailscale for ${termindPricing.annual}/year. Termius Pro costs $120/year, supports Windows, Linux, and Android, and offers separate team plans.`, `Termind Pro 包含 AI 助手与内置 Tailscale，年费 ${termindPricing.annual}。Termius Pro 年费 $120，支持 Windows、Linux 和 Android，另有团队协作方案。`, `Termind Pro は年額 ${termindPricing.annual} で AI アシスタントと内蔵 Tailscale を利用できます。Termius Pro は年額 $120 で、Windows、Linux、Android にも対応し、チーム向けプランを別途提供しています。`),
     termindRecommendationTitle: c("Lower annual cost, with a lifetime option.", "年费更低，也可一次买断。"),
-    termindRecommendation: c(`Termind Pro is ${termindPricing.annual}/year, compared with $120/year for Termius Pro. The ${termindPricing.lifetime} lifetime option also includes the task-running AI Assistant, built-in Tailscale, and multi-connection SFTP.`, `Termind Pro 每年 ${termindPricing.annual}，Termius Pro 每年 $120。也可选择 ${termindPricing.lifetime} 永久版，包含可执行任务的 AI 助手、内置 Tailscale 与多连接 SFTP。`),
+    termindRecommendation: c(`Termind Pro is ${termindPricing.annual}/year, compared with $120/year for Termius Pro. The ${termindPricing.lifetime} lifetime option also includes the task-running AI Assistant, built-in Tailscale, and multi-connection SFTP.`, `Termind Pro 每年 ${termindPricing.annual}，Termius Pro 每年 $120。也可选择 ${termindPricing.lifetime} 永久版，包含可执行任务的 AI 助手、内置 Tailscale 与多连接 SFTP。`, `Termind Pro は年額 ${termindPricing.annual}、Termius Pro は年額 $120 です。Termind には ${termindPricing.lifetime} の買い切りプランもあり、タスクを実行する AI アシスタント、内蔵 Tailscale、複数接続の SFTP が含まれます。`),
     recommendationTitle: c("Cross-platform and team access.", "跨平台与团队协作。"),
     recommendation: c("A fit for Windows, Linux, or Android users, and teams that need shared vaults and live terminal collaboration.", "适合同时使用 Windows、Linux 或 Android，或需要共享保管库和终端实时协作的团队。"),
     features: {

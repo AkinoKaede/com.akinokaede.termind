@@ -12,15 +12,15 @@ import type { CompetitorContent } from "./types";
 // https://help.panic.com/prompt/prompt-vpn-on-demand/ (uses a configured OS VPN)
 // The maintainer confirmed that Prompt 3 has no built-in AI features or MCP server.
 export function getPrompt3(locale: SiteLocale): CompetitorContent {
-  const c = (english: string, simplified: string) => copy(locale, english, simplified);
+  const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
     name: "Prompt 3",
     owner: "Panic Inc.",
     attribution: c("Prompt is a registered trademark of Panic Inc.", "Prompt 是 Panic Inc. 的注册商标。"),
     description: c("Compare Termind and Prompt 3: SSH and Mosh, AI, FIDO2 hardware keys, port forwarding, Tailscale, sync, and pricing.", "对比 Termind 与 Prompt 3 的 SSH 与 Mosh、AI、FIDO2 硬件密钥、端口转发、Tailscale、同步及价格。"),
-    summary: c(`Termind combines SFTP, an AI Assistant, and Tailscale, with lifetime Pro at ${termindPricing.lifetime}. Prompt 3 supports Mosh and Eternal Terminal, with a $49.99 one-time purchase.`, `Termind 提供 SFTP、AI 助手与内置 Tailscale，Pro 永久版 ${termindPricing.lifetime}。Prompt 3 支持 Mosh 与 Eternal Terminal，一次购买 $49.99。`),
+    summary: c(`Termind combines SFTP, an AI Assistant, and Tailscale, with lifetime Pro at ${termindPricing.lifetime}. Prompt 3 supports Mosh and Eternal Terminal, with a $49.99 one-time purchase.`, `Termind 提供 SFTP、AI 助手与内置 Tailscale，Pro 永久版 ${termindPricing.lifetime}。Prompt 3 支持 Mosh 与 Eternal Terminal，一次购买 $49.99。`, `Termind は SFTP、AI アシスタント、Tailscale を搭載し、Pro は ${termindPricing.lifetime} の買い切りで利用できます。Prompt 3 は Mosh と Eternal Terminal に対応し、買い切り価格は $49.99 です。`),
     termindRecommendationTitle: c("Lower purchase price, FIDO2 creation on iOS.", "买断价更低，iOS 也能创建密钥。"),
-    termindRecommendation: c(`Termind Pro is ${termindPricing.lifetime} lifetime or ${termindPricing.annual}/year; Prompt 3 is $49.99 one-time or $9.99/year. Termind also creates ECDSA-SK keys on iOS and offers an AI Assistant and built-in Tailscale with Pro.`, `Termind Pro 为 ${termindPricing.lifetime} 永久版或 ${termindPricing.annual}/年；Prompt 3 为 $49.99 一次购买或 $9.99/年。Termind 还可在 iOS 创建 ECDSA-SK 密钥，Pro 提供 AI 助手与内置 Tailscale。`),
+    termindRecommendation: c(`Termind Pro is ${termindPricing.lifetime} lifetime or ${termindPricing.annual}/year; Prompt 3 is $49.99 one-time or $9.99/year. Termind also creates ECDSA-SK keys on iOS and offers an AI Assistant and built-in Tailscale with Pro.`, `Termind Pro 为 ${termindPricing.lifetime} 永久版或 ${termindPricing.annual}/年；Prompt 3 为 $49.99 一次购买或 $9.99/年。Termind 还可在 iOS 创建 ECDSA-SK 密钥，Pro 提供 AI 助手与内置 Tailscale。`, `Termind Pro は買い切り ${termindPricing.lifetime} または年額 ${termindPricing.annual}、Prompt 3 は買い切り $49.99 または年額 $9.99 です。Termind は iOS での ECDSA-SK 鍵の作成にも対応し、Pro では AI アシスタントと内蔵 Tailscale を利用できます。`),
     recommendationTitle: c("Mosh and Eternal Terminal.", "Mosh 与 Eternal Terminal。"),
     recommendation: c("A fit for changing networks, YubiKey PIV or Ed25519-SK authentication, and terminal access on Apple Vision Pro.", "适合网络频繁变化、使用 YubiKey PIV 或 Ed25519-SK 认证，或需要 Apple Vision Pro 终端的场景。"),
     features: {

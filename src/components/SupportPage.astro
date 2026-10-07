@@ -3,7 +3,7 @@ import { copy, type SiteLocale } from "../lib/i18n";
 
 interface Props { locale: SiteLocale; }
 const { locale } = Astro.props;
-const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 ---
 
 <div class="support shell">

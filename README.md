@@ -23,6 +23,7 @@ npm run preview
 Cloudflare Pages builds `main` from the repository root with `npm run build` and serves `dist/`.
 
 English uses `/`, Simplified Chinese `/zh-hans/`, and Traditional Chinese `/zh-hant/`.
+All Japanese pages are available under `/ja/`, including pricing, comparisons, FAQ, security, privacy, and support.
 Legacy `/zh/` routes redirect to Simplified Chinese.
 
 `src/lib/marketingImages.ts` selects images from `assets/`; Astro generates responsive

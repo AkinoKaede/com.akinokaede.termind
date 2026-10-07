@@ -4,7 +4,7 @@ import { termindPricing } from "../lib/pricing";
 
 interface Props { locale: SiteLocale; }
 const { locale } = Astro.props;
-const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 
 const freeFeatures = [
   c("SSH, Telnet, SFTP, and terminal uploads", "SSH、Telnet、SFTP 与终端上传"),
@@ -68,7 +68,7 @@ const plans = [
         <p class="plan-description">{plan.description}</p>
         <p class="price"><strong>{plan.price}</strong><span>{plan.unit}</span></p>
         <p class="billing">{plan.billing}</p>
-        <a class="plan-button" href={termindPricing.appStoreURL} aria-label={c(`View Termind Pro ${plan.name} on the App Store`, `在 App Store 查看 Termind Pro ${plan.name}`)}>{c("View on the App Store", "在 App Store 查看")} <span aria-hidden="true">↗</span></a>
+        <a class="plan-button" href={termindPricing.appStoreURL} aria-label={c(`View Termind Pro ${plan.name} on the App Store`, `在 App Store 查看 Termind Pro ${plan.name}`, `App Store で Termind Pro の${plan.name}を表示`)}>{c("View on the App Store", "在 App Store 查看")} <span aria-hidden="true">↗</span></a>
         <p class="includes-free">{c("Everything in Free, plus:", "包含所有免费功能，并提供：")}</p>
         <ul role="list">{plan.points.map((point) => <li>{point}</li>)}</ul>
         <a class="feature-link" href="#pro-features">{c("Explore all Pro features", "查看全部 Pro 功能")} <span aria-hidden="true">↓</span></a>

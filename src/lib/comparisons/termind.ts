@@ -2,7 +2,7 @@ import { copy, type SiteLocale } from "../i18n";
 import { termindPricing } from "../pricing";
 
 export function getTermindFeatures(locale: SiteLocale) {
-  const c = (english: string, simplified: string) => copy(locale, english, simplified);
+  const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
     "sftp": {
       id: "sftp",
@@ -78,7 +78,7 @@ export function getTermindFeatures(locale: SiteLocale) {
       id: "plans",
       feature: c("Paid plans", "付费方案"),
       benefit: c("Compare recurring and one-time costs.", "比较订阅与一次购买的费用。"),
-      termind: c(`${termindPricing.annual}/year or ${termindPricing.lifetime} lifetime`, `${termindPricing.annual}/年，或 ${termindPricing.lifetime} 永久版`),
+      termind: c(`${termindPricing.annual}/year or ${termindPricing.lifetime} lifetime`, `${termindPricing.annual}/年，或 ${termindPricing.lifetime} 永久版`, `年額 ${termindPricing.annual} または買い切り ${termindPricing.lifetime}`),
       termindNote: c("Annual and lifetime plans unlock the same Pro features and include Family Sharing. AI model usage is billed separately.", "年度订阅与永久版解锁相同的 Pro 功能，均支持家庭共享。AI 模型用量费用另计。"),
     },
     "teams": {

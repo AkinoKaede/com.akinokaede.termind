@@ -4,7 +4,7 @@ import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
 
 interface Props { locale: SiteLocale; }
 const { locale } = Astro.props;
-const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 
 ---
 
@@ -55,7 +55,7 @@ const c = (english: string, simplified: string) => copy(locale, english, simplif
     )}</figcaption>
   </figure>
     <p class="tailscale-credit">
-      {c("Termind’s built-in Tailscale support is powered by ", "Termind 的内置 Tailscale 功能基于 ")}<a href="https://github.com/AkinoKaede/libtailscale-spm">libtailscale-spm</a>{c(".", " 实现。")}
+      {c("Termind’s built-in Tailscale support is powered by ", "Termind 的内置 Tailscale 功能基于 ")}<a href="https://github.com/AkinoKaede/libtailscale-spm">libtailscale-spm</a>{locale === "ja" ? "を使用しています。" : c(".", " 实现。")}
     </p>
   <p class="tailscale-footnote">{c(
     "Tailscale is a trademark of Tailscale Inc. The name is used here only to describe compatibility. Termind is not affiliated with, sponsored by, or endorsed by Tailscale Inc.",

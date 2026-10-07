@@ -6,13 +6,13 @@ import { getComparison, type ComparisonSlug } from "../lib/comparisons";
 
 interface Props { locale: SiteLocale; slug: ComparisonSlug; }
 const { locale, slug } = Astro.props;
-const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 const { competitor, rows } = getComparison(slug, locale);
-const attribution = competitor.attribution ?? c(`${competitor.name} is a product of ${competitor.owner}.`, `${competitor.name} 由 ${competitor.owner} 开发。`);
+const attribution = competitor.attribution ?? c(`${competitor.name} is a product of ${competitor.owner}.`, `${competitor.name} 由 ${competitor.owner} 开发。`, `${competitor.name} は ${competitor.owner} の製品です。`);
 ---
 
 <BaseLayout
-  title={c(`Termind vs. ${competitor.name} — Compare SSH clients`, `Termind 与 ${competitor.name} — SSH 客户端对比`)}
+  title={c(`Termind vs. ${competitor.name} — Compare SSH clients`, `Termind 与 ${competitor.name} — SSH 客户端对比`, `Termind と ${competitor.name} — SSH クライアント比較`)}
   description={competitor.description}
   locale={locale}
   pagePath={`/compare/${slug}/`}
@@ -38,7 +38,7 @@ const attribution = competitor.attribution ?? c(`${competitor.name} is a product
         <p>{competitor.termindRecommendation}</p>
       </div>
       <div>
-        <span class="take-label">{c(`CONSIDER ${competitor.name.toUpperCase()} IF YOU NEED`, `考虑 ${competitor.name.toUpperCase()}，如果你需要`)}</span>
+        <span class="take-label">{c(`CONSIDER ${competitor.name.toUpperCase()} IF YOU NEED`, `考虑 ${competitor.name.toUpperCase()}，如果你需要`, `こんな方には ${competitor.name} もおすすめ`)}</span>
         <h2>{competitor.recommendationTitle}</h2>
         <p>{competitor.recommendation}</p>
       </div>
@@ -72,7 +72,7 @@ const attribution = competitor.attribution ?? c(`${competitor.name} is a product
       <div><p class="eyebrow">{c("MAKE IT YOUR WORKSPACE", "开始你的远程工作")}</p><h2 class="display">{c("Try Termind for yourself.", "亲手试试 Termind。")}</h2><p>{c("Start with free SSH, SFTP, and port forwarding. No Termind account needed.", "从免费的 SSH、SFTP 和端口转发开始，无需注册 Termind 账户。")}</p></div>
       <a href={termindPricing.appStoreURL}>{c("Download on the App Store", "在 App Store 下载")} <span aria-hidden="true">↗</span></a>
     </section>
-    <p class="trademark-note">{attribution} {c(`This comparison is published by Termind and is not affiliated with or endorsed by ${competitor.owner}.`, `本对比由 Termind 发布，与 ${competitor.owner} 无隶属或背书关系。`)}</p>
+    <p class="trademark-note">{attribution} {c(`This comparison is published by Termind and is not affiliated with or endorsed by ${competitor.owner}.`, `本对比由 Termind 发布，与 ${competitor.owner} 无隶属或背书关系。`, `この比較は Termind が公開したものであり、${competitor.owner} との提携や同社による推奨を示すものではありません。`)}</p>
   </article>
 </BaseLayout>
 

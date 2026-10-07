@@ -10,7 +10,7 @@ const { locale = "en" } = Astro.props;
 
 <BaseLayout
   title={copy(locale, "Pricing — Termind", "价格 — Termind")}
-  description={copy(locale, `Start with free SSH, SFTP, and port forwarding. Termind Pro is ${termindPricing.annual}/year or ${termindPricing.lifetime} for lifetime access on macOS and iOS.`, `免费使用 SSH、SFTP 与端口转发。Termind Pro 年订阅 ${termindPricing.annual}，永久版 ${termindPricing.lifetime}，适用于 macOS 与 iOS。`)}
+  description={copy(locale, `Start with free SSH, SFTP, and port forwarding. Termind Pro is ${termindPricing.annual}/year or ${termindPricing.lifetime} for lifetime access on macOS and iOS.`, `免费使用 SSH、SFTP 与端口转发。Termind Pro 年订阅 ${termindPricing.annual}，永久版 ${termindPricing.lifetime}，适用于 macOS 与 iOS。`, `SSH、SFTP、ポート転送を無料で。macOS と iOS で使える Termind Pro は年額 ${termindPricing.annual} または買い切り ${termindPricing.lifetime} です。`)}
   locale={locale}
   pagePath="/pricing/"
 >

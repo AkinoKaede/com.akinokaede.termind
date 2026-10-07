@@ -11,14 +11,14 @@ import type { CompetitorContent } from "./types";
 // US App Store: https://apps.apple.com/us/app/servercat-ssh-terminal/id1501532023?l=en
 // Regular Premium: $5.99/year or $18.99 lifetime. The $5.99 upgrade discount is a separate product.
 export function getServerCat(locale: SiteLocale): CompetitorContent {
-  const c = (english: string, simplified: string) => copy(locale, english, simplified);
+  const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
     name: "ServerCat",
     owner: "Early Moon, LLC",
     description: c("Compare Termind and ServerCat: server monitoring, SSH, Docker management, AI, hardware keys, Tailscale, sync, and pricing.", "对比 Termind 与 ServerCat 的服务器监控、SSH、Docker 管理、AI、硬件密钥、Tailscale、同步及价格。"),
-    summary: c(`Both offer free monitoring. Termind includes SSH and SFTP for free, with Pro at ${termindPricing.annual}/year; ServerCat’s terminal requires Premium at $5.99/year.`, `两款都有免费监控。Termind 的 SSH 与 SFTP 免费，Pro 年费 ${termindPricing.annual}；ServerCat 终端需要 Premium，年费 $5.99。`),
+    summary: c(`Both offer free monitoring. Termind includes SSH and SFTP for free, with Pro at ${termindPricing.annual}/year; ServerCat’s terminal requires Premium at $5.99/year.`, `两款都有免费监控。Termind 的 SSH 与 SFTP 免费，Pro 年费 ${termindPricing.annual}；ServerCat 终端需要 Premium，年费 $5.99。`, `どちらも無料で監視できます。Termind は SSH と SFTP が無料で、Pro は年額 ${termindPricing.annual}。ServerCat のターミナルには年額 $5.99 の Premium が必要です。`),
     termindRecommendationTitle: c("Free terminal access, lower upgrade costs.", "终端免费，升级费用更低。"),
-    termindRecommendation: c(`Termind Pro costs ${termindPricing.annual}/year or ${termindPricing.lifetime} lifetime; ServerCat Premium costs $5.99/year or $18.99 lifetime. Termind also includes SSH, SFTP, and FIDO2 authentication for free, with AI and Tailscale in Pro.`, `Termind Pro 为 ${termindPricing.annual}/年或 ${termindPricing.lifetime} 永久版；ServerCat Premium 为 $5.99/年或 $18.99 永久版。Termind 免费提供 SSH、SFTP 与 FIDO2 认证，Pro 另含 AI 和 Tailscale。`),
+    termindRecommendation: c(`Termind Pro costs ${termindPricing.annual}/year or ${termindPricing.lifetime} lifetime; ServerCat Premium costs $5.99/year or $18.99 lifetime. Termind also includes SSH, SFTP, and FIDO2 authentication for free, with AI and Tailscale in Pro.`, `Termind Pro 为 ${termindPricing.annual}/年或 ${termindPricing.lifetime} 永久版；ServerCat Premium 为 $5.99/年或 $18.99 永久版。Termind 免费提供 SSH、SFTP 与 FIDO2 认证，Pro 另含 AI 和 Tailscale。`, `Termind Pro は年額 ${termindPricing.annual} または買い切り ${termindPricing.lifetime}、ServerCat Premium は年額 $5.99 または買い切り $18.99 です。Termind は SSH、SFTP、FIDO2 認証を無料で提供し、Pro では AI と Tailscale も利用できます。`),
     recommendationTitle: c("Linux monitoring and Docker.", "Linux 监控与 Docker 管理。"),
     recommendation: c("A fit for detailed resource charts and a dedicated container dashboard. Premium adds the SSH terminal, sync, and container management.", "适合集中查看资源图表与容器状态；Premium 增加 SSH 终端、同步和容器管理。"),
     features: {
