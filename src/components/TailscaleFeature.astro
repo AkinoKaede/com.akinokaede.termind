@@ -48,7 +48,7 @@ const c = (english: string, simplified: string, japaneseText?: string) => copy(l
         ))}
       </div>
     </div>
-    <div class="tailnet-services"><span>SSH</span><span>SFTP</span><span>Exit Node</span></div>
+    <div class="tailnet-services"><span>SSH</span><span>SFTP</span><span>{c("Exit Node", "出口节点", "出口ノード")}</span></div>
     <figcaption>{c(
       "Enable Tailscale SSH on the servers you want to reach. Your Tailnet’s SSH policy controls access.",
       "请在目标服务器上启用 Tailscale SSH，访问权限由你的 Tailnet SSH 策略控制。"

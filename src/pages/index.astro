@@ -13,6 +13,17 @@ const { locale = "en" } = Astro.props;
 const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
 const languageAsset = assetLocale(locale);
 const macWorkspace = workspaceFrame(languageAsset);
+const latinBadge = locale === "en" || locale === "de" || locale === "fr";
+const downloadLabel = locale === "de" ? "Laden im" : locale === "fr" ? "Télécharger dans" : "Download on the";
+const priceSummary = {
+  en: `${termindPricing.annual}/year · ${termindPricing.lifetime} lifetime`,
+  ja: `${termindPricing.annual}/年 · ${termindPricing.lifetime} 買い切り`,
+  ko: `${termindPricing.annual}/년 · ${termindPricing.lifetime} 평생`,
+  de: `${termindPricing.annual}/Jahr · ${termindPricing.lifetime} einmalig`,
+  fr: `${termindPricing.annual}/an · ${termindPricing.lifetime} à vie`,
+  "zh-Hans": `${termindPricing.annual}/年 · ${termindPricing.lifetime} 永久版`,
+  "zh-Hant": `${termindPricing.annual}/年 · ${termindPricing.lifetime} 永久版`,
+}[locale];
 ---
 
 <BaseLayout
@@ -41,9 +52,9 @@ const macWorkspace = workspaceFrame(languageAsset);
           aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
         >
           <span class="apple" aria-hidden="true"></span>
-          <span class:list={["store-copy", { chinese: locale !== "en" }]}>
-            {locale === "en" ? (
-              <><small>Download on the</small><strong>App Store</strong></>
+          <span class:list={["store-copy", { chinese: !latinBadge }]}>
+            {latinBadge ? (
+              <><small>{downloadLabel}</small><strong>App Store</strong></>
             ) : (
               <><strong>App Store</strong><small>{c("", "下载")}</small></>
             )}
@@ -83,13 +94,13 @@ const macWorkspace = workspaceFrame(languageAsset);
     </article>
 
     <article class="story-row metrics-row">
-    <div class="story-copy"><span class="feature-no">03 / IPAD · METRICS</span><h3>{c("Your servers, at a glance.", "服务器状态，一眼即知。")}</h3><p>{c("CPU, memory, disks, and processes in one view. Spot an issue and act over the same SSH connection.", "CPU、内存、磁盘与进程同屏呈现。发现异常，沿同一 SSH 连接继续处理。")}</p></div>
+    <div class="story-copy"><span class="feature-no">{c("03 / IPAD · METRICS", "03 / IPAD · 监控", "03 / IPAD · メトリクス")}</span><h3>{c("Your servers, at a glance.", "服务器状态，一眼即知。")}</h3><p>{c("CPU, memory, disks, and processes in one view. Spot an issue and act over the same SSH connection.", "CPU、内存、磁盘与进程同屏呈现。发现异常，沿同一 SSH 连接继续处理。")}</p></div>
       <div class="product-field wide-field"><figure class="device ipad feature-ipad"><ScreenshotPicture src={ipadFrame("metrics", languageAsset)} width={1480} loading="lazy" alt={c("Server metrics and processes on iPad", "iPad 上的服务器监控与进程列表")} /></figure><div class="metric-pulse"><i></i><span>{c("Live over your SSH connection", "通过你的 SSH 连接实时采样")}</span></div></div>
     </article>
 
     <article class="story-row reverse assistant-row">
       <div class="story-copy">
-        <span class="feature-no">04 / IPHONE DUO · ASSISTANT</span>
+        <span class="feature-no">{c("04 / IPHONE DUO · ASSISTANT", "04 / IPHONE DUO · 助手", "04 / IPHONE DUO · アシスタント")}</span>
         <h3>{c("Takes action.", "能行动，")}<br />{c("Remembers.", "也有记忆。")}</h3>
         <p>{c("Investigate issues and take action with AI. Bring your own model key. You choose what it can do.", "让 AI 协助排查问题、执行操作。使用你自己的模型密钥，行动权限由你决定。")}</p>
         <p>{c("Optional Hermes Memory remembers context between conversations. Off by default, stored on this device, and yours to review, edit, or delete.", "按需开启 Hermes Memory，让背景与偏好延续到新会话。默认关闭，仅存于当前设备，可随时查看、编辑或清除。")}</p>
@@ -101,17 +112,17 @@ const macWorkspace = workspaceFrame(languageAsset);
           )}
         </p>
       </div>
-      <div class="product-field"><figure class="device feature-duo-outer"><ScreenshotPicture src={duoOuterFrame("assistant", languageAsset)} width={1000} loading="lazy" alt={c("Permission-aware AI Assistant on the iPhone Duo outer display", "iPhone Duo 外屏上会请求授权的 AI Assistant")} /></figure><span class="field-note">BYOK · ASK FIRST</span></div>
+      <div class="product-field"><figure class="device feature-duo-outer"><ScreenshotPicture src={duoOuterFrame("assistant", languageAsset)} width={1000} loading="lazy" alt={c("Permission-aware AI Assistant on the iPhone Duo outer display", "iPhone Duo 外屏上会请求授权的 AI Assistant")} /></figure><span class="field-note">{c("BYOK · ASK FIRST", "自带密钥 · 先询问", "BYOK · 実行前に確認")}</span></div>
     </article>
 
     <article class="story-row vault-row">
-      <div class="story-copy"><span class="feature-no">05 / VAULT · ICLOUD</span><h3>{c("Your Vault, protected by design.", "你的保管库，安全为先。")}</h3><p>{c("Keep hosts, snippets, Metrics, and settings—including Connections preferences—in sync through your private iCloud database, while passwords and keys stay separately protected by Keychain.", "主机、命令片段、监控与设置（包括连接偏好）通过你的私有 iCloud 数据库同步；密码和密钥始终由钥匙串独立保护。")}</p></div>
+      <div class="story-copy"><span class="feature-no">{c("05 / VAULT · ICLOUD", "05 / 保管库 · ICLOUD", "05 / 保管庫 · ICLOUD")}</span><h3>{c("Your Vault, protected by design.", "你的保管库，安全为先。")}</h3><p>{c("Keep hosts, snippets, Metrics, and settings—including Connections preferences—in sync through your private iCloud database, while passwords and keys stay separately protected by Keychain.", "主机、命令片段、监控与设置（包括连接偏好）通过你的私有 iCloud 数据库同步；密码和密钥始终由钥匙串独立保护。")}</p></div>
       <div class="product-field duo-field"><figure class="device ipad vault-ipad"><ScreenshotPicture src={ipadFrame("vault", languageAsset)} width={1480} loading="lazy" alt={c("Vault on iPad", "iPad 上的保管库")} /></figure><figure class="device iphone vault-phone"><ScreenshotPicture src={iphoneFrame("vault", languageAsset)} width={765} loading="lazy" alt={c("Vault on iPhone", "iPhone 上的保管库")} /></figure></div>
     </article>
   </section>
 
   <section class="mac-power"><div class="shell mac-grid">
-    <div class="mac-copy"><p class="eyebrow">{c("GO DEEPER ON MAC", "在 Mac 上深入工作")}</p><h2 class="display">{c("Your full control room.", "你的完整控制台。")}</h2><p>{c("Compose SSH, Telnet, SFTP, and serial sessions into multi-pane workspaces and broadcast input between terminals for free. Pro adds the built-in loopback-only MCP server for audited SSH/SFTP tools.", "免费将 SSH、Telnet、SFTP 与串口会话组合成多窗格工作区，并支持在终端间广播输入。Pro 方案还提供默认仅监听本机回环地址的内置 MCP 服务器，可使用经过审计的 SSH 与 SFTP 工具。")}</p><div class="mac-only"><span>MAC ONLY</span><span>{c("Multi-pane", "多窗格")}</span><span>{c("Serial", "串口")}</span><span>{c("Built-in MCP server", "内置 MCP 服务器")}</span></div></div>
+    <div class="mac-copy"><p class="eyebrow">{c("GO DEEPER ON MAC", "在 Mac 上深入工作")}</p><h2 class="display">{c("Your full control room.", "你的完整控制台。")}</h2><p>{c("Compose SSH, Telnet, SFTP, and serial sessions into multi-pane workspaces and broadcast input between terminals for free. Pro adds the built-in loopback-only MCP server for audited SSH/SFTP tools.", "免费将 SSH、Telnet、SFTP 与串口会话组合成多窗格工作区，并支持在终端间广播输入。Pro 方案还提供默认仅监听本机回环地址的内置 MCP 服务器，可使用经过审计的 SSH 与 SFTP 工具。")}</p><div class="mac-only"><span>{c("MAC ONLY", "MAC 专属", "MAC 限定")}</span><span>{c("Multi-pane", "多窗格")}</span><span>{c("Serial", "串口")}</span><span>{c("Built-in MCP server", "内置 MCP 服务器")}</span></div></div>
     <figure class="device mac mac-shot"><ScreenshotPicture src={macWorkspace} width={1800} fallbackBackground="#edf3f7" loading="lazy" alt={c("Multi-pane Termind workspace on Mac", "Mac 上的 Termind 多窗格工作区")} /></figure>
   </div></section>
 
@@ -207,7 +218,7 @@ const macWorkspace = workspaceFrame(languageAsset);
 
   </div>
 
-  <section class="pro shell"><div><p class="eyebrow">TERMIND PRO</p><h2 class="display">{c("Subscribe annually—or keep it forever.", "按年订阅，或永久拥有。")}</h2><p>{c("Core SSH, Telnet, SFTP, terminal uploads, snippets, Command Generator, and port forwarding stay free, as do serial sessions, multi-pane workspaces, and input broadcasting on Mac. Annual or lifetime Pro unlocks built-in Tailscale, the AI Assistant with optional Hermes Memory, monitoring for more than 3 servers, remote MCP clients, iCloud sync, and the built-in MCP server on Mac.", "基础 SSH、Telnet、SFTP、终端上传、命令片段、命令生成器、端口转发，以及 Mac 串口、多窗格工作区和广播输入永久免费。年度订阅或永久版可解锁内置 Tailscale、支持持久化记忆的 AI 助手、超过 3 台服务器的监控、远程 MCP 客户端、iCloud 同步，以及 Mac 内置 MCP 服务器。")}</p></div><aside><strong>{locale === "ja" ? `${termindPricing.annual}/年 · ${termindPricing.lifetime} 買い切り` : c(`${termindPricing.annual}/year · ${termindPricing.lifetime} lifetime`, `${termindPricing.annual}/年 · ${termindPricing.lifetime} 永久版`)}</strong><span>{c("Regional App Store pricing · Family Sharing", "以 App Store 地区价格为准 · 支持家庭共享")}</span><small>{c("Available offers are shown by the App Store. AI provider costs are separate.", "可用优惠以 App Store 当前展示为准；AI 提供方费用另计。")}</small><a href={localizedPath(locale, "/pricing/")}>{c("See all plans", "查看全部方案")} <span aria-hidden="true">→</span></a></aside></section>
+  <section class="pro shell"><div><p class="eyebrow">TERMIND PRO</p><h2 class="display">{c("Subscribe annually—or keep it forever.", "按年订阅，或永久拥有。")}</h2><p>{c("Core SSH, Telnet, SFTP, terminal uploads, snippets, Command Generator, and port forwarding stay free, as do serial sessions, multi-pane workspaces, and input broadcasting on Mac. Annual or lifetime Pro unlocks built-in Tailscale, the AI Assistant with optional Hermes Memory, monitoring for more than 3 servers, remote MCP clients, iCloud sync, and the built-in MCP server on Mac.", "基础 SSH、Telnet、SFTP、终端上传、命令片段、命令生成器、端口转发，以及 Mac 串口、多窗格工作区和广播输入永久免费。年度订阅或永久版可解锁内置 Tailscale、支持持久化记忆的 AI 助手、超过 3 台服务器的监控、远程 MCP 客户端、iCloud 同步，以及 Mac 内置 MCP 服务器。")}</p></div><aside><strong>{priceSummary}</strong><span>{c("Regional App Store pricing · Family Sharing", "以 App Store 地区价格为准 · 支持家庭共享")}</span><small>{c("Available offers are shown by the App Store. AI provider costs are separate.", "可用优惠以 App Store 当前展示为准；AI 提供方费用另计。")}</small><a href={localizedPath(locale, "/pricing/")}>{c("See all plans", "查看全部方案")} <span aria-hidden="true">→</span></a></aside></section>
 
   <TelegramOffer locale={locale} />
 
@@ -242,9 +253,9 @@ const macWorkspace = workspaceFrame(languageAsset);
           aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
         >
           <span class="apple" aria-hidden="true"></span>
-          <span class:list={["store-copy", { chinese: locale !== "en" }]}>
-            {locale === "en" ? (
-              <><small>Download on the</small><strong>App Store</strong></>
+          <span class:list={["store-copy", { chinese: !latinBadge }]}>
+            {latinBadge ? (
+              <><small>{downloadLabel}</small><strong>App Store</strong></>
             ) : (
               <><strong>App Store</strong><small>{c("", "下载")}</small></>
             )}

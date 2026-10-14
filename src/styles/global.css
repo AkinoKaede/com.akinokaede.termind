@@ -45,6 +45,19 @@ html[lang="zh-Hant"] {
   --body: "PingFang TC", "Noto Sans TC", sans-serif;
 }
 
+html[lang="ko"] {
+  --display: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+html[lang="de"],
+html[lang="fr"] {
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
 * {
   box-sizing: border-box;
 }

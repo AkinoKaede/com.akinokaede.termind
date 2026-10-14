@@ -16,7 +16,7 @@ Both are opaque RGB PNGs with an embedded sRGB profile, exported at 1× from the
 Figma `Header and Search Results` page. Keep review previews and export manifests
 outside this asset tree.
 
-Locales are `en`, `zh-hans`, `zh-hant`, and `ja`. Capture and frame directories are `iphone-6.3`,
+Locales are `de`, `en`, `fr`, `ja`, `ko`, `zh-hans`, and `zh-hant`. Capture and frame directories are `iphone-6.3`,
 `ipad-15`, `mac-14`, `iphone-duo-inner`, and `iphone-duo-outer`. Filenames use lowercase words separated by underscores.
 
 ## Image sizes
@@ -33,6 +33,11 @@ Locales are `en`, `zh-hans`, `zh-hant`, and `ja`. Capture and frame directories 
 App Store canvases are `iphone-6.3` (1206 × 2622), `ipad-13` (2752 × 2064),
 `iphone-duo` (2853 × 2007), and `mac` (2880 × 1800). These sizes describe the artwork, not the capture device.
 Preserve original captures and refresh derived frames and artwork when their sources change.
+German, French, and Korean each include 26 native captures, 21 device frames,
+24 App Store screenshots, and one Search Results image. All 75 localized
+Figma boards use validated native captures, with no pending capture placeholders.
+Only export a localized Figma board after every visible product image has been
+replaced with a validated capture in that language.
 
 The Figma `App Store iPhone Duo` page supplies six boards per language. SSH, SFTP,
 and Assistant use the inner display; Metrics and Vault use the outer display.

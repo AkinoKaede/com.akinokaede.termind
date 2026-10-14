@@ -1,0 +1,104 @@
+import assert from "node:assert/strict";
+import { readFile, readdir } from "node:fs/promises";
+import vm from "node:vm";
+import ts from "typescript";
+
+const root = new URL("../", import.meta.url);
+const read = (path) => readFile(new URL(path, root), "utf8");
+const languages = ["de", "en", "fr", "ja", "ko", "zh-Hans", "zh-Hant"];
+const newLocales = ["de", "fr", "ko"];
+const routes = [
+  "", "pricing/", "faq/", "security/", "privacy/", "support/", "compare/",
+  "compare/prompt-3/", "compare/servercat/", "compare/termius/", "compare/webssh/",
+];
+const origin = "https://termind.akinokaede.com";
+const routePath = (locale, route) => locale === "en" ? `/${route}` : `/${locale.toLowerCase()}/${route}`;
+const placeholders = (text) => [...text.matchAll(/\{(\w+)\}/g)].map((match) => match[1]).sort();
+
+async function loadExports(path) {
+  const compiled = ts.transpileModule(await read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS } });
+  const context = { exports: {} };
+  vm.runInNewContext(compiled.outputText, context);
+  return context.exports;
+}
+
+async function sourceFiles(directory) {
+  const entries = await readdir(new URL(directory, root), { withFileTypes: true });
+  const nested = await Promise.all(entries.map((entry) => {
+    const path = `${directory}/${entry.name}`;
+    return entry.isDirectory() ? sourceFiles(path) : /\.(astro|ts)$/.test(path) ? [path] : [];
+  }));
+  return nested.flat();
+}
+
+const keys = new Set();
+for (const file of await sourceFiles("src")) {
+  const source = await read(file);
+  const calls = /\b(?:c\(\s*|copy\(locale,\s*)("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)/g;
+  for (const match of source.matchAll(calls)) {
+    const expression = ts.createSourceFile("key.ts", match[1], ts.ScriptTarget.Latest)
+      .statements[0]?.expression;
+    assert.ok(expression && (ts.isStringLiteral(expression) || ts.isNoSubstitutionTemplateLiteral(expression)),
+      `${file}: translate a stable template before substituting values`);
+    keys.add(expression.text);
+  }
+}
+const { englishFAQ } = await loadExports("src/lib/faq.ts");
+for (const [question, answer] of englishFAQ) {
+  keys.add(question);
+  for (const paragraph of Array.isArray(answer) ? answer : [answer]) keys.add(paragraph);
+}
+
+for (const locale of newLocales) {
+  const dictionary = (await loadExports(`src/lib/${locale}.ts`))[locale];
+  for (const key of keys) {
+    assert.equal(typeof dictionary[key], "string", `${locale}: missing ${JSON.stringify(key)}`);
+    assert.ok(dictionary[key].trim(), `${locale}: empty ${JSON.stringify(key)}`);
+    assert.deepEqual(placeholders(dictionary[key]), placeholders(key), `${locale}: placeholders in ${key}`);
+  }
+  console.log(`${locale}: ${keys.size} copy keys and placeholders OK`);
+}
+
+const generatedAssets = new Set();
+for (const route of routes) {
+  const ogImages = new Set();
+  for (const locale of languages) {
+    const path = routePath(locale, route);
+    const html = await read(`dist${path}index.html`);
+    assert.ok(html.includes(`lang="${locale}"`), `${path}: document language`);
+    assert.ok(html.includes(`rel="canonical" href="${origin}${path}"`), `${path}: canonical`);
+    assert.ok(!/\{(?:annual|lifetime|name|upperName|owner)\}/.test(html), `${path}: unexpanded copy template`);
+    const picker = [...html.matchAll(/<a\b([^>]*\bdata-locale-option="[^"]+"[^>]*)>/g)];
+    assert.deepEqual(picker.map(([, attributes]) => attributes.match(/data-locale-option="([^"]+)"/)[1]),
+      languages, `${path}: language picker order`);
+    for (const candidate of languages) {
+      const target = routePath(candidate, route);
+      assert.ok(html.includes(`hreflang="${candidate}" href="${origin}${target}"`),
+        `${path}: alternate ${candidate}`);
+      const link = picker.find(([, attributes]) => attributes.includes(`data-locale-option="${candidate}"`));
+      assert.ok(link?.[1].includes(`href="${target}"`), `${path}: preserve route when switching to ${candidate}`);
+    }
+    for (const [, attributes] of html.matchAll(/<a\b([^>]+)>/g)) {
+      const href = attributes.match(/\bhref="([^"]+)"/)?.[1];
+      if (!href?.startsWith("/") || href.startsWith("//")) continue;
+      const target = href.split(/[?#]/)[0];
+      await readFile(new URL(`dist${target}${target.endsWith("/") ? "index.html" : ""}`, root));
+      if (newLocales.includes(locale) && !attributes.includes("data-locale-option=")) {
+        assert.ok(target.startsWith(`/${locale}/`), `${path}: English fallback link ${href}`);
+      }
+    }
+    for (const match of html.matchAll(/(?:src|href|content)="(?:https:\/\/termind\.akinokaede\.com)?(\/_astro\/[^"?#]+)"/g)) {
+      generatedAssets.add(match[1]);
+    }
+    const ogImage = html.match(/property="og:image" content="([^"]+)"/)?.[1];
+    assert.ok(ogImage, `${path}: social preview`);
+    assert.ok(!ogImages.has(ogImage), `${path}: social preview must use its own locale`);
+    ogImages.add(ogImage);
+  }
+}
+for (const asset of generatedAssets) await readFile(new URL(`dist${asset}`, root));
+for (const route of routes) {
+  const html = await read(`dist/zh/${route}index.html`);
+  assert.ok(html.includes(`/zh-hans/${route}`), `/zh/${route}: legacy redirect`);
+}
+console.log(`${languages.length * routes.length} localized pages, ${routes.length} legacy redirects, navigation, metadata and assets OK`);

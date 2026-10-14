@@ -1,7 +1,20 @@
 import { japanese } from "./ja";
+import { ko } from "./ko";
+import { de } from "./de";
+import { fr } from "./fr";
 import OpenCC from "opencc-js";
 
-export type SiteLocale = "en" | "zh-Hans" | "zh-Hant" | "ja";
+export type SiteLocale = "de" | "en" | "fr" | "ja" | "ko" | "zh-Hans" | "zh-Hant";
+
+const translations = { ko, de, fr };
+export const languageNames: Record<SiteLocale, string> = {
+  de: "Deutsch", en: "English", fr: "Français", ja: "日本語",
+  ko: "한국어", "zh-Hans": "简体中文", "zh-Hant": "繁體中文",
+};
+
+function hasDictionary(locale: SiteLocale): locale is keyof typeof translations {
+  return locale === "ko" || locale === "de" || locale === "fr";
+}
 
 export const siteOrigin = "https://termind.akinokaede.com";
 
@@ -57,6 +70,11 @@ function taiwanTraditional(text: string): string {
 
 export function copy(locale: SiteLocale, english: string, simplified: string, japaneseText?: string): string {
   if (locale === "en") return english;
+  if (hasDictionary(locale)) {
+    const translated = translations[locale][english];
+    if (translated === undefined) throw new Error(`Missing ${locale} translation: ${english}`);
+    return translated;
+  }
   if (locale === "ja") return japaneseText ?? japanese[english] ?? english;
   return locale === "zh-Hant" ? taiwanTraditional(simplified) : simplified;
 }
@@ -64,16 +82,16 @@ export function copy(locale: SiteLocale, english: string, simplified: string, ja
 export function localizedPath(locale: SiteLocale, pagePath = "/"): string {
   const path = pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
   if (locale === "en") return path;
-  if (locale === "ja") return path === "/" ? "/ja/" : `/ja${path}`;
-  const prefix = locale === "zh-Hans" ? "/zh-hans" : "/zh-hant";
+  const prefix = `/${assetLocale(locale)}`;
   return path === "/" ? `${prefix}/` : `${prefix}${path}`;
 }
 
-export function assetLocale(locale: SiteLocale): "en" | "zh-hans" | "zh-hant" | "ja" {
+export function assetLocale(locale: SiteLocale): "en" | "zh-hans" | "zh-hant" | "ja" | "ko" | "de" | "fr" {
+  if (hasDictionary(locale)) return locale;
   if (locale === "ja") return "ja";
   if (locale === "zh-Hans") return "zh-hans";
   if (locale === "zh-Hant") return "zh-hant";
   return "en";
 }
 
-export const supportedLocales: SiteLocale[] = ["en", "zh-Hans", "zh-Hant", "ja"];
+export const supportedLocales: SiteLocale[] = ["de", "en", "fr", "ja", "ko", "zh-Hans", "zh-Hant"];

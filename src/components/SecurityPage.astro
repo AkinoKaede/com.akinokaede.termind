@@ -36,9 +36,9 @@ const c = (english: string, simplified: string, japaneseText?: string) => copy(l
         <strong>{c("PROTECTED", "全程保护")}</strong>
         <small>{c("Credentials · Connections · Actions", "凭据 · 连接 · 操作")}</small>
       </div>
-      <span class="stage-label label-keychain">KEYCHAIN</span>
-      <span class="stage-label label-host">KNOWN HOSTS</span>
-      <span class="stage-label label-local">LOCAL FIRST</span>
+      <span class="stage-label label-keychain">{c("KEYCHAIN", "钥匙串", "キーチェーン")}</span>
+      <span class="stage-label label-host">{c("KNOWN HOSTS", "已知主机", "既知のホスト")}</span>
+      <span class="stage-label label-local">{c("LOCAL FIRST", "本地优先", "ローカル優先")}</span>
     </div>
   </section>
 
@@ -52,7 +52,7 @@ const c = (english: string, simplified: string, japaneseText?: string) => copy(l
 
   <section class="keys shell" id="ssh-keys">
     <header class="section-heading">
-      <p class="section-index">01 / SSH KEYS</p>
+      <p class="section-index">{c("01 / SSH KEYS", "01 / SSH 密钥", "01 / SSH 鍵")}</p>
       <div>
         <h2 class="display">{c("A short path", "密钥在内存中，")}<br /><em>{c("through memory.", "只走最短的路。")}</em></h2>
         <p>{c(
