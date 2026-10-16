@@ -1,5 +1,4 @@
 import { copy, type SiteLocale } from "../i18n";
-import { termindPricing } from "../pricing";
 import type { CompetitorContent } from "./types";
 
 // Checked 2026-10-03 against ServerCat 26.9.2:
@@ -17,23 +16,23 @@ export function getServerCat(locale: SiteLocale): CompetitorContent {
     name: "ServerCat",
     owner: "Early Moon, LLC",
     description: c("Compare Termind and ServerCat: server monitoring, SSH, Docker management, AI, hardware keys, Tailscale, sync, and pricing.", "对比 Termind 与 ServerCat 的服务器监控、SSH、Docker 管理、AI、硬件密钥、Tailscale、同步及价格。"),
-    summary: c(`Both offer free monitoring. Termind includes SSH and SFTP for free, with Pro at {annual}/year; ServerCat’s terminal requires Premium at $5.99/year.`, `两款都有免费监控。Termind 的 SSH 与 SFTP 免费，Pro 年费 {annual}；ServerCat 终端需要 Premium，年费 $5.99。`, `どちらも無料で監視できます。Termind は SSH と SFTP が無料で、Pro は年額 {annual}。ServerCat のターミナルには年額 $5.99 の Premium が必要です。`).replaceAll("{annual}", termindPricing.annual),
-    termindRecommendationTitle: c("Free terminal access, lower upgrade costs.", "终端免费，升级费用更低。"),
-    termindRecommendation: c(`Termind Pro costs {annual}/year or {lifetime} lifetime; ServerCat Premium costs $5.99/year or $18.99 lifetime. Termind also includes SSH, SFTP, and FIDO2 authentication for free, with AI and Tailscale in Pro.`, `Termind Pro 为 {annual}/年或 {lifetime} 永久版；ServerCat Premium 为 $5.99/年或 $18.99 永久版。Termind 免费提供 SSH、SFTP 与 FIDO2 认证，Pro 另含 AI 和 Tailscale。`, `Termind Pro は年額 {annual} または買い切り {lifetime}、ServerCat Premium は年額 $5.99 または買い切り $18.99 です。Termind は SSH、SFTP、FIDO2 認証を無料で提供し、Pro では AI と Tailscale も利用できます。`).replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
+    summary: c("Termind puts SSH, SFTP, and AI beside live metrics. ServerCat focuses on Linux and Docker dashboards; its interactive SSH terminal requires Premium.", "Termind 将 SSH、SFTP 与 AI 放在实时监控旁，便于直接处理问题。ServerCat 专注 Linux 与 Docker 仪表盘，交互式 SSH 终端需要 Premium。"),
+    termindRecommendationTitle: c("From metrics to a fix, in one app.", "从发现异常到处理问题，一个应用完成。"),
+    termindRecommendation: c("Use Termind when monitoring leads to hands-on troubleshooting: open SSH, move files with SFTP, or ask your own AI model to investigate without switching apps. Pro adds unlimited hosts.", "如果监控之后还要动手排障，Termind 可让你直接打开 SSH、通过 SFTP 处理文件，或让自己的 AI 模型协助调查，无需切换应用。Pro 解锁无限主机。"),
     recommendationTitle: c("Linux monitoring and Docker.", "Linux 监控与 Docker 管理。"),
     recommendation: c("A fit for detailed resource charts and a dedicated container dashboard. Premium adds the SSH terminal, sync, and container management.", "适合集中查看资源图表与容器状态；Premium 增加 SSH 终端、同步和容器管理。"),
     features: {
       monitoring: {
-        title: c("Linux and Docker monitoring for free", "免费 Linux 与 Docker 监控"),
+        title: c("Linux and Docker monitoring", "Linux 与 Docker 监控"),
         note: c("Read CPU, GPU, memory, network, disk I/O, and Docker metrics over SSH. No monitoring agent is needed.", "通过 SSH 采集 CPU、GPU、内存、网络、磁盘 I/O 与 Docker 指标，无需安装监控 Agent。"),
       },
       connections: {
         title: c("SSH terminal · Premium", "SSH 终端 · Premium"),
-        note: c("Monitoring connects over SSH for free. Interactive terminal sessions and background SSH require Premium.", "免费通过 SSH 连接并监控服务器；交互式终端与后台 SSH 需要 Premium。"),
+        note: c("Monitoring connects over SSH. Interactive terminal sessions and background SSH require Premium.", "通过 SSH 连接并监控服务器；交互式终端与后台 SSH 需要 Premium。"),
       },
       containers: {
         title: c("Dedicated Docker dashboard", "专门的 Docker 管理面板"),
-        note: c("View container status and resource use for free. Premium adds container creation and management.", "免费查看容器状态与资源用量；Premium 增加容器创建与管理功能。"),
+        note: c("View container status and resource use. Premium adds container creation and management.", "查看容器状态与资源用量；Premium 增加容器创建与管理功能。"),
       },
       ai: {
         title: c("No built-in AI features", "无内置 AI 功能"),
@@ -65,7 +64,7 @@ export function getServerCat(locale: SiteLocale): CompetitorContent {
       },
       plans: {
         title: c("$5.99/year or $18.99 lifetime", "$5.99/年，或 $18.99 永久版"),
-        note: c("Monitoring is free. Both Premium plans include the terminal, background SSH, sync, and container management.", "监控免费。两种 Premium 方案均包含终端、后台 SSH、同步和容器管理。"),
+        note: c("Both Premium plans include the terminal, background SSH, sync, and container management.", "两种 Premium 方案均包含终端、后台 SSH、同步和容器管理。"),
       },
     },
   };

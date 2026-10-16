@@ -49,6 +49,7 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
         <h2 id="features-heading" class="display">{c("The details that matter.", "关键区别，逐项看。")}</h2>
       </div>
       <p class="connection-summary">{c("Termind supports Mosh and Eternal Terminal, plus Session Persistence with Herdr, tmux, Zellij, and zmx. Among the apps compared here, only Termind includes Wake-on-LAN, with manual or automatic wake on your local network.", "Termind 支持 Mosh 与 Eternal Terminal，并通过 Herdr、tmux、Zellij 与 zmx 提供会话持久化。在这里对比的应用中，只有 Termind 内置 Wake-on-LAN，可在当前局域网手动或自动唤醒主机。")}</p>
+      <p class="connection-summary">{c("3 hosts", "3 个主机")} · Pro: {c("Unlimited hosts", "无限主机")}</p>
       <ul class="feature-list" role="list">
         {rows.map((row, index) => (
           <li id={row.id}>
@@ -65,13 +66,13 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
         ))}
       </ul>
       <div class="sources" id="comparison-sources">
-        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-16">{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date("2026-10-16T00:00:00Z"))}</time></p>
+        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-17">{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date("2026-10-17T00:00:00Z"))}</time></p>
         <p>{c("Competitor pricing and hardware-key details were last checked on October 3, 2026.", "竞品价格与硬件密钥信息最后核对于 2026 年 10 月 3 日。")}</p>
       </div>
     </section>
 
     <section class="download-cta">
-      <div><p class="eyebrow">{c("MAKE IT YOUR WORKSPACE", "开始你的远程工作")}</p><h2 class="display">{c("Try Termind for yourself.", "亲手试试 Termind。")}</h2><p>{c("Start with free SSH, SFTP, and port forwarding. No Termind account needed.", "从免费的 SSH、SFTP 和端口转发开始，无需注册 Termind 账户。")}</p></div>
+      <div><p class="eyebrow">{c("MAKE IT YOUR WORKSPACE", "开始你的远程工作")}</p><h2 class="display">{c("Try Termind for yourself.", "亲手试试 Termind。")}</h2><p>{c("Start with SSH, SFTP, and port forwarding. No Termind account needed.", "从 SSH、SFTP 和端口转发开始，无需注册 Termind 账户。")}</p></div>
       <a href={termindPricing.appStoreURL}>{c("Download on the App Store", "在 App Store 下载")} <span aria-hidden="true">↗</span></a>
     </section>
     <p class="trademark-note">{attribution} {c(`This comparison is published by Termind and is not affiliated with or endorsed by {owner}.`, `本对比由 Termind 发布，与 {owner} 无隶属或背书关系。`, `この比較は Termind が公開したものであり、{owner} との提携や同社による推奨を示すものではありません。`).replaceAll("{owner}", competitor.owner)}</p>

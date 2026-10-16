@@ -20,12 +20,14 @@ function assertSessionTools(text, location) {
   assert.deepEqual(names, sessionTools, `${location}: list all Session Persistence tools in alphabetical order`);
 }
 const proFeatureTitles = {
-  en: ["AI Assistant", "MCP connections", "More servers to monitor", "Parallel SFTP",
-    "Multi-connection port forwarding", "Built-in Tailscale", "Wake-on-LAN", "iCloud sync"],
-  "zh-Hans": ["AI 助手", "MCP 连接", "监控更多服务器", "并行 SFTP",
-    "多连接端口转发", "内置 Tailscale", "Wake-on-LAN", "iCloud 同步"],
-  "zh-Hant": ["AI 助手", "MCP 連線", "監控更多伺服器", "並行 SFTP",
-    "多連線埠轉發", "內建 Tailscale", "Wake-on-LAN", "iCloud 同步"],
+  en: ["Unlimited hosts", "iCloud sync", "Built-in Tailscale", "Multi-connection SFTP", "Multi-connection port forwarding"],
+  "zh-Hans": ["无限主机", "iCloud 同步", "内置 Tailscale", "多连接 SFTP", "多连接端口转发"],
+  "zh-Hant": ["無限主機", "iCloud 同步", "內建 Tailscale", "多連線 SFTP", "多連線埠轉發"],
+};
+const prioritySupportTitles = {
+  en: "Priority support",
+  "zh-Hans": "优先支持",
+  "zh-Hant": "優先支援",
 };
 
 async function loadExports(path) {
@@ -91,7 +93,7 @@ for (const file of await sourceFiles("src")) {
 const { englishFAQ } = await loadExports("src/lib/faq.ts");
 const proAnswer = englishFAQ.find(([question]) => question === "What is free, and what does Pro add?")?.[1]?.[1];
 assert.ok(proAnswer, "FAQ: Pro feature overview");
-const proTopics = ["AI Assistant", "MCP", "monitoring", "SFTP", "port forwarding", "Tailscale", "Wake-on-LAN", "iCloud"];
+const proTopics = ["unlimited hosts", "iCloud sync", "Tailscale", "SFTP", "port forwarding"];
 let previousTopic = -1;
 for (const topic of proTopics) {
   const position = proAnswer.indexOf(topic);
@@ -116,14 +118,29 @@ for (const locale of ["de", "fr", "ja", "ko"]) {
   const exports = await loadExports(`src/lib/${locale}.ts`);
   const dictionary = exports[locale === "ja" ? "japanese" : locale];
   proFeatureTitles[locale] = proFeatureTitles.en.map(key => dictionary[key]);
+  prioritySupportTitles[locale] = dictionary["Priority support"];
 }
 
 const generatedAssets = new Set();
+const freeFeatureTitles = {
+  en: ["3 hosts", "AI Assistant, Command Generator, and MCP",
+    "Server monitoring", "Wake-on-LAN"],
+  "zh-Hans": ["3 个主机", "AI 助手、命令生成器与 MCP", "服务器监控", "Wake-on-LAN"],
+  "zh-Hant": ["3 個主機", "AI 助手、命令生成器與 MCP", "伺服器監控", "Wake-on-LAN"],
+};
+for (const locale of ["de", "fr", "ja", "ko"]) {
+  const exports = await loadExports(`src/lib/${locale}.ts`);
+  const dictionary = exports[locale === "ja" ? "japanese" : locale];
+  freeFeatureTitles[locale] = freeFeatureTitles.en.map(key => dictionary[key]);
+}
 for (const route of routes) {
   const ogImages = new Set();
   for (const locale of languages) {
     const path = routePath(locale, route);
     const html = await read(`dist${path}index.html`);
+    if (route !== "pricing/") {
+      assert.ok(!html.includes(prioritySupportTitles[locale]), `${path}: priority support belongs only on pricing`);
+    }
     assert.ok(html.includes(`lang="${locale}"`), `${path}: document language`);
     assert.ok(html.includes(`rel="canonical" href="${origin}${path}"`), `${path}: canonical`);
     assert.ok(!/\{(?:annual|lifetime|name|upperName|owner)\}/.test(html), `${path}: unexpanded copy template`);
@@ -183,10 +200,28 @@ for (const route of routes) {
       assert.ok(pro, `${path}: Pro feature list`);
       const headings = [...pro.matchAll(/<h3\b[^>]*>([^<]+)<\/h3>/g)].map(match => match[1]);
       assert.deepEqual(headings, proFeatureTitles[locale],
-        `${path}: order Pro features by AI, MCP, monitoring, both connection accelerators, Tailscale, WoL, iCloud`);
+        `${path}: Pro contains unlimited hosts, iCloud sync, Tailscale, and both multi-connection features`);
       const free = html.match(/<div\b[^>]*class="plan free-plan"[^>]*>([\s\S]*?)<\/div>/)?.[1];
       assert.ok(free, `${path}: free plan`);
       assertSessionTools(free, `${path}: free Session Persistence`);
+      for (const title of freeFeatureTitles[locale]) {
+        assert.ok(free.includes(title), `${path}: free plan contains ${title}`);
+      }
+      assert.ok(!free.includes("iCloud"), `${path}: iCloud sync remains a Pro benefit`);
+      assert.ok(!free.includes(prioritySupportTitles[locale]), `${path}: priority support is not in the free plan`);
+      const paidPlans = [...html.matchAll(/<div\b[^>]*class="plan(?: lifetime-plan)?"[^>]*>([\s\S]*?)<\/div>/g)];
+      assert.equal(paidPlans.length, 2, `${path}: annual and lifetime Pro cards`);
+      for (const [, plan] of paidPlans) {
+        assert.ok(plan.includes(prioritySupportTitles[locale]), `${path}: both Pro plans include priority support`);
+      }
+      assert.ok(!/Unlimited (?:connections|transfers)/i.test(html),
+        `${path}: only the host count is unlimited, not connection concurrency`);
+      if (locale === "en") {
+        assert.ok(!/card limit|locked for new|retained but locked|above the limit/.test(html),
+          `${path}: keep plan copy focused on benefits, not implementation rules`);
+        assert.ok(html.includes("Model provider usage is billed separately"),
+          `${path}: free AI does not include provider usage`);
+      }
     }
     if (route === "faq/") {
       for (const id of ["session-tools", "wake-on-lan"]) {
@@ -201,6 +236,12 @@ for (const route of routes) {
       assert.ok(note, `${path}: comparison overview connection capabilities`);
       assertSessionTools(note, `${path}: comparison overview`);
     }
+    if (route.startsWith("compare/")) {
+      const visibleCopy = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "")
+        .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, "").replace(/<[^>]*>/g, " ");
+      assert.ok(!/\bfree\b|免费|免費|無料|무료|kostenlos|gratuit/i.test(visibleCopy),
+        `${path}: describe capabilities without redundant free labels`);
+    }
     if (route.startsWith("compare/") && route !== "compare/") {
       const summary = html.match(/<p\b[^>]*class="connection-summary"[^>]*>([\s\S]*?)<\/p>/)?.[1];
       assert.ok(summary, `${path}: shared Termind connection capabilities`);
@@ -208,12 +249,25 @@ for (const route of routes) {
         assert.ok(summary.includes(name), `${path}: comparison includes ${name}`);
       }
       assertSessionTools(summary, `${path}: comparison`);
+      for (const id of ["ai", "external-agents", "monitoring", "sync"]) {
+        const feature = html.match(new RegExp(`<li\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/li>`))?.[1];
+        if (!feature) continue;
+        const title = feature.match(/<dd\b[^>]*>\s*<strong\b[^>]*>([^<]+)<\/strong>/)?.[1];
+        assert.ok(title, `${path}: ${id} has a concise Termind comparison value`);
+        assert.equal(/\bPro\b/.test(title), id === "sync",
+          `${path}: iCloud remains Pro; AI, MCP, and monitoring do not`);
+        if (id === "monitoring" && locale === "en") {
+          assert.equal(title, "Live system metrics", `${path}: describe monitoring without extra plan claims`);
+        }
+      }
       const wake = html.match(/<li\b[^>]*id="wake-on-lan"[^>]*>([\s\S]*?)<\/li>/)?.[1];
       assert.ok(wake, `${path}: every competitor has a Wake-on-LAN comparison`);
       const products = [...wake.matchAll(/<dd\b[^>]*>([\s\S]*?)<\/dd>/g)];
       assert.equal(products.length, 2, `${path}: both products have Wake-on-LAN details`);
-      assert.ok(products[0][1].includes("Pro"), `${path}: Termind Wake-on-LAN requires Pro`);
+      assert.ok(!/\bPro\b/.test(products[0][1]), `${path}: Termind Wake-on-LAN is not a Pro feature`);
       if (locale === "en") {
+        assert.ok(products[0][1].includes("Manual and automatic wake"),
+          `${path}: describe both Wake modes without a plan suffix`);
         assert.ok(products[1][1].includes("Not supported") && products[1][1].includes("No built-in Wake-on-LAN."),
           `${path}: maintainer-confirmed absence of competitor Wake-on-LAN`);
         assert.ok(summary.includes("only Termind includes Wake-on-LAN"),
