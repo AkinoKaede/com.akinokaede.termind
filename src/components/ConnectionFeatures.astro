@@ -1,0 +1,44 @@
+---
+import { copy, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const features = [
+  {
+    title: "Mosh + Eternal Terminal",
+    description: c("Keep your terminal session through network changes and brief interruptions. Pick up where you left off instead of starting over.", "切换网络、遇到短暂断线，也能接着原来的终端会话继续工作，少些中断，不必从头开始。"),
+  },
+  {
+    title: c("tmux integration", "tmux 集成"),
+    description: c("Let long-running tasks keep going after you disconnect. Return to the same remote session when you are ready to continue.", "断开连接，远程任务仍可继续运行。稍后回来，重新接入原来的会话，接着处理未完成的工作。"),
+  },
+  {
+    title: c("Wake-on-LAN (WoL)", "Wake-on-LAN（WoL）"),
+    description: c("Wake a sleeping machine from Termind when you need it. Get back to work without reaching for its power button.", "需要时，直接从 Termind 唤醒休眠主机。不必走到机器旁按电源键，让远程工作更顺手。"),
+  },
+];
+---
+
+<section class="connection-features" id="session-tools" aria-labelledby="session-tools-heading">
+  <h2 class="eyebrow" id="session-tools-heading">{c("MORE WAYS TO KEEP WORKING", "让远程工作继续")}</h2>
+  <ul role="list">
+    {features.map((feature) => (
+      <li>
+        <h3>{feature.title}</h3>
+        <p>{feature.description}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .connection-features { padding-block: 2rem 4rem; }
+  ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; margin: 1.5rem 0; padding: 0; list-style: none; }
+  li { border-top: 1px solid var(--line-strong); padding-top: 1.4rem; }
+  h3 { margin: 0; font-size: 1.15rem; font-weight: 500; }
+  li p { margin: .8rem 0 0; color: var(--muted); font-size: .85rem; line-height: 1.8; }
+  @media (max-width: 760px) {
+    ul { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>

@@ -11,22 +11,47 @@ import type { CompetitorContent } from "./types";
 // https://help.panic.com/prompt/prompt-omniview/
 // https://help.panic.com/prompt/prompt-vpn-on-demand/ (uses a configured OS VPN)
 // The maintainer confirmed that Prompt 3 has no built-in AI features or MCP server.
+// Connection and workflow details rechecked 2026-10-16:
+// https://panic.com/prompt/ (Mosh/ET, local shell, visionOS, tmux terminal compatibility)
+// https://help.panic.com/prompt/prompt-startup-command/ (tmux via SSH startup command)
+// https://help.panic.com/prompt/ (no documented WoL, graphical SFTP browser, or metrics dashboard)
+// Undocumented capabilities are not treated as confirmed unsupported.
 export function getPrompt3(locale: SiteLocale): CompetitorContent {
   const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
     name: "Prompt 3",
     owner: "Panic Inc.",
     attribution: c("Prompt is a registered trademark of Panic Inc.", "Prompt 是 Panic Inc. 的注册商标。"),
-    description: c("Compare Termind and Prompt 3: SSH and Mosh, AI, FIDO2 hardware keys, port forwarding, Tailscale, sync, and pricing.", "对比 Termind 与 Prompt 3 的 SSH 与 Mosh、AI、FIDO2 硬件密钥、端口转发、Tailscale、同步及价格。"),
-    summary: c(`Termind combines SFTP, an AI Assistant, and Tailscale, with lifetime Pro at {lifetime}. Prompt 3 supports Mosh and Eternal Terminal, with a $49.99 one-time purchase.`, `Termind 提供 SFTP、AI 助手与内置 Tailscale，Pro 永久版 {lifetime}。Prompt 3 支持 Mosh 与 Eternal Terminal，一次购买 $49.99。`, `Termind は SFTP、AI アシスタント、Tailscale を搭載し、Pro は {lifetime} の買い切りで利用できます。Prompt 3 は Mosh と Eternal Terminal に対応し、買い切り価格は $49.99 です。`).replaceAll("{lifetime}", termindPricing.lifetime),
-    termindRecommendationTitle: c("Lower purchase price, FIDO2 creation on iOS.", "买断价更低，iOS 也能创建密钥。"),
-    termindRecommendation: c(`Termind Pro is {lifetime} lifetime or {annual}/year; Prompt 3 is $49.99 one-time or $9.99/year. Termind also creates ECDSA-SK keys on iOS and offers an AI Assistant and built-in Tailscale with Pro.`, `Termind Pro 为 {lifetime} 永久版或 {annual}/年；Prompt 3 为 $49.99 一次购买或 $9.99/年。Termind 还可在 iOS 创建 ECDSA-SK 密钥，Pro 提供 AI 助手与内置 Tailscale。`, `Termind Pro は買い切り {lifetime} または年額 {annual}、Prompt 3 は買い切り $49.99 または年額 $9.99 です。Termind は iOS での ECDSA-SK 鍵の作成にも対応し、Pro では AI アシスタントと内蔵 Tailscale を利用できます。`).replaceAll("{lifetime}", termindPricing.lifetime).replaceAll("{annual}", termindPricing.annual),
-    recommendationTitle: c("Mosh and Eternal Terminal.", "Mosh 与 Eternal Terminal。"),
-    recommendation: c("A fit for changing networks, YubiKey PIV or Ed25519-SK authentication, and terminal access on Apple Vision Pro.", "适合网络频繁变化、使用 YubiKey PIV 或 Ed25519-SK 认证，或需要 Apple Vision Pro 终端的场景。"),
+    description: c("Compare Termind and Prompt 3: Mosh, Eternal Terminal, tmux integration, Wake-on-LAN (WoL), SFTP, AI, Tailscale, hardware keys, and pricing.", "对比 Termind 与 Prompt 3 的 Mosh、Eternal Terminal、tmux 集成、Wake-on-LAN（WoL）、SFTP、AI、Tailscale、硬件密钥与价格。"),
+    summary: c("Both support Mosh and Eternal Terminal. Termind adds built-in tmux session management, SFTP, and server monitoring, with AI, Tailscale, and Wake-on-LAN (WoL) in Pro. Lifetime Pro costs {lifetime}; Prompt 3 is $49.99 one-time.", "两款都支持 Mosh 与 Eternal Terminal。Termind 还提供内置 tmux 会话管理、SFTP 和服务器监控，Pro 增加 AI、Tailscale 与 Wake-on-LAN（WoL）。Termind Pro 永久版 {lifetime}，Prompt 3 一次购买 $49.99。").replaceAll("{lifetime}", termindPricing.lifetime),
+    termindRecommendationTitle: c("More than a terminal. A lower price.", "不止终端，价格也更低。"),
+    termindRecommendation: c("Termind combines Mosh, Eternal Terminal, tmux session management, SFTP, and server monitoring. Pro adds the AI Assistant, built-in Tailscale, WoL, and a Mac MCP server for {annual}/year or {lifetime} lifetime. Prompt 3 costs $9.99/year or $49.99 one-time.", "Termind 集 Mosh、Eternal Terminal、tmux 会话管理、SFTP 与服务器监控于一体。Pro 增加 AI 助手、内置 Tailscale、WoL 与 Mac MCP 服务器，价格为 {annual}/年或 {lifetime} 永久版；Prompt 3 为 $9.99/年或 $49.99 一次购买。").replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
+    recommendationTitle: c("visionOS, local shell, and more key types.", "visionOS、本地 Shell 与更多密钥类型。"),
+    recommendation: c("Consider Prompt 3 for Apple Vision Pro, a local shell on Mac, or YubiKey PIV and Ed25519-SK authentication. Mosh and Eternal Terminal are available in both apps, not a reason to choose Prompt alone.", "如果需要 Apple Vision Pro、Mac 本地 Shell，或 YubiKey PIV 与 Ed25519-SK 认证，可以考虑 Prompt 3。Mosh 与 Eternal Terminal 两款都有，不再是只能选择 Prompt 的理由。"),
     features: {
       connections: {
         title: "SSH, Telnet, Mosh, Eternal Terminal",
         note: c("Mosh and Eternal Terminal help sessions survive unstable networks. Local shell sessions are available on macOS.", "Mosh 与 Eternal Terminal 可帮助会话应对不稳定网络；macOS 还提供本地 Shell。"),
+      },
+      tmux: {
+        title: c("tmux through terminal commands", "通过终端命令使用 tmux"),
+        note: c("Prompt documents launching tmux with an SSH startup command. This is different from Termind’s built-in remote-session picker and managed-session controls.", "Prompt 文档介绍了通过 SSH 启动命令运行 tmux，这不同于 Termind 内置的远程会话选择与托管会话控制。"),
+        sourceURL: "https://help.panic.com/prompt/prompt-startup-command/",
+      },
+      "wake-on-lan": {
+        title: c("Not documented", "未见官方说明"),
+        note: c("The reviewed Prompt feature list and help pages do not describe built-in Wake-on-LAN controls. This is not a claim that no workaround exists.", "已查阅的 Prompt 功能列表与帮助页面未介绍内置 Wake-on-LAN 控制；这不代表无法借助其他方式实现。"),
+        sourceURL: "https://help.panic.com/prompt/",
+      },
+      sftp: {
+        title: c("No graphical SFTP browser documented", "未见图形化 SFTP 浏览器说明"),
+        note: c("Prompt focuses on terminal access. Its published features do not describe a graphical file browser like Termind’s SFTP workspace.", "Prompt 专注于终端访问，公开功能中未介绍类似 Termind SFTP 工作区的图形化文件浏览器。"),
+        sourceURL: "https://panic.com/prompt/",
+      },
+      monitoring: {
+        title: c("Terminal-based monitoring", "通过终端监控"),
+        note: c("Use server-side tools in a terminal. A dedicated dashboard for live CPU, memory, disk, and network metrics is not documented.", "可在终端运行服务器端监控工具；未见专门用于 CPU、内存、磁盘与网络实时指标的监控面板说明。"),
+        sourceURL: "https://panic.com/prompt/",
       },
       "port-forwarding": {
         title: c("SSH port forwarding", "SSH 端口转发"),

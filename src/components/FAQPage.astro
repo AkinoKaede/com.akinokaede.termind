@@ -20,8 +20,13 @@ let items: Array<[string, string | string[], string?]> = zh ? [
   ["AI 会不经确认就执行命令吗？", "取决于你选择的权限模式。命令生成器绝不会主动执行命令；AI 助手则严格遵循工具策略和权限模式：需要授权的操作可以交由你亲自确认，或由安全审查模型评估；开启“完全访问”后，这类操作不再逐次询问。执行前请务必确认操作范围，尤其是在生产服务器上。"],
   ["使用 AI 需要自己的 API 密钥吗？", "需要。Termind 采用自带密钥（BYOK）模式：配置模型服务的端点地址、模型与密钥后即可使用 AI。支持 Chat Completions、Responses、Messages 和 generateContent 四种主流协议。无需注册 Termind 账户；Pro 方案不包含第三方模型用量，相关费用由你的 AI 提供方单独收取。"],
   ["不使用 AI，也能正常使用 Termind 吗？", "当然可以。SSH 与 Telnet 终端、SFTP 文件管理、命令片段和端口转发均可独立使用，无需配置任何 AI 密钥。AI 助手、持久化记忆、网页搜索和 MCP 连接均可按需开启。"],
-  ["Mac、iPhone 和 iPad 的功能一样吗？", "Termind 支持 macOS 15、iOS 18 和 iPadOS 18 及以上版本。三端均可使用 SSH、Telnet、SFTP、服务器监控、AI 助手和内置 Tailscale，部分高级功能需要 Pro。Mac 额外免费提供串口、多窗格工作区和广播输入，内置 MCP 服务器需要 Pro；iPhone 和 iPad 的每个工作区包含一个 SSH、Telnet 或 SFTP 会话。"],
-  ["服务器上需要安装 Termind 或其他软件吗？", "无需安装 Termind Agent 或任何常驻守护进程。普通连接仅需目标服务器具备可用的 SSH 或 Telnet 服务，文件管理则需支持 SFTP。使用内置 Tailscale 连接时，目标服务器需要运行 Tailscale 并启用 Tailscale SSH。可选的 SSH Shell 集成仅在当前 Shell 会话中运行，断开后不会留下后台进程，也绝不修改 Shell 配置文件。"],
+  ["Mac、iPhone 和 iPad 的功能一样吗？", "Termind 支持 macOS 15、iOS 18 和 iPadOS 18 及以上版本。三端均可使用 SSH、Mosh、Eternal Terminal、Telnet、SFTP、服务器监控、AI 助手和内置 Tailscale，部分高级功能需要 Pro。Mac 额外免费提供串口、多窗格工作区和广播输入，内置 MCP 服务器需要 Pro；iPhone 和 iPad 的每个工作区包含一个 SSH、Mosh、Eternal Terminal、Telnet 或 SFTP 会话。"],
+  ["服务器上需要安装 Termind 或其他软件吗？", "标准 SSH、Telnet 与 SFTP 连接无需安装 Termind Agent 或额外守护进程。普通连接仅需目标服务器具备可用的 SSH 或 Telnet 服务，文件管理则需支持 SFTP。使用内置 Tailscale 连接时，目标服务器需要运行 Tailscale 并启用 Tailscale SSH。可选的 SSH Shell 集成仅在当前 Shell 会话中运行，断开后不会留下后台进程，也绝不修改 Shell 配置文件。"],
+  ["Mosh、Eternal Terminal 和 tmux 如何使用？", [
+    "Mosh 与 Eternal Terminal 可帮助终端连接从网络中断中恢复。需在主机设置中启用相应传输方式，并安装对应服务端软件。Mosh 还需开放可达的 UDP 端口，不适用于由内置 Tailscale 管理的主机。",
+    "tmux 集成可在断开连接后保留远程进程。启用“会话持久化”，即可创建或选择远程会话，之后重新接入。服务器需先安装 tmux。这些功能均支持 Mac、iPhone 和 iPad。",
+  ], "session-tools"],
+  ["Wake-on-LAN（WoL）如何工作？", "Pro 支持手动发送唤醒请求，或在连接前自动唤醒。需保存目标主机的 MAC 地址，并在该主机上启用 WoL。请求仅在当前局域网广播，不经 SSH、代理或 Tailscale；发送成功不代表主机已唤醒。", "wake-on-lan"],
   ["如何连接 Tailnet？需要另外安装 Tailscale 吗？", [
     "内置 Tailscale 是 Termind Pro 功能。当前设备无需额外安装 Tailscale 客户端或配置系统 VPN，Termind 会在应用内直接建立连接。",
     "在保管库中新建或编辑分组，开启 Tailscale，通过浏览器登录或使用 Auth Key，完成后保存分组。Tailnet 中发现的设备会自动呈现在该分组下；不同分组还可以分别连接不同的 Tailnet。",
@@ -81,6 +86,22 @@ if (!zh && locale !== "en") {
   </aside>
 </div>
 
+<script>
+  function revealLinkedAnswer() {
+    const answer = document.getElementById(window.location.hash.slice(1));
+    if (!(answer instanceof HTMLDetailsElement) || !answer.closest(".faq-list")) return;
+
+    // Open the linked answer instead of leaving the default Tailscale answer in view.
+    for (const item of document.querySelectorAll<HTMLDetailsElement>(".faq-list details")) {
+      item.open = item === answer;
+    }
+    answer.scrollIntoView({ block: "start" });
+  }
+
+  revealLinkedAnswer();
+  window.addEventListener("hashchange", revealLinkedAnswer);
+</script>
+
 <style>
   .faq { padding-top: 7rem; }
   .faq-hero { max-width: 880px; padding-bottom: 5rem; }
@@ -88,7 +109,7 @@ if (!zh && locale !== "en") {
   .faq-hero > p:last-child { max-width: 590px; margin: 2rem 0 0; color: var(--muted); font-size: 1.1rem; }
   .faq-list { width: calc(100% - 220px); margin-left: 220px; border-top: 1px solid var(--line-strong); }
   details[open] { background: var(--surface-soft); }
-  details { border-bottom: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); scroll-margin-top: 2rem; }
   summary { display: grid; grid-template-columns: 58px 1fr 20px; align-items: center; min-height: 88px; cursor: pointer; list-style: none; }
   summary::-webkit-details-marker { display: none; }
   summary span { color: var(--cyan); font-family: var(--mono); font-size: .62rem; }

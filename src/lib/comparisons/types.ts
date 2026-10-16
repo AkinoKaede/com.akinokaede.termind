@@ -10,5 +10,5 @@ export interface CompetitorContent {
   termindRecommendation: string;
   recommendationTitle: string;
   recommendation: string;
-  features: Partial<Record<ComparisonFeatureId, { title: string; note: string }>>;
+  features: Partial<Record<ComparisonFeatureId, { title: string; note: string; sourceURL?: string }>>;
 }

@@ -48,6 +48,7 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
       <div class="section-heading">
         <h2 id="features-heading" class="display">{c("The details that matter.", "关键区别，逐项看。")}</h2>
       </div>
+      <p class="connection-summary">{c("Termind supports Mosh, Eternal Terminal, tmux integration, and manual or automatic Wake-on-LAN (WoL) on your local network.", "Termind 支持 Mosh、Eternal Terminal、tmux 集成，以及在当前局域网手动或自动发送 Wake-on-LAN（WoL）唤醒请求。")}</p>
       <ul class="feature-list" role="list">
         {rows.map((row, index) => (
           <li id={row.id}>
@@ -58,13 +59,14 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
             </div>
             <dl class="product-details">
               <div class="termind-detail"><dt>Termind</dt><dd><strong>{row.termind}</strong><p>{row.termindNote}</p></dd></div>
-              <div><dt>{competitor.name}</dt><dd><strong>{row.competitor.title}</strong><p>{row.competitor.note}</p></dd></div>
+              <div><dt>{competitor.name}</dt><dd><strong>{row.competitor.title}</strong><p>{row.competitor.note}</p>{row.competitor.sourceURL && <a class="feature-source" href={row.competitor.sourceURL}>{c("Official reference", "官方资料")} <span aria-hidden="true">↗</span></a>}</dd></div>
             </dl>
           </li>
         ))}
       </ul>
       <div class="sources" id="comparison-sources">
-        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-03">{c("October 3, 2026", "2026 年 10 月 3 日")}</time></p>
+        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-16">{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date("2026-10-16T00:00:00Z"))}</time></p>
+        <p>{c("Competitor pricing and hardware-key details were last checked on October 3, 2026.", "竞品价格与硬件密钥信息最后核对于 2026 年 10 月 3 日。")}</p>
       </div>
     </section>
 
@@ -95,6 +97,8 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
   .feature-comparison { padding-top: 5rem; scroll-margin-top: 2rem; }
   .section-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.7rem; }
   .section-heading h2, .download-cta h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
+  .connection-summary { max-width: 800px; margin: 0 0 2rem; color: var(--muted); font-size: .9rem; }
+  .feature-source { color: var(--cyan); font-size: .75rem; }
   .feature-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
   .feature-list > li { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 2.5rem; padding: 2rem 0; border-bottom: 1px solid var(--line-strong); scroll-margin-top: 2rem; }
   .feature-number { color: var(--cyan); font: .72rem var(--mono); }

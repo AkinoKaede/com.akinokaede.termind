@@ -8,12 +8,14 @@ const c = (english: string, simplified: string, japaneseText?: string) => copy(l
 
 const freeFeatures = [
   c("SSH, Telnet, SFTP, and terminal uploads", "SSH、Telnet、SFTP 与终端上传"),
+  c("Mosh, Eternal Terminal, and tmux integration", "Mosh、Eternal Terminal 与 tmux 集成"),
   c("Snippets and port forwarding", "命令片段与端口转发"),
   c("AI Command Generator with your own key", "使用自己密钥的 AI 命令生成器"),
   c("Monitor up to 3 servers", "最多监控 3 台服务器"),
   c("On macOS: serial, multi-pane workspaces, and input broadcasting", "macOS：串口、多窗格工作区与广播输入"),
 ];
 const proFeatures = [
+  [c("Wake-on-LAN (WoL)", "Wake-on-LAN（WoL）"), c("Wake a machine manually or automatically before connecting. Requires its MAC address, WoL support, and access to the same local network; requests do not travel through SSH, proxies, or Tailscale.", "手动唤醒主机，或在连接前自动唤醒。需配置 MAC 地址、启用 WoL，并处于同一局域网；请求不经 SSH、代理或 Tailscale。")],
   [c("Parallel SFTP", "并行 SFTP"), c("Transfer across multiple SSH connections, with smart scheduling and global and per-host concurrency limits.", "通过多个 SSH 连接传输，支持智能调度，以及全局和单主机并发上限。")],
   [c("Multi-connection port forwarding", "多连接端口转发"), c("On macOS, spread local and dynamic forwarding traffic across an SSH connection pool.", "在 macOS 上，通过 SSH 连接池分摊本地与动态端口转发流量。")],
   [c("Built-in Tailscale", "内置 Tailscale"), c("Sign in to multiple tailnets, discover devices, and connect through Tailscale SSH without a separate client on this device.", "登录多个 Tailnet、自动发现设备，并通过 Tailscale SSH 连接，当前设备无需另装客户端。")],

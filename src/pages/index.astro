@@ -4,6 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ScreenshotPicture from "../components/ScreenshotPicture.astro";
 import TelegramOffer from "../components/TelegramOffer.astro";
 import TailscaleFeature from "../components/TailscaleFeature.astro";
+import ConnectionFeatures from "../components/ConnectionFeatures.astro";
 import { assetLocale, copy, localizedPath, type SiteLocale } from "../lib/i18n";
 import { duoInnerFrame, duoOuterFrame, ipadFrame, iphoneFrame, workspaceFrame } from "../lib/marketingImages";
 import { termindPricing } from "../lib/pricing";
@@ -87,6 +88,8 @@ const priceSummary = {
       <div class="story-copy"><span class="feature-no">01 / IPHONE · SSH</span><h3>{c("A real terminal, wherever you are.", "真正的终端，随手即达。")}</h3><p>{c("A full terminal, made for touch. Find output, recall a snippet, and keep working wherever you are.", "为触控而生的完整终端。搜索输出、调用命令片段，随时接着工作。")}</p><ul><li>{c("Touch-first terminal controls", "为触控优化的终端控制")}</li><li>{c("Snippets and command history", "命令片段与历史记录")}</li><li>{c("Command Generator never presses Return", "命令生成器绝不替你按下回车")}</li></ul></div>
       <div class="product-field phone-field"><figure class="device iphone feature-phone"><ScreenshotPicture src={iphoneFrame("ssh", languageAsset)} width={765} loading="lazy" alt={c("SSH terminal with production service output on iPhone", "iPhone 上显示生产服务输出的 SSH 终端")} /></figure><span class="field-note">{c("iPHONE · PORTRAIT", "iPHONE · 竖屏")}</span></div>
     </article>
+
+    <ConnectionFeatures locale={locale} />
 
     <article class="story-row reverse unfolded-row">
     <div class="story-copy"><span class="feature-no">02 / IPHONE DUO · SFTP</span><h3>{c("Move files. Keep your flow.", "传文件，不必换工具。")}</h3><p>{c("Browse, preview, drag to upload, and track concurrent transfers. Open the same live path in SSH without rebuilding context.", "浏览、预览、拖入上传并跟踪并发传输；还能从当前路径直接切到 SSH，不必重新定位。")}</p><ul><li>{c("A complete SFTP workflow, built for touch", "触控优化的完整 SFTP 工作流")}</li><li>{c("Concurrent transfers continue in the background", "并发传输持续在后台运行")}</li><li>{c("Open the same live path in SSH", "同一路径直接切换 SSH")}</li></ul></div>

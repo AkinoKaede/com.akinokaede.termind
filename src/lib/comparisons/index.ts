@@ -20,7 +20,7 @@ const topics: Record<ComparisonSlug, ComparisonFeatureId[]> = {
   termius: ["sftp", "port-forwarding", "tailscale", "ai", "hardware-keys"],
   webssh: ["sftp", "tailscale", "external-agents", "hardware-keys"],
   servercat: ["monitoring", "containers", "ai", "tailscale", "hardware-keys"],
-  "prompt-3": ["connections", "ai", "tailscale", "plans", "hardware-keys"],
+  "prompt-3": ["connections", "tmux", "wake-on-lan", "sftp", "ai"],
 };
 
 export function getComparison(slug: ComparisonSlug, locale: SiteLocale) {

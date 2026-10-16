@@ -16,6 +16,7 @@ const comparisons = getComparisonPreviews(locale);
       "Compare features, limits, and pricing to find the SSH tool that fits your workflow.",
       "深入对比各项功能、规格限制与方案定价，找到最契合你工作流的 SSH 工具。"
     )}</p>
+    <p class="connection-note">{c("Termind supports Mosh, Eternal Terminal, tmux integration, and manual or automatic Wake-on-LAN (WoL) on your local network.", "Termind 支持 Mosh、Eternal Terminal、tmux 集成，以及在当前局域网手动或自动发送 Wake-on-LAN（WoL）唤醒请求。")}</p>
   </header>
 
   <section aria-labelledby="comparisons-heading">
@@ -53,6 +54,7 @@ const comparisons = getComparisonPreviews(locale);
   h1 { margin-top: 1.5rem; font-size: clamp(2.8rem, 6vw, 5.2rem); }
   h1 em { color: var(--cyan); }
   .lede { max-width: 650px; margin: 1.7rem 0 0; color: var(--muted); font-size: 1.08rem; }
+  .connection-note { max-width: 650px; margin: 1rem 0 0; color: var(--muted); font-size: .85rem; }
   .section-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
   .section-label h2 { margin: 0; font-size: .85rem; font-weight: 600; }
   .section-label > span { color: var(--faint); font-family: var(--mono); font-size: .75rem; }
