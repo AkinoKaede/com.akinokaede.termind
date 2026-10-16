@@ -14,6 +14,19 @@ const routes = [
 const origin = "https://termind.akinokaede.com";
 const routePath = (locale, route) => locale === "en" ? `/${route}` : `/${locale.toLowerCase()}/${route}`;
 const placeholders = (text) => [...text.matchAll(/\{(\w+)\}/g)].map((match) => match[1]).sort();
+const sessionTools = ["Herdr", "tmux", "Zellij", "zmx"];
+function assertSessionTools(text, location) {
+  const names = text.match(/\b(?:Herdr|tmux|Zellij|zmx)\b/g) ?? [];
+  assert.deepEqual(names, sessionTools, `${location}: list all Session Persistence tools in alphabetical order`);
+}
+const proFeatureTitles = {
+  en: ["AI Assistant", "MCP connections", "More servers to monitor", "Parallel SFTP",
+    "Multi-connection port forwarding", "Built-in Tailscale", "Wake-on-LAN", "iCloud sync"],
+  "zh-Hans": ["AI 助手", "MCP 连接", "监控更多服务器", "并行 SFTP",
+    "多连接端口转发", "内置 Tailscale", "Wake-on-LAN", "iCloud 同步"],
+  "zh-Hant": ["AI 助手", "MCP 連線", "監控更多伺服器", "並行 SFTP",
+    "多連線埠轉發", "內建 Tailscale", "Wake-on-LAN", "iCloud 同步"],
+};
 
 async function loadExports(path) {
   const compiled = ts.transpileModule(await read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS } });
@@ -76,6 +89,15 @@ for (const file of await sourceFiles("src")) {
   }
 }
 const { englishFAQ } = await loadExports("src/lib/faq.ts");
+const proAnswer = englishFAQ.find(([question]) => question === "What is free, and what does Pro add?")?.[1]?.[1];
+assert.ok(proAnswer, "FAQ: Pro feature overview");
+const proTopics = ["AI Assistant", "MCP", "monitoring", "SFTP", "port forwarding", "Tailscale", "Wake-on-LAN", "iCloud"];
+let previousTopic = -1;
+for (const topic of proTopics) {
+  const position = proAnswer.indexOf(topic);
+  assert.ok(position > previousTopic, `FAQ: list ${topic} in the same category order as pricing`);
+  previousTopic = position;
+}
 for (const [question, answer] of englishFAQ) {
   keys.add(question);
   for (const paragraph of Array.isArray(answer) ? answer : [answer]) keys.add(paragraph);
@@ -90,6 +112,11 @@ for (const locale of newLocales) {
   }
   console.log(`${locale}: ${keys.size} copy keys and placeholders OK`);
 }
+for (const locale of ["de", "fr", "ja", "ko"]) {
+  const exports = await loadExports(`src/lib/${locale}.ts`);
+  const dictionary = exports[locale === "ja" ? "japanese" : locale];
+  proFeatureTitles[locale] = proFeatureTitles.en.map(key => dictionary[key]);
+}
 
 const generatedAssets = new Set();
 for (const route of routes) {
@@ -100,12 +127,41 @@ for (const route of routes) {
     assert.ok(html.includes(`lang="${locale}"`), `${path}: document language`);
     assert.ok(html.includes(`rel="canonical" href="${origin}${path}"`), `${path}: canonical`);
     assert.ok(!/\{(?:annual|lifetime|name|upperName|owner)\}/.test(html), `${path}: unexpanded copy template`);
+    assert.ok(!/Wake-on-LAN\s*[(（]WoL[)）]/.test(html),
+      `${path}: use Wake-on-LAN or WoL, not the full name followed by its abbreviation`);
+    const footer = html.match(/<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/)?.[1];
+    assert.ok(footer, `${path}: shared site footer`);
+    for (const group of ["product", "resources", "community"]) {
+      assert.ok(footer.includes(`aria-labelledby="footer-${group}"`) && footer.includes(`id="footer-${group}"`),
+        `${path}: labeled ${group} footer navigation`);
+    }
+    for (const destination of ["", "pricing/", "compare/", "faq/", "security/", "privacy/", "support/"]) {
+      assert.ok(footer.includes(`href="${routePath(locale, destination)}"`),
+        `${path}: footer links to the localized ${destination || "homepage"}`);
+    }
+    for (const [label, href] of [
+      ["Discord", "https://discord.gg/3dzmRAUA36"],
+      ["Telegram", "https://t.me/termind_updates"],
+    ]) {
+      const link = [...footer.matchAll(/<a\b([^>]+)>([\s\S]*?)<\/a>/g)]
+        .find(([, attributes]) => attributes.includes(`href="${href}"`));
+      assert.ok(link?.[2].includes(label), `${path}: visible ${label} community link uses the supplied URL`);
+    }
+    const footerIntro = footer.match(/<div\b[^>]*class="footer-intro"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+    assert.ok(footerIntro?.includes("© 2026 Termind Team"), `${path}: copyright belongs below the brand introduction`);
+    assert.ok(!footer.includes("apps.apple.com") && !footer.includes("footer-heart") && !footer.includes("footer-signoff"),
+      `${path}: footer has no download button or made-with-love signoff`);
     if (route === "") {
+      const subtitle = html.match(/<p\b[^>]*class="lede"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+      const footerDescription = footer.match(/<p\b[^>]*class="footer-description"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+      assert.ok(subtitle, `${path}: homepage subtitle`);
+      assert.equal(footerDescription, subtitle, `${path}: footer introduction matches the homepage subtitle`);
       const tools = html.match(/<section\b[^>]*\bid="session-tools"[^>]*>([\s\S]*?)<\/section>/)?.[1];
       assert.ok(tools, `${path}: connection tools are visible on the homepage`);
-      for (const name of ["Mosh", "Eternal Terminal", "tmux", "Wake-on-LAN", "WoL"]) {
+      for (const name of ["Mosh", "Eternal Terminal", "Wake-on-LAN"]) {
         assert.ok(tools.includes(name), `${path}: homepage explains ${name}`);
       }
+      assertSessionTools(tools, `${path}: homepage`);
       assert.ok(!/\bPro\b|\bfree\b|kostenlos|gratuit|免费|免費|無料|무료/i.test(tools),
         `${path}: homepage connection tools describe capabilities, not plan tiers`);
       assert.ok(!/<a\b/.test(tools), `${path}: homepage connection tools have no setup links`);
@@ -113,22 +169,55 @@ for (const route of routes) {
         && html.indexOf('id="session-tools"') < html.indexOf('class="story-row reverse unfolded-row"'),
         `${path}: connection tools extend the terminal story before file transfers`);
       if (locale === "en") {
+        assert.ok(/<h3\b[^>]*>Session Persistence<\/h3>/.test(tools),
+          `${path}: use the Session Persistence feature name`);
         assert.ok(!/install|MAC address|server software|proxies|Tailscale/i.test(tools),
           `${path}: homepage describes benefits, not setup instructions`);
         assert.ok(html.includes('content="AI-driven remote work with SSH, SFTP, live metrics, and built-in Tailscale.'),
           `${path}: preserve AI-driven positioning in homepage metadata`);
       }
     }
+    if (route === "pricing/") {
+      assert.ok(!html.includes('class="tailscale-note"'), `${path}: keep Tailscale setup guidance out of pricing notes`);
+      const pro = html.match(/<section\b[^>]*\bid="pro-features"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+      assert.ok(pro, `${path}: Pro feature list`);
+      const headings = [...pro.matchAll(/<h3\b[^>]*>([^<]+)<\/h3>/g)].map(match => match[1]);
+      assert.deepEqual(headings, proFeatureTitles[locale],
+        `${path}: order Pro features by AI, MCP, monitoring, both connection accelerators, Tailscale, WoL, iCloud`);
+      const free = html.match(/<div\b[^>]*class="plan free-plan"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+      assert.ok(free, `${path}: free plan`);
+      assertSessionTools(free, `${path}: free Session Persistence`);
+    }
     if (route === "faq/") {
       for (const id of ["session-tools", "wake-on-lan"]) {
         assert.ok(html.includes(`id="${id}"`), `${path}: linked setup guidance for ${id}`);
       }
+      const sessions = html.match(/<details\b[^>]*\bid="session-tools"[^>]*>([\s\S]*?)<\/details>/)?.[1];
+      assert.ok(sessions, `${path}: Session Persistence setup guidance`);
+      assertSessionTools(sessions, `${path}: FAQ`);
+    }
+    if (route === "compare/") {
+      const note = html.match(/<p\b[^>]*class="connection-note"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+      assert.ok(note, `${path}: comparison overview connection capabilities`);
+      assertSessionTools(note, `${path}: comparison overview`);
     }
     if (route.startsWith("compare/") && route !== "compare/") {
       const summary = html.match(/<p\b[^>]*class="connection-summary"[^>]*>([\s\S]*?)<\/p>/)?.[1];
       assert.ok(summary, `${path}: shared Termind connection capabilities`);
-      for (const name of ["Mosh", "Eternal Terminal", "tmux", "Wake-on-LAN", "WoL"]) {
+      for (const name of ["Mosh", "Eternal Terminal", "Wake-on-LAN"]) {
         assert.ok(summary.includes(name), `${path}: comparison includes ${name}`);
+      }
+      assertSessionTools(summary, `${path}: comparison`);
+      const wake = html.match(/<li\b[^>]*id="wake-on-lan"[^>]*>([\s\S]*?)<\/li>/)?.[1];
+      assert.ok(wake, `${path}: every competitor has a Wake-on-LAN comparison`);
+      const products = [...wake.matchAll(/<dd\b[^>]*>([\s\S]*?)<\/dd>/g)];
+      assert.equal(products.length, 2, `${path}: both products have Wake-on-LAN details`);
+      assert.ok(products[0][1].includes("Pro"), `${path}: Termind Wake-on-LAN requires Pro`);
+      if (locale === "en") {
+        assert.ok(products[1][1].includes("Not supported") && products[1][1].includes("No built-in Wake-on-LAN."),
+          `${path}: maintainer-confirmed absence of competitor Wake-on-LAN`);
+        assert.ok(summary.includes("only Termind includes Wake-on-LAN"),
+          `${path}: scope Wake-on-LAN exclusivity to the apps compared here`);
       }
     }
     if (route === "compare/prompt-3/") {
@@ -145,10 +234,13 @@ for (const route of routes) {
       }
       assert.ok(html.includes('href="https://help.panic.com/prompt/prompt-startup-command/"'),
         `${path}: primary source for Prompt tmux workflow`);
+      const persistence = html.match(/<li\b[^>]*id="tmux"[^>]*>([\s\S]*?)<\/li>/)?.[1];
+      const termind = persistence?.match(/<dd\b[^>]*>([\s\S]*?)<\/dd>/)?.[1];
+      assert.ok(termind, `${path}: preserve the legacy tmux anchor for Session Persistence`);
+      assertSessionTools(termind, `${path}: Termind Session Persistence comparison`);
       if (locale === "en") {
-        const wake = html.match(/<li\b[^>]*id="wake-on-lan"[^>]*>([\s\S]*?)<\/li>/)?.[1];
-        assert.ok(wake?.includes("Not documented") && !wake.includes("Not supported"),
-          `${path}: undocumented WoL is not presented as proven unsupported`);
+        assert.ok(/<h3\b[^>]*>Session Persistence<\/h3>/.test(persistence),
+          `${path}: Session Persistence comparison label`);
         assert.ok(html.includes("visionOS, local shell, and more key types."),
           `${path}: retain Prompt-specific reasons to choose it`);
       }

@@ -2,6 +2,7 @@ import { copy, type SiteLocale } from "../i18n";
 import { termindPricing } from "../pricing";
 import type { CompetitorContent } from "./types";
 
+// The maintainer confirmed on 2026-10-16 that WebSSH has no built-in Wake-on-LAN.
 // Checked 2026-10-03 against WebSSH 33.0 and these first-party sources:
 // https://webssh.net/documentation/pricing/
 // https://webssh.net/documentation/help/intelligence/api-mcp-server/
@@ -36,6 +37,10 @@ export function getWebSSH(locale: SiteLocale): CompetitorContent {
       tailscale: {
         title: c("No built-in Tailscale integration", "无内置 Tailscale 集成"),
         note: c("Use a separate Tailscale client to reach Tailnet hosts. VPN-over-SSH is an SSH tunnel feature, not Tailnet integration.", "需通过独立的 Tailscale 客户端访问 Tailnet 主机。VPN-over-SSH 属于 SSH 隧道功能，不提供 Tailnet 集成。"),
+      },
+      "wake-on-lan": {
+        title: c("Not supported", "不支持"),
+        note: c("No built-in Wake-on-LAN. Wake the machine with another tool before connecting.", "不提供内置 Wake-on-LAN，需先通过其他工具唤醒主机，再进行连接。"),
       },
       ai: {
         title: c("No built-in AI features", "无内置 AI 功能"),

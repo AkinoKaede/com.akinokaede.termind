@@ -7,6 +7,7 @@ import type { CompetitorContent } from "./types";
 // https://itunes.apple.com/lookup?id=1501532023&country=us (free monitoring, Premium terminal/sync)
 // The maintainer explicitly tested and confirmed no external FIDO2 hardware-key support.
 // The maintainer also confirmed that ServerCat has no built-in AI features or MCP server.
+// The maintainer confirmed on 2026-10-16 that ServerCat has no built-in Wake-on-LAN.
 // No built-in Tailnet sign-in/device sync appears in the current app feature inventory or docs.
 // US App Store: https://apps.apple.com/us/app/servercat-ssh-terminal/id1501532023?l=en
 // Regular Premium: $5.99/year or $18.99 lifetime. The $5.99 upgrade discount is a separate product.
@@ -45,6 +46,10 @@ export function getServerCat(locale: SiteLocale): CompetitorContent {
       tailscale: {
         title: c("No built-in Tailscale integration", "无内置 Tailscale 集成"),
         note: c("Connect the device with a separate Tailscale client, then use the host’s Tailnet address. No in-app Tailnet login or device sync.", "需先通过独立的 Tailscale 客户端联网，再使用主机的 Tailnet 地址连接；不提供应用内登录或设备同步。"),
+      },
+      "wake-on-lan": {
+        title: c("Not supported", "不支持"),
+        note: c("No built-in Wake-on-LAN. Wake the machine with another tool before connecting.", "不提供内置 Wake-on-LAN，需先通过其他工具唤醒主机，再进行连接。"),
       },
       "hardware-keys": {
         title: c("No FIDO2 hardware-key support", "不支持 FIDO2 硬件密钥"),

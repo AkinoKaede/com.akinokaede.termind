@@ -1,0 +1,129 @@
+---
+import { copy, localizedPath, type SiteLocale } from "../lib/i18n";
+
+interface Props { locale: SiteLocale; }
+const { locale } = Astro.props;
+const c = (english: string, simplified: string) => copy(locale, english, simplified);
+const groups = [
+  {
+    id: "footer-product",
+    title: c("Product", "产品"),
+    links: [
+      { label: c("Overview", "概览"), href: localizedPath(locale) },
+      { label: c("Pricing", "价格"), href: localizedPath(locale, "/pricing/") },
+      { label: c("Compare", "对比"), href: localizedPath(locale, "/compare/") },
+    ],
+  },
+  {
+    id: "footer-resources",
+    title: c("Resources", "资源"),
+    links: [
+      { label: "FAQ", href: localizedPath(locale, "/faq/") },
+      { label: c("Security", "安全"), href: localizedPath(locale, "/security/") },
+      { label: c("Privacy", "隐私"), href: localizedPath(locale, "/privacy/") },
+      { label: c("Support", "支持"), href: localizedPath(locale, "/support/") },
+    ],
+  },
+  {
+    id: "footer-community",
+    title: c("Community", "社区"),
+    links: [
+      { label: "Discord", href: "https://discord.gg/3dzmRAUA36" },
+      { label: "Telegram", href: "https://t.me/termind_updates" },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-intro">
+        <a class="footer-brand" href={localizedPath(locale)} aria-label={c("Termind home", "Termind 首页")}>
+          <img src="/brand_mark.svg" width="40" height="40" alt="" loading="lazy" />
+          <span>Termind</span>
+        </a>
+        <p class="footer-description">{c("Connect. Transfer. Let AI assist. One workspace for Mac, iPhone, and iPad.", "连接、传输，AI 协助。在 Mac、iPhone 与 iPad 上，始终由你掌控。")}</p>
+        <p class="footer-copyright">© 2026 Termind Team</p>
+      </div>
+      {groups.map((group) => (
+        <nav class="footer-group" aria-labelledby={group.id}>
+          <h2 id={group.id}>{group.title}</h2>
+          <ul role="list">
+            {group.links.map((link) => (
+              <li>
+                <a href={link.href}>
+                  {link.label}
+                  {link.href.startsWith("https://") && <span class="external-arrow" aria-hidden="true">↗</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: 7rem;
+    padding-block: 3.5rem;
+    border-block-start: 1px solid var(--line);
+    background: radial-gradient(ellipse at 12% 100%, var(--surface) 0%, transparent 65%);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) repeat(3, minmax(0, 1fr));
+    gap: 3rem;
+  }
+  .footer-intro { max-width: 22rem; }
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .footer-brand span {
+    font-family: Palatino, "Palatino Linotype", Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+  .footer-brand img { display: block; }
+  .footer-description { margin: 1rem 0 1.4rem; color: var(--muted); font-size: .85rem; line-height: 1.8; }
+  .footer-copyright { margin: 0; color: var(--faint); font-size: .75rem; }
+  .footer-group h2 {
+    margin: .5rem 0 1rem;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .footer-group ul { margin: 0; padding: 0; list-style: none; }
+  .footer-group a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 44px;
+    max-width: 100%;
+    color: var(--muted);
+    font-size: .85rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .footer-group a:hover { color: var(--cyan); text-decoration: underline; }
+  .external-arrow { color: var(--faint); font-size: .75rem; }
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+    .footer-intro { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .site-footer { margin-block-start: 5rem; padding-block: 2.5rem; }
+    .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+    .footer-group h2 { margin-block-start: 0; }
+  }
+</style>

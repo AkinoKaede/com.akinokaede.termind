@@ -97,14 +97,14 @@ export function getTermindFeatures(locale: SiteLocale) {
     },
     tmux: {
       id: "tmux",
-      feature: c("tmux integration", "tmux 集成"),
+      feature: c("Session Persistence", "会话持久化"),
       benefit: c("Keep remote work running after you disconnect.", "断开连接后，让远程任务继续运行。"),
       termind: c("Built-in session management", "内置会话管理"),
-      termindNote: c("Create or attach to remote tmux sessions from Termind, then disconnect without stopping their processes. Requires tmux on the server.", "在 Termind 中创建或接入远程 tmux 会话，断开连接时可保留远程进程。服务器需安装 tmux。"),
+      termindNote: c("Create or attach to remote sessions with Herdr, tmux, Zellij, or zmx from Termind, then disconnect without stopping their processes. Install your chosen tool on the server first.", "在 Termind 中通过 Herdr、tmux、Zellij 或 zmx 创建或接入远程会话，断开连接时可保留远程进程。服务器需先安装所选工具。"),
     },
     "wake-on-lan": {
       id: "wake-on-lan",
-      feature: c("Wake-on-LAN (WoL)", "Wake-on-LAN（WoL）"),
+      feature: c("Wake-on-LAN", "Wake-on-LAN"),
       benefit: c("Wake a sleeping machine before connecting.", "连接前先唤醒休眠主机。"),
       termind: c("Manual and automatic wake · Pro", "手动与自动唤醒 · Pro"),
       termindNote: c("Send a wake request manually or automatically before connecting. Requires a saved MAC address and WoL enabled on the target. Broadcasts stay on your local network, not through SSH, proxies, or Tailscale.", "手动发送唤醒请求，或在连接前自动发送。需保存 MAC 地址，并在目标主机上启用 WoL。请求仅在当前局域网广播，不经 SSH、代理或 Tailscale。"),

@@ -6,6 +6,7 @@ import type { CompetitorContent } from "./types";
 // and https://docs.termius.com/keychain/ssh-keys-and-certificates.
 // The maintainer confirmed the missing Tailscale, monitoring, terminal-upload and MCP features,
 // plus Starter hardware-key availability and the iOS credential compatibility limitation.
+// The maintainer confirmed on 2026-10-16 that Termius has no built-in Wake-on-LAN.
 export function getTermius(locale: SiteLocale): CompetitorContent {
   const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
@@ -34,6 +35,10 @@ export function getTermius(locale: SiteLocale): CompetitorContent {
       "tailscale": {
         title: c("No built-in Tailscale integration", "无内置 Tailscale 集成"),
         note: c("Connect through a separate Tailscale client before accessing Tailnet hosts.", "需先通过独立的 Tailscale 客户端接入 Tailnet，再连接主机。"),
+      },
+      "wake-on-lan": {
+        title: c("Not supported", "不支持"),
+        note: c("No built-in Wake-on-LAN. Wake the machine with another tool before connecting.", "不提供内置 Wake-on-LAN，需先通过其他工具唤醒主机，再进行连接。"),
       },
       "ai": {
         title: c("AI-powered autocomplete", "AI 自动补全"),

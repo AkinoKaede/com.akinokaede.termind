@@ -14,7 +14,8 @@ import type { CompetitorContent } from "./types";
 // Connection and workflow details rechecked 2026-10-16:
 // https://panic.com/prompt/ (Mosh/ET, local shell, visionOS, tmux terminal compatibility)
 // https://help.panic.com/prompt/prompt-startup-command/ (tmux via SSH startup command)
-// https://help.panic.com/prompt/ (no documented WoL, graphical SFTP browser, or metrics dashboard)
+// https://help.panic.com/prompt/ (no documented graphical SFTP browser or metrics dashboard)
+// The maintainer confirmed on 2026-10-16 that Prompt 3 has no built-in Wake-on-LAN.
 // Undocumented capabilities are not treated as confirmed unsupported.
 export function getPrompt3(locale: SiteLocale): CompetitorContent {
   const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
@@ -22,10 +23,10 @@ export function getPrompt3(locale: SiteLocale): CompetitorContent {
     name: "Prompt 3",
     owner: "Panic Inc.",
     attribution: c("Prompt is a registered trademark of Panic Inc.", "Prompt 是 Panic Inc. 的注册商标。"),
-    description: c("Compare Termind and Prompt 3: Mosh, Eternal Terminal, tmux integration, Wake-on-LAN (WoL), SFTP, AI, Tailscale, hardware keys, and pricing.", "对比 Termind 与 Prompt 3 的 Mosh、Eternal Terminal、tmux 集成、Wake-on-LAN（WoL）、SFTP、AI、Tailscale、硬件密钥与价格。"),
-    summary: c("Both support Mosh and Eternal Terminal. Termind adds built-in tmux session management, SFTP, and server monitoring, with AI, Tailscale, and Wake-on-LAN (WoL) in Pro. Lifetime Pro costs {lifetime}; Prompt 3 is $49.99 one-time.", "两款都支持 Mosh 与 Eternal Terminal。Termind 还提供内置 tmux 会话管理、SFTP 和服务器监控，Pro 增加 AI、Tailscale 与 Wake-on-LAN（WoL）。Termind Pro 永久版 {lifetime}，Prompt 3 一次购买 $49.99。").replaceAll("{lifetime}", termindPricing.lifetime),
+    description: c("Compare Termind and Prompt 3: connection types, Session Persistence, Wake-on-LAN, SFTP, AI, Tailscale, hardware keys, and pricing.", "对比 Termind 与 Prompt 3 的连接类型、会话持久化、Wake-on-LAN、SFTP、AI、Tailscale、硬件密钥与价格。"),
+    summary: c("Both support Mosh and Eternal Terminal. Termind adds Session Persistence with Herdr, tmux, Zellij, and zmx, plus SFTP and server monitoring, with AI, Tailscale, and Wake-on-LAN in Pro. Lifetime Pro costs {lifetime}; Prompt 3 is $49.99 one-time.", "两款都支持 Mosh 与 Eternal Terminal。Termind 还通过 Herdr、tmux、Zellij 与 zmx 提供会话持久化，并提供 SFTP 和服务器监控，Pro 增加 AI、Tailscale 与 Wake-on-LAN。Termind Pro 永久版 {lifetime}，Prompt 3 一次购买 $49.99。").replaceAll("{lifetime}", termindPricing.lifetime),
     termindRecommendationTitle: c("More than a terminal. A lower price.", "不止终端，价格也更低。"),
-    termindRecommendation: c("Termind combines Mosh, Eternal Terminal, tmux session management, SFTP, and server monitoring. Pro adds the AI Assistant, built-in Tailscale, WoL, and a Mac MCP server for {annual}/year or {lifetime} lifetime. Prompt 3 costs $9.99/year or $49.99 one-time.", "Termind 集 Mosh、Eternal Terminal、tmux 会话管理、SFTP 与服务器监控于一体。Pro 增加 AI 助手、内置 Tailscale、WoL 与 Mac MCP 服务器，价格为 {annual}/年或 {lifetime} 永久版；Prompt 3 为 $9.99/年或 $49.99 一次购买。").replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
+    termindRecommendation: c("Termind combines Mosh, Eternal Terminal, Session Persistence, SFTP, and server monitoring. Pro adds the AI Assistant, a Mac MCP server, built-in Tailscale, and WoL for {annual}/year or {lifetime} lifetime. Prompt 3 costs $9.99/year or $49.99 one-time.", "Termind 集 Mosh、Eternal Terminal、会话持久化、SFTP 与服务器监控于一体。Pro 增加 AI 助手、Mac MCP 服务器、内置 Tailscale 与 WoL，价格为 {annual}/年或 {lifetime} 永久版；Prompt 3 为 $9.99/年或 $49.99 一次购买。").replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
     recommendationTitle: c("visionOS, local shell, and more key types.", "visionOS、本地 Shell 与更多密钥类型。"),
     recommendation: c("Consider Prompt 3 for Apple Vision Pro, a local shell on Mac, or YubiKey PIV and Ed25519-SK authentication. Mosh and Eternal Terminal are available in both apps, not a reason to choose Prompt alone.", "如果需要 Apple Vision Pro、Mac 本地 Shell，或 YubiKey PIV 与 Ed25519-SK 认证，可以考虑 Prompt 3。Mosh 与 Eternal Terminal 两款都有，不再是只能选择 Prompt 的理由。"),
     features: {
@@ -39,9 +40,8 @@ export function getPrompt3(locale: SiteLocale): CompetitorContent {
         sourceURL: "https://help.panic.com/prompt/prompt-startup-command/",
       },
       "wake-on-lan": {
-        title: c("Not documented", "未见官方说明"),
-        note: c("The reviewed Prompt feature list and help pages do not describe built-in Wake-on-LAN controls. This is not a claim that no workaround exists.", "已查阅的 Prompt 功能列表与帮助页面未介绍内置 Wake-on-LAN 控制；这不代表无法借助其他方式实现。"),
-        sourceURL: "https://help.panic.com/prompt/",
+        title: c("Not supported", "不支持"),
+        note: c("No built-in Wake-on-LAN. Wake the machine with another tool before connecting.", "不提供内置 Wake-on-LAN，需先通过其他工具唤醒主机，再进行连接。"),
       },
       sftp: {
         title: c("No graphical SFTP browser documented", "未见图形化 SFTP 浏览器说明"),
