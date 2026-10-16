@@ -35,12 +35,12 @@ const plans = [
     lifetime: false,
   },
   {
-    name: c("Lifetime", "永久版"),
+    name: c("Lifetime", "终身版"),
     price: termindPricing.lifetime,
     unit: c("once", "一次购买"),
     description: c("Your workspace, yours to keep.", "一次付费，永久拥有。"),
     billing: c("One payment. No subscription renewal.", "一次付费，无需续订。"),
-    points: [c("Unlimited hosts", "无限主机"), c("iCloud sync", "iCloud 同步"), c("Built-in Tailscale", "内置 Tailscale"), c("Multi-connection SFTP", "多连接 SFTP"), c("Multi-connection port forwarding", "多连接端口转发") + " (Mac)", c("Priority support", "优先支持"), c("macOS & iOS", "macOS 与 iOS"), c("Family Sharing included", "支持家庭共享"), c("Lifetime Pro access", "永久使用 Pro")],
+    points: [c("Unlimited hosts", "无限主机"), c("iCloud sync", "iCloud 同步"), c("Built-in Tailscale", "内置 Tailscale"), c("Multi-connection SFTP", "多连接 SFTP"), c("Multi-connection port forwarding", "多连接端口转发") + " (Mac)", c("Priority support", "优先支持"), c("macOS & iOS", "macOS 与 iOS"), c("Family Sharing included", "支持家庭共享"), c("Lifetime Pro access", "终身使用Pro")],
     lifetime: true,
   },
 ];
@@ -50,7 +50,7 @@ const plans = [
   <header class="pricing-hero reveal page-intro">
     <p class="eyebrow">{c("PRICING", "价格")}</p>
     <h1 class="display">{c("Start free.", "免费开始，")}<br /><em>{c("Make it yours.", "随心选择升级方式。")}</em></h1>
-    <p class="lede">{c("Start with 3 hosts, AI, server monitoring, and Wake-on-LAN. Pro adds unlimited hosts, iCloud sync, and advanced connections. Annual or lifetime, with Family Sharing on macOS and iOS.", "从 3 个主机开始，使用 AI、服务器监控与 Wake-on-LAN。Pro 提供无限主机、iCloud 同步与高级连接能力。可按年订阅或永久购买，macOS 与 iOS 通用，并支持家庭共享。")}</p>
+    <p class="lede">{c("Start with 3 hosts, AI, server monitoring, and Wake-on-LAN. Pro adds unlimited hosts, iCloud sync, and advanced connections. Annual or lifetime, with Family Sharing on macOS and iOS.", "从 3 个主机开始，使用 AI、服务器监控与 Wake-on-LAN。Pro 提供无限主机、iCloud 同步与高级连接能力。可按年订阅或购买终身版，macOS 与 iOS 通用，并支持家庭共享。")}</p>
   </header>
 
   <section class="plans" aria-label={c("Free and Pro plans", "免费版与 Pro 方案")}>
@@ -84,7 +84,7 @@ const plans = [
   </div>
 
   <section class="pro-features" id="pro-features" aria-labelledby="pro-features-heading">
-    <div class="section-heading"><p class="eyebrow">{c("ONE PRO. TWO WAYS TO OWN IT.", "同样的 PRO，两种购买方式")}</p><h2 class="display" id="pro-features-heading">{c("Unlimited hosts. Your whole workspace.", "无限主机，完整工作台。")}</h2><p>{c("Annual and lifetime unlock the same Pro features.", "年度订阅与永久版，解锁相同的 Pro 功能。")}</p></div>
+    <div class="section-heading"><p class="eyebrow">{c("ONE PRO. TWO WAYS TO OWN IT.", "同样的 PRO，两种购买方式")}</p><h2 class="display" id="pro-features-heading">{c("Unlimited hosts. Your whole workspace.", "无限主机，完整工作台。")}</h2><p>{c("Annual and lifetime unlock the same Pro features.", "年度订阅与终身版，解锁相同的 Pro 功能。")}</p></div>
     <ul class="feature-list" role="list">
       {proFeatures.map(([title, description], index) => (
         <li><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{description}</p></div></li>

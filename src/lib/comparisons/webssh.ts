@@ -22,7 +22,7 @@ export function getWebSSH(locale: SiteLocale): CompetitorContent {
     description: c("Compare Termind and WebSSH: SFTP, port forwarding, Tailscale, external AI clients, hardware keys, monitoring, and paid plans.", "对比 Termind 与 WebSSH 的 SFTP、端口转发、Tailscale、外部 AI 客户端、硬件密钥、监控与付费方案。"),
     summary: c("Termind combines an in-app AI Assistant, SFTP, and FIDO2 authentication. WebSSH includes network diagnostics and Proxmox workflows.", "Termind 将应用内 AI 助手、SFTP 与 FIDO2 认证结合在一起。WebSSH 提供网络诊断与 Proxmox 工作流。"),
     termindRecommendationTitle: c("AI in the app. MCP on Mac.", "应用内 AI，Mac 上的 MCP。"),
-    termindRecommendation: c("Pick Termind for AI inside your SSH and SFTP workflow, or connect an external AI client through the Mac MCP server. Pro adds unlimited hosts and built-in Tailscale; its lifetime option costs {lifetime}.", "在 SSH 与 SFTP 工作中直接使用 AI，或通过 Mac MCP 服务器接入外部 AI 客户端，都可以选择 Termind。Pro 解锁无限主机与内置 Tailscale，永久版为 {lifetime}。").replaceAll("{lifetime}", termindPricing.lifetime),
+    termindRecommendation: c("Pick Termind for AI inside your SSH and SFTP workflow, or connect an external AI client through the Mac MCP server. Pro adds unlimited hosts and built-in Tailscale; its lifetime option costs {lifetime}.", "在 SSH 与 SFTP 工作中直接使用 AI，或通过 Mac MCP 服务器接入外部 AI 客户端，都可以选择 Termind。Pro 解锁无限主机与内置 Tailscale，终身版为 {lifetime}。").replaceAll("{lifetime}", termindPricing.lifetime),
     recommendationTitle: c("Network tools and Proxmox.", "网络工具与 Proxmox 管理。"),
     recommendation: c("A fit for Mosh, network diagnostics, VPN-over-SSH, and Proxmox workflows, with a one-time Pro purchase.", "适合常用 Mosh、网络诊断、VPN-over-SSH 或 Proxmox 的工作流，Pro 支持一次购买。"),
     features: {

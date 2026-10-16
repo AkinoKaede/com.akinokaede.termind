@@ -10,7 +10,7 @@ const { locale = "en" } = Astro.props;
 
 <BaseLayout
   title={copy(locale, "Pricing — Termind", "价格 — Termind")}
-  description={copy(locale, "Start with 3 hosts, AI, MCP, server monitoring, and Wake-on-LAN. Pro adds unlimited hosts and iCloud sync: {annual}/year or {lifetime} lifetime on macOS and iOS.", "从 3 个主机、AI、MCP、服务器监控与 Wake-on-LAN 开始。Pro 提供无限主机与 iCloud 同步：年费 {annual}，永久版 {lifetime}，macOS 与 iOS 通用。").replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime)}
+  description={copy(locale, "Start with 3 hosts, AI, MCP, server monitoring, and Wake-on-LAN. Pro adds unlimited hosts and iCloud sync: {annual}/year or {lifetime} lifetime on macOS and iOS.", "从 3 个主机、AI、MCP、服务器监控与 Wake-on-LAN 开始。Pro 提供无限主机与 iCloud 同步：年费 {annual}，终身版 {lifetime}，macOS 与 iOS 通用。").replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime)}
   locale={locale}
   pagePath="/pricing/"
 >

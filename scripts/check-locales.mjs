@@ -138,6 +138,14 @@ for (const route of routes) {
   for (const locale of languages) {
     const path = routePath(locale, route);
     const html = await read(`dist${path}index.html`);
+    if (["zh-Hans", "zh-Hant"].includes(locale)
+      && ["", "pricing/", "faq/", "privacy/", ...routes.filter(route => route.startsWith("compare/") && route !== "compare/")].includes(route)) {
+      const lifetimeName = locale === "zh-Hans" ? "终身版" : "終身版";
+      assert.ok(html.includes(lifetimeName), `${path}: use the localized Lifetime name ${lifetimeName}`);
+      if (!route.startsWith("compare/")) {
+        assert.ok(!html.includes("永久版"), `${path}: remove Termind's old Lifetime name`);
+      }
+    }
     if (route !== "pricing/") {
       assert.ok(!html.includes(prioritySupportTitles[locale]), `${path}: priority support belongs only on pricing`);
     }
@@ -211,6 +219,11 @@ for (const route of routes) {
       assert.ok(!free.includes(prioritySupportTitles[locale]), `${path}: priority support is not in the free plan`);
       const paidPlans = [...html.matchAll(/<div\b[^>]*class="plan(?: lifetime-plan)?"[^>]*>([\s\S]*?)<\/div>/g)];
       assert.equal(paidPlans.length, 2, `${path}: annual and lifetime Pro cards`);
+      if (["zh-Hans", "zh-Hant"].includes(locale)) {
+        const lifetimeName = locale === "zh-Hans" ? "终身版" : "終身版";
+        assert.ok(new RegExp(`<h2\\b[^>]*>${lifetimeName}<\\/h2>`).test(paidPlans[1][1]),
+          `${path}: the Lifetime plan heading uses ${lifetimeName}`);
+      }
       for (const [, plan] of paidPlans) {
         assert.ok(plan.includes(prioritySupportTitles[locale]), `${path}: both Pro plans include priority support`);
       }

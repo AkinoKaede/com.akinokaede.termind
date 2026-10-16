@@ -78,8 +78,8 @@ export function getTermindFeatures(locale: SiteLocale) {
       id: "plans",
       feature: c("Paid plans", "付费方案"),
       benefit: c("Compare recurring and one-time costs.", "比较订阅与一次购买的费用。"),
-      termind: c(`{annual}/year or {lifetime} lifetime`, `{annual}/年，或 {lifetime} 永久版`, `年額 {annual} または買い切り {lifetime}`).replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
-      termindNote: c("Annual and lifetime plans unlock the same Pro features and include Family Sharing. AI model usage is billed separately.", "年度订阅与永久版解锁相同的 Pro 功能，均支持家庭共享。AI 模型用量费用另计。"),
+      termind: c(`{annual}/year or {lifetime} lifetime`, `{annual}/年，或 {lifetime} 终身版`, `年額 {annual} または買い切り {lifetime}`).replaceAll("{annual}", termindPricing.annual).replaceAll("{lifetime}", termindPricing.lifetime),
+      termindNote: c("Annual and lifetime plans unlock the same Pro features and include Family Sharing. AI model usage is billed separately.", "年度订阅与终身版解锁相同的 Pro 功能，均支持家庭共享。AI 模型用量费用另计。"),
     },
     "teams": {
       id: "teams",
