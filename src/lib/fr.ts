@@ -571,7 +571,7 @@ export const fr: Record<string, string> = {
   "LOCAL FIRST": "LOCAL EN PRIORITÉ",
   "01 / SSH KEYS": "01 / CLÉS SSH",
   "MORE WAYS TO KEEP WORKING": "POUR CONTINUER À TRAVAILLER",
-  "Mosh and Eternal Terminal": "Mosh + Eternal Terminal",
+  "Mosh and Eternal Terminal": "Mosh / Eternal Terminal",
   "Wake-on-LAN": "Wake-on-LAN",
   "Wake a machine manually or automatically before connecting. Requires its MAC address, WoL support, and access to the same local network; requests do not travel through SSH, proxies, or Tailscale.": "Réveillez une machine manuellement ou automatiquement avant la connexion. Son adresse MAC, WoL activé et l’accès au même réseau local sont nécessaires. Les requêtes ne passent ni par SSH, ni par un proxy, ni par Tailscale.",
   "Termind supports Mosh and Eternal Terminal, plus Session Persistence with Herdr, tmux, Zellij, and zmx. Among the apps compared here, only Termind includes Wake-on-LAN, with manual or automatic wake on your local network.": "Termind prend en charge Mosh et Eternal Terminal, ainsi que la persistance des sessions avec Herdr, tmux, Zellij et zmx. Parmi les apps comparées ici, seule Termind intègre Wake-on-LAN, avec un réveil manuel ou automatique sur votre réseau local.",

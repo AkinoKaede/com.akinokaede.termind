@@ -555,7 +555,7 @@ export const japanese: Record<string, string> = {
   "Where can I get help?": "どこでサポートを受けられますか？",
   "Visit Support or email support-termind@akinokaede.com. Tell us what you were trying to do, what happened, and which device and OS version you use. Before sharing screenshots or logs, remove passwords, keys, host addresses, and other sensitive details.": "サポートページ、またはsupport-termind@akinokaede.comへご連絡ください。試した操作、起きたこと、デバイスとOSのバージョンをお知らせください。スクリーンショットやログを共有する前に、パスワード、鍵、ホストアドレスなどの機密情報を取り除いてください。",
   "MORE WAYS TO KEEP WORKING": "リモート作業を続けるために",
-  "Mosh and Eternal Terminal": "Mosh + Eternal Terminal",
+  "Mosh and Eternal Terminal": "Mosh / Eternal Terminal",
   "Wake-on-LAN": "Wake-on-LAN",
   "Wake a machine manually or automatically before connecting. Requires its MAC address, WoL support, and access to the same local network; requests do not travel through SSH, proxies, or Tailscale.": "接続前に手動または自動でマシンを起動できます。MACアドレス、WoLの有効化、同じローカルネットワークへの接続が必要です。要求はSSH、プロキシ、Tailscaleを経由しません。",
   "Termind supports Mosh and Eternal Terminal, plus Session Persistence with Herdr, tmux, Zellij, and zmx. Among the apps compared here, only Termind includes Wake-on-LAN, with manual or automatic wake on your local network.": "TermindはMoshとEternal Terminalに加え、Herdr、tmux、Zellij、zmxによるセッションの永続化に対応しています。ここで比較するアプリの中でWake-on-LANを内蔵するのはTermindだけです。ローカルネットワーク上で手動または自動でマシンを起動できます。",
