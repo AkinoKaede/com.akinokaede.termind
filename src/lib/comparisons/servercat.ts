@@ -22,10 +22,6 @@ export function getServerCat(locale: SiteLocale): CompetitorContent {
     recommendationTitle: c("Linux monitoring and Docker.", "Linux 监控与 Docker 管理。"),
     recommendation: c("A fit for detailed resource charts and a dedicated container dashboard. Premium adds the SSH terminal, sync, and container management.", "适合集中查看资源图表与容器状态；Premium 增加 SSH 终端、同步和容器管理。"),
     features: {
-      "open-source": {
-        title: c("No public app source confirmed", "尚未确认应用源码公开"),
-        note: c("No public source release of the app has been confirmed. This is separate from any open-source dependencies.", "尚未确认该应用本身有公开源码发布；这与其是否使用开源依赖是两回事。"),
-      },
       monitoring: {
         title: c("Linux and Docker monitoring", "Linux 与 Docker 监控"),
         note: c("Read CPU, GPU, memory, network, disk I/O, and Docker metrics over SSH. No monitoring agent is needed.", "通过 SSH 采集 CPU、GPU、内存、网络、磁盘 I/O 与 Docker 指标，无需安装监控 Agent。"),
@@ -69,6 +65,10 @@ export function getServerCat(locale: SiteLocale): CompetitorContent {
       plans: {
         title: c("$5.99/year or $18.99 lifetime", "$5.99/年，或 $18.99 永久版"),
         note: c("Both Premium plans include the terminal, background SSH, sync, and container management.", "两种 Premium 方案均包含终端、后台 SSH、同步和容器管理。"),
+      },
+      "open-source": {
+        title: c("Closed-source", "闭源"),
+        note: c("The app's source code is not publicly available.", "应用源代码未公开。"),
       },
     },
   };

@@ -659,6 +659,6 @@ export const de: Record<string, string> = {
   "Open source": "Open Source",
   "Inspect the code behind your remote workspace.": "Sieh dir den Code hinter deinem Remote-Arbeitsplatz an.",
   "Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.": "Der Quellcode ist auf GitHub öffentlich verfügbar. Du kannst ihn unter der Lizenz GPL-3.0-only einsehen, kompilieren, ändern und weitergeben.",
-  "No public app source confirmed": "Kein öffentlicher App-Quellcode bestätigt",
-  "No public source release of the app has been confirmed. This is separate from any open-source dependencies.": "Eine Veröffentlichung des App-Quellcodes wurde nicht bestätigt. Dies ist unabhängig von eventuell verwendeten Open-Source-Abhängigkeiten.",
+  "Closed-source": "Closed Source",
+  "The app's source code is not publicly available.": "Der Quellcode der App ist nicht öffentlich verfügbar.",
 };

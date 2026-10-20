@@ -659,6 +659,6 @@ export const ko: Record<string, string> = {
   "Open source": "오픈 소스",
   "Inspect the code behind your remote workspace.": "원격 작업 공간의 소스 코드를 살펴보세요.",
   "Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.": "소스 코드는 GitHub에 공개되어 있습니다. GPL-3.0-only 라이선스에 따라 코드를 살펴보고 빌드, 수정 및 재배포할 수 있습니다.",
-  "No public app source confirmed": "앱 소스 코드 공개 여부 미확인",
-  "No public source release of the app has been confirmed. This is separate from any open-source dependencies.": "앱 자체의 소스 코드 공개는 확인되지 않았습니다. 이는 오픈 소스 의존성 사용 여부와는 별개입니다.",
+  "Closed-source": "클로즈드 소스",
+  "The app's source code is not publicly available.": "앱 소스 코드는 공개되어 있지 않습니다.",
 };

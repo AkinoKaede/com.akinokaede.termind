@@ -4,14 +4,6 @@ import { termindPricing } from "../pricing";
 export function getTermindFeatures(locale: SiteLocale) {
   const c = (english: string, simplified: string, japaneseText?: string) => copy(locale, english, simplified, japaneseText);
   return {
-    "open-source": {
-      id: "open-source",
-      feature: c("Open source", "开源"),
-      benefit: c("Inspect the code behind your remote workspace.", "查看远程工作台背后的源代码。"),
-      termind: "GPL-3.0-only",
-      termindNote: c("Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.", "源代码已在 GitHub 公开，可按 GPL-3.0-only 许可证查看、构建、修改与再分发。"),
-      termindSourceURL: "https://github.com/AkinoKaede/Termind",
-    },
     "sftp": {
       id: "sftp",
       feature: c("SFTP transfers", "SFTP 传输"),
@@ -130,6 +122,14 @@ export function getTermindFeatures(locale: SiteLocale) {
       benefit: c("Choose how you work with containers.", "选择适合你的容器管理方式。"),
       termind: c("Terminal commands and AI tools", "终端命令与 AI 工具"),
       termindNote: c("Run Docker commands through SSH, or let the AI Assistant investigate and act within your chosen permissions.", "通过 SSH 执行 Docker 命令，或让 AI 助手按设定权限排查和操作。"),
+    },
+    "open-source": {
+      id: "open-source",
+      feature: c("Open source", "开源"),
+      benefit: c("Inspect the code behind your remote workspace.", "查看远程工作台背后的源代码。"),
+      termind: "GPL-3.0-only",
+      termindNote: c("Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.", "源代码已在 GitHub 公开，可按 GPL-3.0-only 许可证查看、构建、修改与再分发。"),
+      termindSourceURL: "https://github.com/AkinoKaede/Termind",
     },
   };
 }

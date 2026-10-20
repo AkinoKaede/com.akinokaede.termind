@@ -29,10 +29,6 @@ export function getPrompt3(locale: SiteLocale): CompetitorContent {
     recommendationTitle: c("visionOS, local shell, and more key types.", "visionOS、本地 Shell 与更多密钥类型。"),
     recommendation: c("Consider Prompt 3 for Apple Vision Pro, a local shell on Mac, or YubiKey PIV and Ed25519-SK authentication. Mosh and Eternal Terminal are available in both apps, not a reason to choose Prompt alone.", "如果需要 Apple Vision Pro、Mac 本地 Shell，或 YubiKey PIV 与 Ed25519-SK 认证，可以考虑 Prompt 3。Mosh 与 Eternal Terminal 两款都有，不再是只能选择 Prompt 的理由。"),
     features: {
-      "open-source": {
-        title: c("No public app source confirmed", "尚未确认应用源码公开"),
-        note: c("No public source release of the app has been confirmed. This is separate from any open-source dependencies.", "尚未确认该应用本身有公开源码发布；这与其是否使用开源依赖是两回事。"),
-      },
       connections: {
         title: "SSH, Telnet, Mosh, Eternal Terminal",
         note: c("Mosh and Eternal Terminal help sessions survive unstable networks. Local shell sessions are available on macOS.", "Mosh 与 Eternal Terminal 可帮助会话应对不稳定网络；macOS 还提供本地 Shell。"),
@@ -91,6 +87,10 @@ export function getPrompt3(locale: SiteLocale): CompetitorContent {
       plans: {
         title: c("$9.99/year or $49.99 one-time", "$9.99/年，或 $49.99 一次购买"),
         note: c("Includes a 7-day trial. An active annual subscription also covers future major versions.", "提供 7 天试用；有效年度订阅还包含后续主要版本。"),
+      },
+      "open-source": {
+        title: c("Closed-source", "闭源"),
+        note: c("The app's source code is not publicly available.", "应用源代码未公开。"),
       },
     },
   };

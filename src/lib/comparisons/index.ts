@@ -17,10 +17,10 @@ const providers: Record<ComparisonSlug, (locale: SiteLocale) => CompetitorConten
 };
 
 const topics: Record<ComparisonSlug, ComparisonFeatureId[]> = {
-  termius: ["open-source", "sftp", "port-forwarding", "tailscale", "ai", "hardware-keys"],
-  webssh: ["open-source", "sftp", "tailscale", "external-agents", "hardware-keys"],
-  servercat: ["open-source", "monitoring", "containers", "ai", "tailscale", "hardware-keys"],
-  "prompt-3": ["open-source", "connections", "tmux", "wake-on-lan", "sftp", "ai"],
+  termius: ["sftp", "port-forwarding", "tailscale", "ai", "hardware-keys", "open-source"],
+  webssh: ["sftp", "tailscale", "external-agents", "hardware-keys", "open-source"],
+  servercat: ["monitoring", "containers", "ai", "tailscale", "hardware-keys", "open-source"],
+  "prompt-3": ["connections", "tmux", "wake-on-lan", "sftp", "ai", "open-source"],
 };
 
 export function getComparison(slug: ComparisonSlug, locale: SiteLocale) {

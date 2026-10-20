@@ -643,6 +643,6 @@ export const japanese: Record<string, string> = {
   "Open source": "オープンソース",
   "Inspect the code behind your remote workspace.": "リモートワークスペースのソースコードを確認できます。",
   "Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.": "ソースコードは GitHub で公開されています。GPL-3.0-only ライセンスに従って、閲覧、ビルド、変更、再配布できます。",
-  "No public app source confirmed": "アプリのソース公開は未確認",
-  "No public source release of the app has been confirmed. This is separate from any open-source dependencies.": "アプリ自体のソースコードの公開は確認できていません。これはオープンソースの依存関係の利用とは別のものです。",
+  "Closed-source": "クローズドソース",
+  "The app's source code is not publicly available.": "アプリのソースコードは公開されていません。",
 };

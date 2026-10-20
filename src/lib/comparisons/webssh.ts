@@ -26,10 +26,6 @@ export function getWebSSH(locale: SiteLocale): CompetitorContent {
     recommendationTitle: c("Network tools and Proxmox.", "网络工具与 Proxmox 管理。"),
     recommendation: c("A fit for Mosh, network diagnostics, VPN-over-SSH, and Proxmox workflows, with a one-time Pro purchase.", "适合常用 Mosh、网络诊断、VPN-over-SSH 或 Proxmox 的工作流，Pro 支持一次购买。"),
     features: {
-      "open-source": {
-        title: c("No public app source confirmed", "尚未确认应用源码公开"),
-        note: c("No public source release of the app has been confirmed. This is separate from any open-source dependencies.", "尚未确认该应用本身有公开源码发布；这与其是否使用开源依赖是两回事。"),
-      },
       sftp: {
         title: c("One connection in the base plan", "基础方案包含 1 个连接"),
         note: c("Browse, transfer, and edit remote files. Pro lets you save unlimited connections.", "支持浏览、传输和编辑远程文件；Pro 可保存不限数量的连接。"),
@@ -77,6 +73,10 @@ export function getWebSSH(locale: SiteLocale): CompetitorContent {
       plans: {
         title: c("$15.00 lifetime Pro", "$15.00 永久版 Pro"),
         note: c("The base plan saves one connection. Pro removes this limit on devices using the same Apple ID.", "基础方案可保存 1 个连接。Pro 解锁数量限制，同一 Apple ID 的设备通用。"),
+      },
+      "open-source": {
+        title: c("Closed-source", "闭源"),
+        note: c("The app's source code is not publicly available.", "应用源代码未公开。"),
       },
     },
   };

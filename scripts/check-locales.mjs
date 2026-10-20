@@ -113,6 +113,12 @@ for (const route of routes) {
       const sourceRow = html.match(/<li\b[^>]*id="open-source"[^>]*>([\s\S]*?)<\/li>/)?.[1];
       assert.ok(sourceRow?.includes("GPL-3.0-only"), `${path}: open-source license comparison`);
       assert.ok(sourceRow?.includes(`href="${repositoryURL}"`), `${path}: source repository reference`);
+      const featureList = html.match(/<ul\b[^>]*class="feature-list"[^>]*>([\s\S]*?)<\/ul>/)?.[1] ?? "";
+      const rowIDs = [...featureList.matchAll(/<li\b[^>]*id="([^"]+)"/g)].map((match) => match[1]);
+      assert.equal(rowIDs.at(-1), "open-source", `${path}: open source is the last comparison`);
+      if (locale === "en") {
+        assert.ok(sourceRow?.includes("Closed-source"), `${path}: competitor is closed-source`);
+      }
     }
     assert.ok(html.includes(`lang="${locale}"`), `${path}: document language`);
     assert.ok(html.includes(`rel="canonical" href="${origin}${path}"`), `${path}: canonical`);
