@@ -59,14 +59,14 @@ const attribution = competitor.attribution ?? c(`{name} is a product of {owner}.
               <p>{row.benefit}</p>
             </div>
             <dl class="product-details">
-              <div class="termind-detail"><dt>Termind</dt><dd><strong>{row.termind}</strong><p>{row.termindNote}</p></dd></div>
+              <div class="termind-detail"><dt>Termind</dt><dd><strong>{row.termind}</strong><p>{row.termindNote}</p>{"termindSourceURL" in row && <a class="feature-source" href={row.termindSourceURL}>GitHub <span aria-hidden="true">↗</span></a>}</dd></div>
               <div><dt>{competitor.name}</dt><dd><strong>{row.competitor.title}</strong><p>{row.competitor.note}</p>{row.competitor.sourceURL && <a class="feature-source" href={row.competitor.sourceURL}>{c("Official reference", "官方资料")} <span aria-hidden="true">↗</span></a>}</dd></div>
             </dl>
           </li>
         ))}
       </ul>
       <div class="sources" id="comparison-sources">
-        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-17">{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date("2026-10-17T00:00:00Z"))}</time></p>
+        <p>{c("Updated: ", "更新时间：")}<time datetime="2026-10-20">{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date("2026-10-20T00:00:00Z"))}</time></p>
         <p>{c("Competitor pricing and hardware-key details were last checked on October 3, 2026.", "竞品价格与硬件密钥信息最后核对于 2026 年 10 月 3 日。")}</p>
       </div>
     </section>

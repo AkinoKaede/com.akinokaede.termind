@@ -20,6 +20,10 @@ export function getTermius(locale: SiteLocale): CompetitorContent {
     recommendationTitle: c("Cross-platform and team access.", "跨平台与团队协作。"),
     recommendation: c("A fit for Windows, Linux, or Android users, and teams that need shared vaults and live terminal collaboration.", "适合同时使用 Windows、Linux 或 Android，或需要共享保管库和终端实时协作的团队。"),
     features: {
+      "open-source": {
+        title: c("No public app source confirmed", "尚未确认应用源码公开"),
+        note: c("No public source release of the app has been confirmed. This is separate from any open-source dependencies.", "尚未确认该应用本身有公开源码发布；这与其是否使用开源依赖是两回事。"),
+      },
       "sftp": {
         title: c("SFTP included in Starter", "Starter 包含 SFTP"),
         note: c("Browse remote files and transfer files over SFTP.", "通过 SFTP 浏览远程文件并传输文件。"),

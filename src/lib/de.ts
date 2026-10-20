@@ -656,4 +656,9 @@ export const de: Record<string, string> = {
   "View container status and resource use. Premium adds container creation and management.": "Sieh Containerstatus und Ressourcennutzung. Premium ergänzt das Erstellen und Verwalten von Containern.",
   "Both Premium plans include the terminal, background SSH, sync, and container management.": "Beide Premium-Pläne enthalten Terminal, Hintergrund-SSH, Synchronisierung und Containerverwaltung.",
   "Start with SSH, SFTP, and port forwarding. No Termind account needed.": "Starte mit SSH, SFTP und Portweiterleitung. Kein Termind-Konto erforderlich.",
+  "Open source": "Open Source",
+  "Inspect the code behind your remote workspace.": "Sieh dir den Code hinter deinem Remote-Arbeitsplatz an.",
+  "Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.": "Der Quellcode ist auf GitHub öffentlich verfügbar. Du kannst ihn unter der Lizenz GPL-3.0-only einsehen, kompilieren, ändern und weitergeben.",
+  "No public app source confirmed": "Kein öffentlicher App-Quellcode bestätigt",
+  "No public source release of the app has been confirmed. This is separate from any open-source dependencies.": "Eine Veröffentlichung des App-Quellcodes wurde nicht bestätigt. Dies ist unabhängig von eventuell verwendeten Open-Source-Abhängigkeiten.",
 };

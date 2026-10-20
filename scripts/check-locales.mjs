@@ -97,6 +97,23 @@ for (const route of routes) {
   for (const locale of languages) {
     const path = routePath(locale, route);
     const html = await read(`dist${path}index.html`);
+    const repositoryURL = "https://github.com/AkinoKaede/Termind";
+    const footer = html.match(/<footer\b[^>]*class="site-footer"[\s\S]*?<\/footer>/)?.[0];
+    assert.ok(footer?.includes(`href="${repositoryURL}"`), `${path}: footer GitHub link`);
+    if (route === "") {
+      const actions = [...html.matchAll(/<div\b[^>]*class="download-actions"[^>]*>([\s\S]*?)<\/div>/g)];
+      assert.equal(actions.length, 2, `${path}: hero and closing download actions`);
+      for (const [, content] of actions) {
+        const links = [...content.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+        assert.deepEqual(links, ["https://apps.apple.com/app/apple-store/id6805856690", repositoryURL],
+          `${path}: GitHub follows the App Store download`);
+      }
+    }
+    if (route.startsWith("compare/") && route !== "compare/") {
+      const sourceRow = html.match(/<li\b[^>]*id="open-source"[^>]*>([\s\S]*?)<\/li>/)?.[1];
+      assert.ok(sourceRow?.includes("GPL-3.0-only"), `${path}: open-source license comparison`);
+      assert.ok(sourceRow?.includes(`href="${repositoryURL}"`), `${path}: source repository reference`);
+    }
     assert.ok(html.includes(`lang="${locale}"`), `${path}: document language`);
     assert.ok(html.includes(`rel="canonical" href="${origin}${path}"`), `${path}: canonical`);
     assert.ok(!/\{(?:annual|lifetime|name|upperName|owner)\}/.test(html), `${path}: unexpanded copy template`);

@@ -640,4 +640,9 @@ export const japanese: Record<string, string> = {
   "View container status and resource use. Premium adds container creation and management.": "コンテナの状態とリソース使用量を確認できます。Premiumはコンテナの作成と管理を追加します。",
   "Both Premium plans include the terminal, background SSH, sync, and container management.": "どちらのPremiumプランもターミナル、バックグラウンドSSH、同期、コンテナ管理を含みます。",
   "Start with SSH, SFTP, and port forwarding. No Termind account needed.": "SSH、SFTP、ポート転送で始めましょう。Termindアカウントは不要です。",
+  "Open source": "オープンソース",
+  "Inspect the code behind your remote workspace.": "リモートワークスペースのソースコードを確認できます。",
+  "Source code is public on GitHub. Inspect, build, modify, and redistribute it under the GPL-3.0-only license.": "ソースコードは GitHub で公開されています。GPL-3.0-only ライセンスに従って、閲覧、ビルド、変更、再配布できます。",
+  "No public app source confirmed": "アプリのソース公開は未確認",
+  "No public source release of the app has been confirmed. This is separate from any open-source dependencies.": "アプリ自体のソースコードの公開は確認できていません。これはオープンソースの依存関係の利用とは別のものです。",
 };

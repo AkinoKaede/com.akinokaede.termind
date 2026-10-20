@@ -1,5 +1,6 @@
 ---
 import AppIcon from "../components/AppIcon.astro";
+import GitHubButton from "../components/GitHubButton.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ScreenshotPicture from "../components/ScreenshotPicture.astro";
 import TelegramOffer from "../components/TelegramOffer.astro";
@@ -47,20 +48,23 @@ const priceSummary = {
         "连接、传输，AI 协助。在 Mac、iPhone 与 iPad 上，始终由你掌控。"
       )}</p>
       <div class="hero-actions">
-        <a
-          class="app-store-button"
-          href="https://apps.apple.com/app/apple-store/id6805856690"
-          aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
-        >
-          <span class="apple" aria-hidden="true"></span>
-          <span class:list={["store-copy", { chinese: !latinBadge }]}>
-            {latinBadge ? (
-              <><small>{downloadLabel}</small><strong>App Store</strong></>
-            ) : (
-              <><strong>App Store</strong><small>{c("", "下载")}</small></>
-            )}
-          </span>
-        </a>
+        <div class="download-actions">
+          <a
+            class="app-store-button"
+            href="https://apps.apple.com/app/apple-store/id6805856690"
+            aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
+          >
+            <span class="apple" aria-hidden="true"></span>
+            <span class:list={["store-copy", { chinese: !latinBadge }]}>
+              {latinBadge ? (
+                <><small>{downloadLabel}</small><strong>App Store</strong></>
+              ) : (
+                <><strong>App Store</strong><small>{c("", "下载")}</small></>
+              )}
+            </span>
+          </a>
+          <GitHubButton />
+        </div>
         <a class="text-link" href="#features">{c("Explore Termind", "了解 Termind")} <span>↓</span></a>
       </div>
       <div class="requirements" aria-label={c("System requirements", "系统要求")}><span>macOS 15+</span><i></i><span>iOS 18+</span><i></i><span>iPadOS 18+</span></div>
@@ -250,24 +254,28 @@ const priceSummary = {
     <img src="/brand_mark.svg" width="72" height="72" alt="" />
     <h2 class="display">{c("Ready when you are.", "随时，开始。")}</h2>
     <p>{c("Your next connection starts here.", "下一次连接，从这里开始。")}</p>
-    <a
-          class="app-store-button"
-          href="https://apps.apple.com/app/apple-store/id6805856690"
-          aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
-        >
-          <span class="apple" aria-hidden="true"></span>
-          <span class:list={["store-copy", { chinese: !latinBadge }]}>
-            {latinBadge ? (
-              <><small>{downloadLabel}</small><strong>App Store</strong></>
-            ) : (
-              <><strong>App Store</strong><small>{c("", "下载")}</small></>
-            )}
-          </span>
-        </a>
+    <div class="download-actions">
+      <a
+        class="app-store-button"
+        href="https://apps.apple.com/app/apple-store/id6805856690"
+        aria-label={c("Download Termind on the App Store", "在 App Store 下载 Termind")}
+      >
+        <span class="apple" aria-hidden="true"></span>
+        <span class:list={["store-copy", { chinese: !latinBadge }]}>
+          {latinBadge ? (
+            <><small>{downloadLabel}</small><strong>App Store</strong></>
+          ) : (
+            <><strong>App Store</strong><small>{c("", "下载")}</small></>
+          )}
+        </span>
+      </a>
+      <GitHubButton />
+    </div>
   </section>
 </BaseLayout>
 
 <style>
+  .download-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: .75rem; }
   .assistant-row .story-copy > p + p { margin-top: 1rem; }
   .assistant-row .story-copy > .agentkit-credit { margin-top: 1.25rem; font-size: .78rem; }
   .agentkit-credit a { color: var(--cyan); text-underline-offset: .2em; }
